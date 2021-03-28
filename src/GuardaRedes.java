@@ -1,10 +1,18 @@
+import java.util.List;
+import java.util.Objects;
+
 public class GuardaRedes extends Jogador {
     private int elasticidade;
 
     public GuardaRedes (){
         super();
         this.elasticidade = 70;
-        setPosition(Position.GUARDAREDES);
+        setPosition(Position.GUARDA_REDES);
+    }
+
+    public GuardaRedes(String name, Position position, Atributos atributos, List<String> historico,int elasticidade) {
+        super(name,position,atributos,historico);
+        this.elasticidade = elasticidade;
     }
 
     public int getElasticidade() {
@@ -17,6 +25,26 @@ public class GuardaRedes extends Jogador {
 
     @Override
     public String toString() {
-        return super.toString() + "\n elasticidade=" + elasticidade;
+        return "Jogador{" +
+                "\n name='" + super.getName() + '\'' +
+                "\n position=" + super.getPosition() +
+                "\n Atributos{\n" +super.getAtributos().toString() +
+                "\n  elasticidade=" + getElasticidade() +
+                "\n Histórico de Clubes=" + super.getHistorico().toString() +
+                "\n}";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        GuardaRedes that = (GuardaRedes) o;
+        return getElasticidade() == that.getElasticidade();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getElasticidade());
     }
 }
