@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Atributos {
     private int velocidade;
     private int resistencia;
@@ -83,14 +85,23 @@ public class Atributos {
         this.capacidadePasse = capacidadePasse;
     }
 
+
     @Override
     public String toString() {
-        return " velocidade=" + velocidade +
-                "\nresistencia=" + resistencia +
-                "\n destreza=" + destreza +
-                "\n impulsao=" + impulsao +
-                "\n jogoDecCabeca=" + jogoDecCabeca +
-                "\n remate=" + remate +
-                "\n capacidadePasse=" + capacidadePasse;
+        return "  velocidade=" + velocidade +
+                "\n  resistencia=" + resistencia +
+                "\n  destreza=" + destreza +
+                "\n  impulsao=" + impulsao +
+                "\n  jogoDecCabeca=" + jogoDecCabeca +
+                "\n  remate=" + remate +
+                "\n  capacidadePasse=" + capacidadePasse;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Atributos atributos = (Atributos) o;
+        return getVelocidade() == atributos.getVelocidade() && getResistencia() == atributos.getResistencia() && getDestreza() == atributos.getDestreza() && getImpulsao() == atributos.getImpulsao() && getJogoDecCabeca() == atributos.getJogoDecCabeca() && getRemate() == atributos.getRemate() && getCapacidadePasse() == atributos.getCapacidadePasse();
     }
 }
