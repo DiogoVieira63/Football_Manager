@@ -1,6 +1,4 @@
-public class JogadorDeCampo {
-    private String name;
-    private Position position;
+public class Atributos {
     private int velocidade;
     private int resistencia;
     private int destreza;
@@ -9,9 +7,7 @@ public class JogadorDeCampo {
     private int remate;
     private int capacidadePasse;
 
-    public JogadorDeCampo(){
-        this.name = "Default";
-        this.position = Position.MEDIO;
+    public Atributos (){
         this.velocidade = 70;
         this.resistencia = 70;
         this.destreza = 70;
@@ -19,11 +15,9 @@ public class JogadorDeCampo {
         this.jogoDecCabeca = 70;
         this.remate = 70;
         this.capacidadePasse = 70;
-
     }
 
-    public JogadorDeCampo(Position position, int velocidade, int resistencia, int destreza, int impulsao, int jogoDecCabeca, int remate, int capacidadePasse) {
-        this.position = position;
+    public Atributos(int velocidade, int resistencia, int destreza, int impulsao, int jogoDecCabeca, int remate, int capacidadePasse) {
         this.velocidade = velocidade;
         this.resistencia = resistencia;
         this.destreza = destreza;
@@ -31,36 +25,6 @@ public class JogadorDeCampo {
         this.jogoDecCabeca = jogoDecCabeca;
         this.remate = remate;
         this.capacidadePasse = capacidadePasse;
-    }
-
-    @Override
-    public String toString() {
-        return "Jogador{" +
-                "\n name='" + name + '\'' +
-                "\n position=" + position +
-                "\n velocidade=" + velocidade +
-                "\n resistencia=" + resistencia +
-                "\n destreza=" + destreza +
-                "\n impulsao=" + impulsao +
-                "\n jogoDecCabeca=" + jogoDecCabeca +
-                "\n remate=" + remate +
-                "\n capacidadePasse=" + capacidadePasse;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Position getPosition() {
-        return position;
-    }
-
-    public void setPosition(Position position) {
-        this.position = position;
     }
 
     public int getVelocidade() {
@@ -117,5 +81,16 @@ public class JogadorDeCampo {
 
     public void setCapacidadePasse(int capacidadePasse) {
         this.capacidadePasse = capacidadePasse;
+    }
+
+    @Override
+    public String toString() {
+        return " velocidade=" + velocidade +
+                "\nresistencia=" + resistencia +
+                "\n destreza=" + destreza +
+                "\n impulsao=" + impulsao +
+                "\n jogoDecCabeca=" + jogoDecCabeca +
+                "\n remate=" + remate +
+                "\n capacidadePasse=" + capacidadePasse;
     }
 }

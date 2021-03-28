@@ -1,4 +1,4 @@
-public class GuardaRedes extends JogadorDeCampo {
+public class GuardaRedes extends Jogador {
     private int elasticidade;
 
     public GuardaRedes (){
