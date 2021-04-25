@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Jogador {
     private String name;
@@ -49,15 +48,29 @@ public class Jogador {
      */
 
     public int habilidadeGeral (){
-        Atributos atributos = getAtributos();
-        return
-                (atributos.getCapacidadePasse()
-                + atributos.getDestreza()
-                + atributos.getImpulsao()
-                + atributos.getRemate()
-                + atributos.getJogoDecCabeca()
-                + atributos.getResistencia()
-                + atributos.getVelocidade())/7;
+        int result = 0;
+        switch(getPosition().getNum()) {
+            case 1:
+                result = (int) (atributos.getAtaque().media() * 0.15
+                                        + atributos.getTecnico().media() * 0.25
+                                        + atributos.getFisico().media() * 0.25
+                                        + atributos.getDefensivo().media() * 0.35);
+            break;
+            case 2:
+                result = (int) (atributos.getAtaque().media() * 0.20
+                        + atributos.getTecnico().media() * 0.30
+                        + atributos.getFisico().media() * 0.30
+                        + atributos.getDefensivo().media() * 0.20);
+            break;
+            case 3:
+                result = (int) (atributos.getAtaque().media() * 0.40
+                        + atributos.getTecnico().media() * 0.25
+                        + atributos.getFisico().media() * 0.25
+                        + atributos.getDefensivo().media() * 0.10);
+                break;
+        }
+        return result;
+
     }
 
     public String getName() {
@@ -90,7 +103,9 @@ public class Jogador {
 
     public void setHistorico(List<String> historico) {
         this.historico = new ArrayList<>();
-        this.historico.addAll(historico);
+        for (String equipa : historico){
+            this.historico.add(equipa);
+        }
     }
 
     @Override

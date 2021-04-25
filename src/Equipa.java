@@ -58,18 +58,19 @@ public class Equipa {
         System.out.println("---------------------------------------------");
         System.out.format("%-14s%-20s%-4s\n","Posição","Nome","Rating");
         System.out.println("---------------------------------------------");
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 4; i++) {
             for (Jogador jogador : getPosition(Position.getPlayer(i)))
             System.out.format("%-14s%-20s%-4s\n", jogador.getPosition(), jogador.getName(),jogador.habilidadeGeral());
         }
+        System.out.println("---------------------------------------------");
     }
 
-    public double habilidadeEquipa (){
+    public int habilidadeEquipa (){
         int total = 0;
         for (Jogador jogador : getListaJogadores()){
             total += jogador.habilidadeGeral();
         }
-        return (double) total/getListaJogadores().size();
+        return total/getListaJogadores().size();
     }
 
     public List<Jogador> getListaJogadores() {
@@ -77,7 +78,9 @@ public class Equipa {
     }
 
     public void setListaJogadores(List<Jogador> listaJogadores) {
-        this.listaJogadores.addAll(listaJogadores);
+        for (Jogador jogador : listaJogadores){
+            this.listaJogadores.add(jogador);
+        }
     }
 
     public int getPositionLeague() {

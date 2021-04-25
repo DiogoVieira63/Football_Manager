@@ -43,8 +43,11 @@ public class GuardaRedes extends Jogador {
         return getElasticidade() == that.getElasticidade();
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getElasticidade());
+    public int habilidadeGeral (){
+        return (int) (getAtributos().getTecnico().media() * 0.05
+                + getAtributos().getFisico().media() * 0.10
+                + getAtributos().getDefensivo().media() * 0.10
+                + elasticidade * 0.80);
     }
+
 }

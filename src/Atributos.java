@@ -1,107 +1,58 @@
-import java.util.Objects;
+import Atributo.Atacante;
+import Atributo.Defensivo;
+import Atributo.Fisico;
+import Atributo.Tecnico;
 
 public class Atributos {
-    private int velocidade;
-    private int resistencia;
-    private int destreza;
-    private int impulsao;
-    private int jogoDecCabeca;
-    private int remate;
-    private int capacidadePasse;
+    Atacante ataque;
+    Defensivo defensivo;
+    Tecnico tecnico;
+    Fisico fisico;
+
 
     public Atributos (){
-        this.velocidade = 70;
-        this.resistencia = 70;
-        this.destreza = 70;
-        this.impulsao = 70;
-        this.jogoDecCabeca = 70;
-        this.remate = 70;
-        this.capacidadePasse = 70;
+        this.ataque = new Atacante(70,70);
+        this.defensivo = new Defensivo(70,70);
+        this.tecnico = new Tecnico(70,70);
+        this.fisico = new Fisico(70,70);
     }
 
-    public Atributos(int velocidade, int resistencia, int destreza, int impulsao, int jogoDecCabeca, int remate, int capacidadePasse) {
-        this.velocidade = velocidade;
-        this.resistencia = resistencia;
-        this.destreza = destreza;
-        this.impulsao = impulsao;
-        this.jogoDecCabeca = jogoDecCabeca;
-        this.remate = remate;
-        this.capacidadePasse = capacidadePasse;
+    public Atributos(int velocidade, int resistencia, int destreza, int impulsao, int jogoDecCabeca, int remate, int capacidadePasse,int capacidadeDefensiva) {
+        this.ataque = new Atacante(remate,jogoDecCabeca);
+        this.defensivo = new Defensivo(impulsao,capacidadeDefensiva);
+        this.tecnico = new Tecnico(capacidadePasse,destreza);
+        this.fisico = new Fisico(velocidade,resistencia);
     }
 
-    public int getVelocidade() {
-        return velocidade;
+    public Atacante getAtaque() {
+        return ataque;
     }
 
-    public void setVelocidade(int velocidade) {
-        this.velocidade = velocidade;
+    public void setAtaque(Atacante ataque) {
+        this.ataque = ataque;
     }
 
-    public int getResistencia() {
-        return resistencia;
+    public Defensivo getDefensivo() {
+        return defensivo;
     }
 
-    public void setResistencia(int resistencia) {
-        this.resistencia = resistencia;
+    public void setDefensivo(Defensivo defensivo) {
+        this.defensivo = defensivo;
     }
 
-    public int getDestreza() {
-        return destreza;
+    public Tecnico getTecnico() {
+        return tecnico;
     }
 
-    public void setDestreza(int destreza) {
-        this.destreza = destreza;
+    public void setTecnico(Tecnico tecnico) {
+        this.tecnico = tecnico;
     }
 
-    public int getImpulsao() {
-        return impulsao;
+    public Fisico getFisico() {
+        return fisico;
     }
 
-    public void setImpulsao(int impulsao) {
-        this.impulsao = impulsao;
-    }
-
-    public int getJogoDecCabeca() {
-        return jogoDecCabeca;
-    }
-
-    public void setJogoDecCabeca(int jogoDecCabeca) {
-        this.jogoDecCabeca = jogoDecCabeca;
-    }
-
-    public int getRemate() {
-        return remate;
-    }
-
-    public void setRemate(int remate) {
-        this.remate = remate;
-    }
-
-    public int getCapacidadePasse() {
-        return capacidadePasse;
-    }
-
-    public void setCapacidadePasse(int capacidadePasse) {
-        this.capacidadePasse = capacidadePasse;
-    }
-
-
-    @Override
-    public String toString() {
-        return "  velocidade=" + velocidade +
-                "\n  resistencia=" + resistencia +
-                "\n  destreza=" + destreza +
-                "\n  impulsao=" + impulsao +
-                "\n  jogoDecCabeca=" + jogoDecCabeca +
-                "\n  remate=" + remate +
-                "\n  capacidadePasse=" + capacidadePasse;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Atributos atributos = (Atributos) o;
-        return getVelocidade() == atributos.getVelocidade() && getResistencia() == atributos.getResistencia() && getDestreza() == atributos.getDestreza() && getImpulsao() == atributos.getImpulsao() && getJogoDecCabeca() == atributos.getJogoDecCabeca() && getRemate() == atributos.getRemate() && getCapacidadePasse() == atributos.getCapacidadePasse();
+    public void setFisico(Fisico fisico) {
+        this.fisico = fisico;
     }
 }
