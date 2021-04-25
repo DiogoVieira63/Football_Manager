@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class FootballManager {
     public static void main(String[] args) {
         GuardaRedes gr = new GuardaRedes();
@@ -10,22 +13,24 @@ public class FootballManager {
         defesa.setName("Sergio Ramos");
         jogador.setName("DeBruyne");
         avancado.setName("Messi");
+        Atributos atributos = new Atributos(90,70,90,70,80,90,80,40);
+        jogador.setAtributos(atributos);
+        avancado.setAtributos(atributos);
+        defesa.setAtributos(atributos);
+        gr.setAtributos(atributos);
+        gr.setElasticidade(90);
 
         Equipa braga = new Equipa("Braga");
         Equipa benfica = new Equipa("Benfica");
         League liga = new League();
-        liga.addEquipa(braga);
-        liga.addEquipa(benfica);
-        System.out.println(liga.getTabela().toString());
-
-
-        braga.addJogador(jogador);
-        braga.transferenciaJogador(jogador,benfica);
-        benfica.addJogador(defesa);
-        benfica.addJogador(avancado);
-        benfica.addJogador(gr);
-        Atributos atributos = new Atributos(80,80,80,80,80,80,80);
-        jogador.setAtributos(atributos);
+        List<Jogador> lista = new ArrayList<>();
+        lista.add(jogador);
+        lista.add(avancado);
+        lista.add(defesa);
+        lista.add(gr);
+        braga.setListaJogadores(lista);
+        benfica.setListaJogadores(lista);
+        //jogador.getAtributos().setImpulsao(100);
 
         benfica.printHabilidadeEquipa();
 
