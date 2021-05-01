@@ -19,23 +19,5 @@ public class FootballManager {
         defesa.setAtributos(atributos);
         gr.setAtributos(atributos);
         gr.setElasticidade(90);
-
-        Equipa braga = new Equipa("Braga");
-        Equipa benfica = new Equipa("Benfica");
-        League liga = new League();
-        List<Jogador> lista = new ArrayList<>();
-        lista.add(jogador);
-        lista.add(avancado);
-        lista.add(defesa);
-        lista.add(gr);
-        braga.setListaJogadores(lista);
-        benfica.setListaJogadores(lista);
-        //jogador.getAtributos().setImpulsao(100);
-
-        benfica.printHabilidadeEquipa();
-
-/*        System.out.println(braga.getListaJogadores());
-        System.out.println("----------------------------------------");
-        System.out.println(benfica.getPosition(Position.GUARDAREDES));*/
     }
 }
