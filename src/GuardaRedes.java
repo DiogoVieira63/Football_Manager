@@ -1,5 +1,7 @@
+import Atributo.Atributo;
+
+import java.util.AbstractMap;
 import java.util.List;
-import java.util.Objects;
 
 public class GuardaRedes extends Jogador {
     private int elasticidade;
@@ -10,7 +12,7 @@ public class GuardaRedes extends Jogador {
         setPosition(Position.GUARDA_REDES);
     }
 
-    public GuardaRedes(String name, Position position, Atributos atributos, List<String> historico,int elasticidade) {
+    public GuardaRedes(String name, Position position, AbstractMap.SimpleEntry<Double, Atributo> atributos, List<String> historico, int elasticidade) {
         super(name,position,atributos,historico);
         this.elasticidade = elasticidade;
     }

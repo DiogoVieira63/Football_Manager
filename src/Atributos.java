@@ -1,9 +1,9 @@
-import Atributo.Atacante;
-import Atributo.Defensivo;
-import Atributo.Fisico;
-import Atributo.Tecnico;
+import Atributo.*;
+
+import java.util.List;
 
 public class Atributos {
+    List<Atributo> list;
     Atacante ataque;
     Defensivo defensivo;
     Tecnico tecnico;

@@ -2,7 +2,7 @@ public enum Position {
     GUARDA_REDES(0),
     DEFESA(1),
     MEDIO(2),
-    AVANCADO(3);
+    AVANCADO(3);z
     int num;
 
     Position(int i) {

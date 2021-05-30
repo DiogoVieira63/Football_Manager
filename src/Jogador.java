@@ -1,20 +1,23 @@
+import Atributo.Atributo;
+
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Jogador {
     private String name;
     private Position position;
-    private Atributos atributos;
+    private AbstractMap.SimpleEntry<Double, Atributo.Atributo> atributos;
     private List<String> historico;
 
     public Jogador(){
         this.name = "Default";
         this.position = Position.MEDIO;
-        this.atributos = new Atributos();
+        this.atributos = new ArrayList<>();
         this.historico = new ArrayList<>();
     }
 
-    public Jogador(String name, Position position, Atributos atributos, List<String> historico) {
+    public Jogador(String name, Position position, AbstractMap.SimpleEntry<Double, Atributo.Atributo> atributos, List<String> historico) {
         this.name = name;
         this.position = position;
         this.atributos = atributos;
@@ -89,11 +92,11 @@ public class Jogador {
         this.position = position;
     }
 
-    public Atributos getAtributos() {
+    public AbstractMap.SimpleEntry<Double, Atributo.Atributo> getAtributos() {
         return atributos;
     }
 
-    public void setAtributos(Atributos atributos) {
+    public void setAtributos(AbstractMap.SimpleEntry<Double, Atributo.Atributo> atributos) {
         this.atributos = atributos;
     }
 

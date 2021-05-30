@@ -1,5 +1,6 @@
-import java.util.ArrayList;
-import java.util.List;
+import Atributo.Atributo;
+
+import java.util.AbstractMap;
 
 public class FootballManager {
     public static void main(String[] args) {
@@ -13,7 +14,7 @@ public class FootballManager {
         defesa.setName("Sergio Ramos");
         jogador.setName("DeBruyne");
         avancado.setName("Messi");
-        Atributos atributos = new Atributos(90,70,90,70,80,90,80,40);
+        AbstractMap.SimpleEntry<Double, Atributo> atributos = new Atributos(90,70,90,70,80,90,80,40);
         jogador.setAtributos(atributos);
         avancado.setAtributos(atributos);
         defesa.setAtributos(atributos);
