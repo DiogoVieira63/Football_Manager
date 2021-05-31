@@ -9,6 +9,11 @@ public class Fisico implements Atributo{
         this.resistencia = resistencia;
     }
 
+    public Fisico(Fisico fisico){
+        this.velocidade = fisico.getVelocidade();
+        this.resistencia = fisico.getResistencia();
+    }
+
     public int getVelocidade() {
         return velocidade;
     }
@@ -27,5 +32,9 @@ public class Fisico implements Atributo{
 
     public double media() {
         return (double) (resistencia + velocidade )/2;
+    }
+
+    public Atributo clone() {
+        return new Fisico(this);
     }
 }

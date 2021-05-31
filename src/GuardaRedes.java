@@ -47,8 +47,8 @@ public class GuardaRedes extends Jogador {
         this.reflexos = reflexos;
     }
 
-    public int habilidadeGeral (){
-        return 10;
+    public int habilidadeGeralEspecifica (){
+        return (int) (super.habilidadeGeral() + (this.elasticidade * 0.15 + this.reflexos * 0.15));
     }
 
     public Jogador clone(){

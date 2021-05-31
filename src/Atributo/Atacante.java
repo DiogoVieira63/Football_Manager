@@ -9,6 +9,11 @@ public class Atacante implements Atributo{
         this.jogoDeCabeca = jogoDeCabeca;
     }
 
+    public Atacante(Atacante atacante){
+        this.remate = atacante.getRemate();
+        this.jogoDeCabeca = atacante.getJogoDeCabeca();
+    }
+
     public int getRemate() {
         return remate;
     }
@@ -27,5 +32,9 @@ public class Atacante implements Atributo{
 
     public double media() {
         return (double) (remate+ jogoDeCabeca) /2;
+    }
+
+    public Atributo clone() {
+        return new Atacante(this);
     }
 }

@@ -1,4 +1,4 @@
-import Atributo.Atributo;
+import Atributo.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -29,6 +29,7 @@ public abstract class Jogador {
                 .collect(Collectors.toMap(Map.Entry::getKey,
                         l -> l.getValue()
                                 .stream()
+                                .map(Atributo::clone)
                                 .collect(Collectors.toList())));
         this.historico = new ArrayList<>(historico);
     }
@@ -59,28 +60,71 @@ public abstract class Jogador {
     }
 
     public Map<Double, List<Atributo>> getAtributos() {
-        return atributos;
+        return this.atributos
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(Map.Entry::getKey,
+                        l -> l.getValue()
+                                .stream()
+                                .map(Atributo::clone)
+                                .collect(Collectors.toList())));
     }
 
     public void setAtributos(Map<Double, List<Atributo>> atributos) {
-        this.atributos = atributos;
+        this.atributos = atributos
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(Map.Entry::getKey,
+                        l -> l.getValue()
+                                .stream()
+                                .map(Atributo::clone)
+                                .collect(Collectors.toList())));;
     }
 
     public List<String> getHistorico() {
-        return historico;
+        return new ArrayList<>(this.historico);
     }
 
     public void setHistorico(List<String> historico) {
-        this.historico = historico;
+        this.historico = new ArrayList<>(historico);
     }
 
     public void addEquipaHistorico (String equipa){
         historico.add(equipa);
     }
 
+    public int habilidadeGeral() {
+        double ataque = 0;
+        double defesa = 0;
+        double tecnico = 0;
+        double fisico = 0;
+        double mental = 0;
+        for (Map.Entry<Double, List<Atributo>> entry : this.atributos.entrySet()){
+            Double d = entry.getKey();
+            for (Atributo atributo : entry.getValue()){
+                if (atributo instanceof Atacante){
+                    ataque = atributo.media() * d;
+                }
+                if (atributo instanceof Fisico){
+                    fisico = atributo.media() * d;
+                }
+                if (atributo instanceof Tecnico){
+                    tecnico = atributo.media() * d;
+                }
+                if (atributo instanceof Defensivo){
+                    defesa = atributo.media() * d;
+                }
+                if (atributo instanceof MentalTatico){
+                    mental = atributo.media() * d;
+                }
+            }
+        }
+        return (int) (ataque + fisico + tecnico + defesa + mental);
+    }
+
     //              Abstract Methods                //
 
-    public abstract int habilidadeGeral();
+    public abstract int habilidadeGeralEspecifica();
 
     public abstract Jogador clone();
 

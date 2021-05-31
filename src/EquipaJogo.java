@@ -2,7 +2,7 @@ import java.util.*;
 
 public class EquipaJogo {
     private String idEquipa;
-    //private EsquemaTatico esquemaTatico;
+    private EsquemaTatico esquemaTatico;
     private Map<String, Double> titulares;
     private HashSet<String> suplentes;
     private Map<String, String> substituições;

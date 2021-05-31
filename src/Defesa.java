@@ -5,24 +5,28 @@ import java.util.Map;
 
 public class Defesa extends Jogador{
     private int marcacao;
+    private boolean lateral;
 
     //              Constructors                //
 
     public Defesa(){
         super();
         this.marcacao = 0;
+        this.lateral = false;
     }
 
     public Defesa(String name, String id, Map<Double, List<Atributo>> atributos,
-                 List<String> historico, int marcacao)
+                 List<String> historico, int marcacao, boolean lateral)
     {
         super(name, id, atributos, historico);
         this.marcacao = marcacao;
+        this.lateral = lateral;
     }
 
     public Defesa(Defesa defesa){
         super(defesa);
-        this.marcacao = getMarcacao();
+        this.marcacao = defesa.getMarcacao();
+        this.lateral = defesa.getLateral();
     }
 
     //              Getters and Setters             //
@@ -35,8 +39,16 @@ public class Defesa extends Jogador{
         this.marcacao = marcacao;
     }
 
-    public int habilidadeGeral() {
-        return 0;
+    public boolean getLateral() {
+        return lateral;
+    }
+
+    public void setLateral(boolean lateral) {
+        this.lateral = lateral;
+    }
+
+    public int habilidadeGeralEspecifica() {
+        return (int) (super.habilidadeGeral() + (this.marcacao * 0.3));
     }
 
     public Jogador clone() {

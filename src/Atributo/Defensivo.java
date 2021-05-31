@@ -9,6 +9,11 @@ public class Defensivo implements Atributo{
         this.capacidadeDefensiva = capacidadeDefensiva;
     }
 
+    public Defensivo(Defensivo defensivo){
+        this.impulsao = defensivo.getImpulsao();
+        this.capacidadeDefensiva = defensivo.getCapacidadeDefensiva();
+    }
+
     public int getImpulsao() {
         return impulsao;
     }
@@ -27,5 +32,9 @@ public class Defensivo implements Atributo{
 
     public double media() {
         return (double) (capacidadeDefensiva + impulsao)/2;
+    }
+
+    public Atributo clone() {
+        return new Defensivo(this);
     }
 }

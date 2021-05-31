@@ -9,6 +9,11 @@ public class Tecnico implements Atributo{
         this.destreza = destreza;
     }
 
+    public Tecnico(Tecnico tecnico){
+        this.capacidadeDePasse = tecnico.getCapacidadeDePasse();
+        this.destreza = tecnico.getDestreza();
+    }
+
     public int getCapacidadeDePasse() {
         return capacidadeDePasse;
     }
@@ -27,5 +32,9 @@ public class Tecnico implements Atributo{
 
     public double media() {
         return (double) (destreza+capacidadeDePasse)/2;
+    }
+
+    public Atributo clone() {
+        return new Tecnico(this);
     }
 }
