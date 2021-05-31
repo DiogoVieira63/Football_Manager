@@ -2,20 +2,34 @@ import Atributo.Atributo;
 
 import java.util.AbstractMap;
 import java.util.List;
+import java.util.Map;
 
 public class GuardaRedes extends Jogador {
     private int elasticidade;
+    private int reflexos;
+
+    //              Constructors                //
 
     public GuardaRedes (){
         super();
-        this.elasticidade = 70;
-        setPosition(Position.GUARDA_REDES);
+        this.elasticidade = 0;
+        this.reflexos = 0;
     }
 
-    public GuardaRedes(String name, Position position, AbstractMap.SimpleEntry<Double, Atributo> atributos, List<String> historico, int elasticidade) {
-        super(name,position,atributos,historico);
+    public GuardaRedes(String name, String id, Map<Double, List<Atributo>> atributos,
+                       List<String> historico, int elasticidade, int reflexos){
+        super(name, id, atributos, historico);
         this.elasticidade = elasticidade;
+        this.reflexos = reflexos;
     }
+
+    public GuardaRedes (GuardaRedes guardaRedes){
+        super(guardaRedes);
+        this.elasticidade = guardaRedes.getElasticidade();
+        this.reflexos = guardaRedes.getReflexos();
+    }
+
+    //              Getters and Setters             //
 
     public int getElasticidade() {
         return elasticidade;
@@ -25,31 +39,20 @@ public class GuardaRedes extends Jogador {
         this.elasticidade = elasticidade;
     }
 
-    @Override
-    public String toString() {
-        return "Jogador{" +
-                "\n name='" + super.getName() + '\'' +
-                "\n position=" + super.getPosition() +
-                "\n Atributos{\n" +super.getAtributos().toString() +
-                "\n  elasticidade=" + getElasticidade() +
-                "\n Histórico de Clubes=" + super.getHistorico().toString() +
-                "\n}";
+    public int getReflexos() {
+        return reflexos;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        GuardaRedes that = (GuardaRedes) o;
-        return getElasticidade() == that.getElasticidade();
+    public void setReflexos(int reflexos) {
+        this.reflexos = reflexos;
     }
 
     public int habilidadeGeral (){
-        return (int) (getAtributos().getTecnico().media() * 0.05
-                + getAtributos().getFisico().media() * 0.10
-                + getAtributos().getDefensivo().media() * 0.10
-                + elasticidade * 0.80);
+        return 10;
+    }
+
+    public Jogador clone(){
+        return new GuardaRedes(this);
     }
 
 }

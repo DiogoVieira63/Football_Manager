@@ -25,7 +25,6 @@ public class Atacante implements Atributo{
         this.jogoDeCabeca = jogoDeCabeca;
     }
 
-    @Override
     public double media() {
         return (double) (remate+ jogoDeCabeca) /2;
     }

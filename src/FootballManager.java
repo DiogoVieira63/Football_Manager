@@ -4,6 +4,7 @@ import java.util.AbstractMap;
 
 public class FootballManager {
     public static void main(String[] args) {
+        /*
         GuardaRedes gr = new GuardaRedes();
         Jogador jogador = new Jogador();
         Jogador defesa = new Jogador();
@@ -20,5 +21,6 @@ public class FootballManager {
         defesa.setAtributos(atributos);
         gr.setAtributos(atributos);
         gr.setElasticidade(90);
+         */
     }
 }

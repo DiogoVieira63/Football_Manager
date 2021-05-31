@@ -25,7 +25,6 @@ public class Defensivo implements Atributo{
         this.capacidadeDefensiva = capacidadeDefensiva;
     }
 
-    @Override
     public double media() {
         return (double) (capacidadeDefensiva + impulsao)/2;
     }

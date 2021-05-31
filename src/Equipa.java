@@ -1,20 +1,70 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Equipa {
     private String name;
-    private List<Jogador> listaJogadores;
-    private int positionLeague;
+    private Map<String, Jogador> listaJogadores;
+    private boolean lateral;
 
-    public Equipa (){
-        this.listaJogadores = new ArrayList<>();
+    //              Constructors                //
+
+    public Equipa() {
+        this.name = "";
+        this.listaJogadores = new HashMap<>();
+        this.lateral = false;
     }
 
-    public Equipa (String name){
+    public Equipa (String name, Map<String, Jogador> listaJogadores, boolean lateral){
         this.name = name;
-        this.listaJogadores = new ArrayList<>();
+        this.listaJogadores = listaJogadores
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, j -> j.getValue().clone()));
+        this.lateral = lateral;
     }
+
+    public Equipa (Equipa equipa){
+        this.name = equipa.getName();
+        this.listaJogadores = equipa.getListaJogadores();
+        this.lateral = equipa.getLateral();
+    }
+
+    //              Getters and Setters             //
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Map<String, Jogador> getListaJogadores() {
+        return listaJogadores
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, j -> j.getValue().clone()));
+    }
+
+    public void setListaJogadores(Map<String, Jogador> listaJogadores) {
+        this.listaJogadores = listaJogadores
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, j -> j.getValue().clone()));
+    }
+
+    public boolean getLateral() {
+        return lateral;
+    }
+
+    public void setLateral(boolean lateral) {
+        this.lateral = lateral;
+    }
+
+    /*
 
     public void addJogador (Jogador jogador) {
         Jogador clone = jogador.clone();
@@ -30,19 +80,11 @@ public class Equipa {
         novaEquipa.addJogador(jogador);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     /**
      * Returns a list with Jogadores from that Position
      * @param position The Position
      * @return The List
-     */
+
 
     public List<Jogador> getPosition (Position position){
         return getListaJogadores().stream().
@@ -52,7 +94,6 @@ public class Equipa {
 
     /**
      * Imprime o nome do jogador e a sua habilidade por ordem de posições
-     */
     public void printHabilidadeEquipa () {
         System.out.format("%-15s%-4s\n",getName(),habilidadeEquipa());
         System.out.println("---------------------------------------------");
@@ -72,31 +113,5 @@ public class Equipa {
         }
         return total/getListaJogadores().size();
     }
-
-    public List<Jogador> getListaJogadores() {
-        return listaJogadores;
-    }
-
-    public void setListaJogadores(List<Jogador> listaJogadores) {
-        for (Jogador jogador : listaJogadores){
-            this.listaJogadores.add(jogador);
-        }
-    }
-
-    public int getPositionLeague() {
-        return positionLeague;
-    }
-
-    public void setPositionLeague(int positionLeague) {
-        this.positionLeague = positionLeague;
-    }
-
-    @Override
-    public String toString() {
-        return "Equipa{" +
-                "name='" + name + '\'' +
-                ", listaJogadores=" + listaJogadores +
-                ", positionLeague=" + positionLeague +
-                '}';
-    }
+     */
 }

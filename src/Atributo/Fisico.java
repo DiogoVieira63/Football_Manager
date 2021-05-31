@@ -25,7 +25,6 @@ public class Fisico implements Atributo{
         this.resistencia = resistencia;
     }
 
-    @Override
     public double media() {
         return (double) (resistencia + velocidade )/2;
     }

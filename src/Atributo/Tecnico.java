@@ -25,7 +25,6 @@ public class Tecnico implements Atributo{
         this.destreza = destreza;
     }
 
-    @Override
     public double media() {
         return (double) (destreza+capacidadeDePasse)/2;
     }
