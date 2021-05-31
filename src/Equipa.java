@@ -117,4 +117,7 @@ public class Equipa {
         this.lateral = lateral;
     }
 
+    public Equipa clone(){
+        return new Equipa(this);
+    }
 }
