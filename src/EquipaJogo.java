@@ -1,3 +1,5 @@
+import Exceptions.SubstituicaoException;
+
 import java.util.*;
 
 public class EquipaJogo {
@@ -29,6 +31,19 @@ public class EquipaJogo {
         this.titulares = equipa.getTitulares();
         this.suplentes = equipa.getSuplentes();
         this.substituições = equipa.getSubstituições();
+    }
+
+    public void substituicao(String n1, String n2) throws SubstituicaoException{
+        // n1 é o que sai, n2 entra
+        if (!(this.titulares.containsKey(n1)) || !(this.suplentes.contains(n2))){
+            throw new SubstituicaoException("Não é possível realizar esta substituição");
+        }
+        else {
+            this.titulares.remove(n1);
+            this.suplentes.remove(n2);
+            this.titulares.put(n2,0.0);
+            this.substituições.put(n1,n2);
+        }
     }
 
     //              Getters and Setters             //
