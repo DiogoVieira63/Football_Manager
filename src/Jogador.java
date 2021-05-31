@@ -128,31 +128,4 @@ public abstract class Jogador {
 
     public abstract Jogador clone();
 
-    /*
-    public int habilidadeGeral (){
-        int result = 0;
-        switch(getPosition().getNum()) {
-            case 1:
-                result = (int) (atributos.getAtaque().media() * 0.15
-                                        + atributos.getTecnico().media() * 0.25
-                                        + atributos.getFisico().media() * 0.25
-                                        + atributos.getDefensivo().media() * 0.35);
-            break;
-            case 2:
-                result = (int) (atributos.getAtaque().media() * 0.20
-                        + atributos.getTecnico().media() * 0.30
-                        + atributos.getFisico().media() * 0.30
-                        + atributos.getDefensivo().media() * 0.20);
-            break;
-            case 3:
-                result = (int) (atributos.getAtaque().media() * 0.40
-                        + atributos.getTecnico().media() * 0.25
-                        + atributos.getFisico().media() * 0.25
-                        + atributos.getDefensivo().media() * 0.10);
-                break;
-        }
-        return result;
-    }
-     */
-
 }
