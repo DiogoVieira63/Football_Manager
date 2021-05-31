@@ -38,23 +38,21 @@ public class Equipa {
             throw new JogadorExistenteException("O Jogador " + jogador.getName() + "já pertence à equipa " + this.name);
         else {
             this.listaJogadores.put(jogador.getId(), jogador.clone());
+            jogador.getHistorico().add(this.name);
         }
     }
 
     public void transferenciaJogador (Jogador jogador, Equipa novaEquipa) throws JogadorExistenteException {
-        if (novaEquipa.getListaJogadores().containsKey(jogador.getId()))
+        if (novaEquipa.getListaJogadores().containsKey(jogador.getId()) || jogador.getHistorico().contains(novaEquipa.getName()))
             throw new JogadorExistenteException("O Jogador " + jogador.getName() +"já pertence à equipa " + novaEquipa.getName());
         else{
             this.listaJogadores.remove(jogador.getId());
             novaEquipa.addJogador(jogador.clone());
+            jogador.getHistorico().add(novaEquipa.getName());
         }
     }
 
-    /**
-     * Returns a list with Jogadores from that Position
-     * @param position The Position
-     * @return The List
-
+    /*
 
     public List<Jogador> getPosition (Position position){
         return getListaJogadores().stream().
