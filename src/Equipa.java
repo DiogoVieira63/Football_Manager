@@ -43,13 +43,26 @@ public class Equipa {
     }
 
     public void transferenciaJogador (Jogador jogador, Equipa novaEquipa) throws JogadorExistenteException {
-        if (novaEquipa.getListaJogadores().containsKey(jogador.getId()) || jogador.getHistorico().contains(novaEquipa.getName()))
+        int size = jogador.getHistorico().size();
+        if (novaEquipa.getListaJogadores().containsKey(jogador.getId()) || jogador.getHistorico().get(size-1).equals(novaEquipa.name))
             throw new JogadorExistenteException("O Jogador " + jogador.getName() +"já pertence à equipa " + novaEquipa.getName());
         else{
             this.listaJogadores.remove(jogador.getId());
             novaEquipa.addJogador(jogador.clone());
             jogador.getHistorico().add(novaEquipa.getName());
         }
+    }
+
+    public double mediaGeralEquipa (Equipa equipa){
+        double total=0;
+        for (Jogador player : this.listaJogadores.values()){
+            total += player.habilidadeGeralEspecifica();
+        }
+        return total/this.listaJogadores.size();
+    }
+
+    public Jogador getJogador(String idJog){
+        return this.listaJogadores.get(idJog).clone();
     }
 
     /*

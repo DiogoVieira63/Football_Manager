@@ -46,6 +46,14 @@ public class EquipaJogo {
         }
     }
 
+    public double mediaGeralTitulares (Equipa equipa){
+        double total=0;
+        for (String titul : this.titulares.keySet()){
+            total += equipa.getJogador(titul).habilidadeGeralEspecifica();
+        }
+        return total/this.titulares.size();
+    }
+
     //              Getters and Setters             //
 
     public String getIdEquipa() {
