@@ -30,9 +30,12 @@ public class Jogo {
 
     public Jogo(Jogo jogo){
         this.casa = jogo.getCasa();
+        this.casaEquipa = jogo.getCasaEquipa();
         this.fora = jogo.getFora();
+        this.foraEquipa = jogo.getForaEquipa();
         this.golosCasa = jogo.getGolosCasa();
         this.golosFora = jogo.getGolosFora();
+        this.date = jogo.getDate();
     }
 
     public void goloCasa(){
@@ -127,5 +130,29 @@ public class Jogo {
 
     public void setGolosFora(int golosFora) {
         this.golosFora = golosFora;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public Equipa getCasaEquipa() {
+        return casaEquipa;
+    }
+
+    public void setCasaEquipa(Equipa casaEquipa) {
+        this.casaEquipa = casaEquipa;
+    }
+
+    public Equipa getForaEquipa() {
+        return foraEquipa;
+    }
+
+    public void setForaEquipa(Equipa foraEquipa) {
+        this.foraEquipa = foraEquipa;
     }
 }
