@@ -1,5 +1,7 @@
-import Atributo.Atributo;
+import Atributo.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +35,46 @@ public class Medio extends Jogador{
         this.lateral = medio.getLateral();
     }
 
+    public Medio parseMedio(String input){
+
+        //meti valores atoa
+
+        String[] campos = input.split(",", 9);
+        String nome = campos[0];
+        String id = campos[1];
+        int velocidade = Integer.parseInt(campos[2]);
+        int resistencia = Integer.parseInt(campos[3]);
+        int destreza = Integer.parseInt(campos[4]);
+        int impulso = Integer.parseInt(campos[5]);
+        int jogocabeca = Integer.parseInt(campos[6]);
+        int remate = Integer.parseInt(campos[7]);
+        int capacidadePasse = Integer.parseInt(campos[8]);
+        int recuperacaoBoLA = Integer.parseInt(campos[9]);
+
+        Fisico fisico = new Fisico(velocidade, resistencia);
+        Tecnico tecnico = new Tecnico(capacidadePasse, destreza);
+        Defensivo defensivo = new Defensivo(impulso, 50);
+        Atacante atacante = new Atacante(remate, jogocabeca);
+        MentalTatico mentalTatico = new MentalTatico(50, 50);
+
+        List<Atributo> bestAtributos = new ArrayList<>();
+        List<Atributo> atributos = new ArrayList<>();
+
+        bestAtributos.add(tecnico);
+        bestAtributos.add(fisico);
+        atributos.add(defensivo);
+        atributos.add(atacante);
+        atributos.add(mentalTatico);
+
+        Map<Double, List<Atributo>> mapa = new HashMap<>();
+        List<String> historico = new ArrayList<>();
+
+        mapa.put(0.125, bestAtributos);
+        mapa.put(0.1, atributos);
+
+        return new Medio(nome, id, mapa, historico, recuperacaoBoLA, 50, false);
+    }
+
     //              Getters and Setters             //
 
     public int getRecuperacaoBola() {
@@ -60,7 +102,7 @@ public class Medio extends Jogador{
     }
 
     public int habilidadeGeralEspecifica() {
-        return (int) (super.habilidadeGeral() + (this.recuperacaoBola * 0.15 + this.visao * 0.15));
+        return (int) (super.habilidadeGeral() + (this.recuperacaoBola * 0.20 + this.visao * 0.15));
     }
 
     public Jogador clone() {

@@ -128,4 +128,17 @@ public abstract class Jogador {
 
     public abstract Jogador clone();
 
+    /*
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Jogador: ").append(this.name);
+        sb.append("\n");
+        sb.append("Número da Camisola: ").append(this.id);
+        sb.append("\n");
+        sb.append("Atributos: ").append(this.atributos.values());
+        sb.append("\n");
+        sb.append("Histórico: ").append(this.historico);
+        return sb.toString();
+    }
+    */
 }

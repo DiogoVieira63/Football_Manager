@@ -1,6 +1,8 @@
 public class Jogo {
     private EquipaJogo casa;
+    private Equipa casaEquipa;
     private EquipaJogo fora;
+    private Equipa foraEquipa;
     private int golosCasa;
     private int golosFora;
 
