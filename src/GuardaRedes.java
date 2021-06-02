@@ -27,7 +27,7 @@ public class GuardaRedes extends Jogador {
         this.reflexos = guardaRedes.getReflexos();
     }
 
-    public GuardaRedes parseGuardaRedes(String input){
+    public static GuardaRedes parse(String input){
 
         //meti valores default nos atributos não dados pelos stores
 

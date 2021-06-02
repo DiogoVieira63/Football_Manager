@@ -35,7 +35,7 @@ public class Medio extends Jogador{
         this.lateral = medio.getLateral();
     }
 
-    public Medio parseMedio(String input){
+    public static Medio parse(String input){
 
         //meti valores atoa
 

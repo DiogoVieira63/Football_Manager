@@ -13,14 +13,16 @@ public class EquipaJogo {
 
     public EquipaJogo(){
         this.idEquipa = "";
+        this.esquemaTatico = new EsquemaTatico();
         this.titulares = new HashMap<>();
         this.suplentes = new HashSet<>();
         this.substituições = new HashMap<>();
     }
 
-    public EquipaJogo(String idEquipa, Map<String, Double> titulares, HashSet<String> suplentes,
+    public EquipaJogo(String idEquipa, EsquemaTatico esquemaTatico, Map<String, Double> titulares, HashSet<String> suplentes,
                       Map<String, String> substituições){
         this.idEquipa = idEquipa;
+        this.esquemaTatico = esquemaTatico.clone();
         this.titulares = new HashMap<String, Double>(titulares);
         this.suplentes = new HashSet<String>(suplentes);
         this.substituições = new HashMap<String, String>(substituições);

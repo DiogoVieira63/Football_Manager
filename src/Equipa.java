@@ -8,14 +8,17 @@ import Exceptions.*;
 public class Equipa {
     private String name;
     private Map<String, Jogador> listaJogadores;
-    private boolean lateral;
 
     //              Constructors                //
 
     public Equipa() {
         this.name = "";
         this.listaJogadores = new HashMap<>();
-        this.lateral = false;
+    }
+
+    public Equipa(String name){
+        this.name = name;
+        this.listaJogadores = new HashMap<>();
     }
 
     public Equipa (String name, Map<String, Jogador> listaJogadores, boolean lateral){
@@ -24,13 +27,11 @@ public class Equipa {
                 .entrySet()
                 .stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, j -> j.getValue().clone()));
-        this.lateral = lateral;
     }
 
     public Equipa (Equipa equipa){
         this.name = equipa.getName();
         this.listaJogadores = equipa.getListaJogadores();
-        this.lateral = equipa.getLateral();
     }
 
     public void addJogador (Jogador jogador) throws JogadorExistenteException {
@@ -98,6 +99,11 @@ public class Equipa {
         return total/getListaJogadores().size();
     }
 
+    public static Equipa parse(String input){
+        String[] campos = input.split(",");
+        return new Equipa(campos[0]);
+    }
+
     //              Getters and Setters             //
 
     public String getName() {
@@ -120,14 +126,6 @@ public class Equipa {
                 .entrySet()
                 .stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, j -> j.getValue().clone()));
-    }
-
-    public boolean getLateral() {
-        return lateral;
-    }
-
-    public void setLateral(boolean lateral) {
-        this.lateral = lateral;
     }
 
     public Equipa clone(){
