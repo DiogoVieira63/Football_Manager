@@ -33,7 +33,10 @@ public class Parser {
                     ultima.addJogador(j.clone()); //if no team was parsed previously, file is not well-formed
                     break;
                 case "Defesa":
-                    //...
+                    j = Defesa.parse(linhaPartida[1]);
+                    jogadores.put(j.getId(), j);
+                    if (ultima == null) throw new LinhaIncorretaException(); //we need to insert the player into the team
+                    ultima.addJogador(j.clone()); //if no team was parsed previously, file is not well-formed
                     break;
                 case "Medio":
                     j = Medio.parse(linhaPartida[1]);
@@ -45,7 +48,10 @@ public class Parser {
                     //...
                     break;
                 case "Avancado":
-                    //...
+                    j = Avancado.parse(linhaPartida[1]);
+                    jogadores.put(j.getId(), j);
+                    if (ultima == null) throw new LinhaIncorretaException(); //we need to insert the player into the team
+                    ultima.addJogador(j.clone()); //if no team was parsed previously, file is not well-formed
                     break;
                 case "Jogo":
                     Jogo jo = Jogo.parse(linhaPartida[1]);
