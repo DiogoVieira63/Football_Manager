@@ -94,32 +94,19 @@ public abstract class Jogador {
     }
 
     public int habilidadeGeral() {
-        double ataque = 0;
-        double defesa = 0;
-        double tecnico = 0;
-        double fisico = 0;
-        double mental = 0;
+        double total = 0;
         for (Map.Entry<Double, List<Atributo>> entry : this.atributos.entrySet()){
             Double d = entry.getKey();
             for (Atributo atributo : entry.getValue()){
-                if (atributo instanceof Atacante){
-                    ataque = atributo.media() * d;
-                }
-                if (atributo instanceof Fisico){
-                    fisico = atributo.media() * d;
-                }
-                if (atributo instanceof Tecnico){
-                    tecnico = atributo.media() * d;
-                }
-                if (atributo instanceof Defensivo){
-                    defesa = atributo.media() * d;
-                }
-                if (atributo instanceof MentalTatico){
-                    mental = atributo.media() * d;
-                }
+                total += atributo.media() * d;
             }
         }
-        return (int) (ataque + fisico + tecnico + defesa + mental);
+        return (int) (total);
+    }
+
+    public void addAtributo(Atributo atributo, Double perc){
+        this.atributos.putIfAbsent(perc, new ArrayList<>());
+        this.atributos.get(perc).add(atributo);
     }
 
     //              Abstract Methods                //

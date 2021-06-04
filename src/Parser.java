@@ -1,3 +1,4 @@
+import Atributo.*;
 import Exceptions.JogadorExistenteException;
 import Exceptions.LinhaIncorretaException;
 
@@ -5,10 +6,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Parser {
     public static void parse() throws LinhaIncorretaException, JogadorExistenteException {
@@ -18,6 +16,7 @@ public class Parser {
         List<Jogo> jogos = new ArrayList<>();
         Equipa ultima = null; Jogador j = null;
         String[] linhaPartida;
+        Random rand = new Random();
         for (String linha : linhas){
             linhaPartida = linha.split(":", 2);
             switch (linhaPartida[0]){
@@ -45,7 +44,40 @@ public class Parser {
                     ultima.addJogador(j.clone()); //if no team was parsed previously, file is not well-formed
                     break;
                 case "Lateral":
-                    //...
+                    int i = rand.nextInt(2);
+                    if (i == 0){
+                        //MEDIO
+                        j = Medio.parse(linhaPartida[1]);
+                        Lateralidade lateralidade = new Lateralidade(50);
+                        j.addAtributo(lateralidade, 0.2);
+                        Medio medio = (Medio) j;
+                        medio.setLateral(true);
+                        jogadores.put(j.getId(), j);
+                        if (ultima == null) throw new LinhaIncorretaException(); //we need to insert the player into the team
+                        ultima.addJogador(j.clone()); //if no team was parsed previously, file is not well-formed
+                    }
+                    if (i == 1){
+                        //AVANCADO
+                        j = Avancado.parse(linhaPartida[1]);
+                        Lateralidade lateralidade = new Lateralidade(50);
+                        j.addAtributo(lateralidade, 0.2);
+                        Avancado avancado = (Avancado) j;
+                        avancado.setLateral(true);
+                        jogadores.put(j.getId(), j);
+                        if (ultima == null) throw new LinhaIncorretaException(); //we need to insert the player into the team
+                        ultima.addJogador(j.clone()); //if no team was parsed previously, file is not well-formed
+                    }
+                    else{
+                        //DEFESA
+                        j = Defesa.parse(linhaPartida[1]);
+                        Lateralidade lateralidade = new Lateralidade(50);
+                        j.addAtributo(lateralidade, 0.2);
+                        Defesa defesa = (Defesa) j;
+                        defesa.setLateral(true);
+                        jogadores.put(j.getId(), j);
+                        if (ultima == null) throw new LinhaIncorretaException(); //we need to insert the player into the team
+                        ultima.addJogador(j.clone()); //if no team was parsed previously, file is not well-formed
+                    }
                     break;
                 case "Avancado":
                     j = Avancado.parse(linhaPartida[1]);
