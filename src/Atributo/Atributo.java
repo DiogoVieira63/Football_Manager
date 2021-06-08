@@ -1,6 +1,6 @@
 package Atributo;
 
 public interface Atributo {
-    double media ();
+    int valor ();
     Atributo clone();
 }
