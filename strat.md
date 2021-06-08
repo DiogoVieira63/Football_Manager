@@ -114,20 +114,81 @@
 ---
 # Estratégias para o Jogo
 
-- Dividir o campo em 3 zonas:
-	- Defesa
-	- Medio
-	- Ataque
-- Manter o registo de quem tem a posse de bola
-- Calculo do que acontecerá a seguir:
-	- Acontecimentos
-		- Passe para a mesma zona
-		- Passe para outra zona
-		- Oportunidade de golo
-	- Resultados
-		- Manter posse de bola
-		- Troca de posse de bola
-		- Golo 
+## MomentoJogo 
+
+```java 
+public class MomentoJogo{
+	int posseDeBola; 			//0 -> CASA | 1 -> FORA
+	Int zonaDoCampo; 			//1 -> CASA->defesa , FORA ->ataque | 2-> CASA|FORA ->medio | 3-> CASA->ataque , FORA->defesa
+}
+
+
+enum Acontecimentos{
+	PASSE_TO_ZONA_1;
+	PASSE_TO_ZONA_2;
+	PASSE_TO_ZONA_3;
+	OPORTUNIDADE_GOLO;
+}
+```
+
+### Considerações
+	- Passe para a mesma zona 
+		- Definir uma probablidade de sucesso consoante a zona do campo e a equipa
+			- Média da habilidade geral dos jogadores nessa zona
+			- Adicionar a diferença da média geral dos jogadores adversários
+		- CASA (ataca de 1 para 3):
+			- Sentido cresecente: Probablidade diminui
+			- Sentido decrescente: Probablidade aumenta
+		- FORA (ataca de 3 para 1):
+			- Sentido crescente: Probablidade aumenta
+			- Sentido decrescente: Probablidade diminui
+	- Oportunidade de golo:
+		- Probablidade aumenta consoante o streak de passes ?? (to think about)
+
+```java
+public void calculaMomento (Jogo jogo){
+	List <Jogadores> jogadoresCasa = jogo.getZona(zonaDoCampo,0);
+	List <Jogadores> jogadoresFora = jogo.getZona(zonaDoCampo,1);
+	
+
+
+	int acontecimento = getAcontecimento ();
+
+
+	double probablidadeDeSuceder =  calculaProb (jogadoresCasa,jogadoresFora); 
+
+	
+	boolean resultado = calcularResultado (probablidadeDeSuceder);
+
+	
+	jogo.aplicarResultado (acontecimento,resultado);
+
+}
+
+
+```
+
+## Exemplo de como fazer a probablidade 
+
+```java
+
+double probablidade = 0.5;
+
+int result = rand.nextInt (100);
+
+int number = (int)probalidade * 10;
+
+if (result < number){
+	//SUCESSS
+}
+else {
+	//FAILED	
+}
+
+```
+
+
+
 
 
 ---
