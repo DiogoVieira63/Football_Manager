@@ -189,12 +189,90 @@ else {
 
 
 
-
-
 ---
 
 ## Leitura do logs
 
 - Para os atributos que não se encontrem no ficheiro de logs, dar um valor aleatório consoante os restantes atributos
 
+
+---
+
+# Interface Necessário
+	- Menu Inicial
+		- Simular um jogo
+			- Selecionar equipa CASA
+				- Vizualizar equipa
+				- Escolher Esquema Tático
+					- Escolher jogadores para as posições
+				- Voltar Atrás
+			- Selecionar equipa FORA
+				- Vizualizar equipa
+				- Escolher Esquema tático
+					- Escolher jogadores para as posições
+				- Voltar Atrás
+		- Ver equipas
+			- Selecionar Equipa
+				- Selecionar Jogador
+					- Transferir Jogador
+						- Selecionar equipa
+					- Voltar atrás
+				- Voltar atrás
+			- Voltar Atrás
+		- Load File
+			-Escolher nome
+		- Save File
+			- Escolher nome
+				- Verificar se existe um ficheiro com esse nome, se existir, perguntar se quer dar overwrite
+		- Exit
+
+---
+
+# Probabilidade de Acontecimento
+
+- ## ZONA 1
+	- Passe Zona 1:
+		Acontecer:**50%**
+		Sucesso:**+0%**
+	- Passe Zona 2:
+		Acontecer:**35%**
+		Sucesso:**-15%**
+	- Passe Zona 3:
+		Acontecer:**14%**
+		Sucesso:**-40%**
+	- Oportunidade de Golo:
+		Acontecer:**1%**
+		Sucesso:**-99%**
+- ## ZONA 2
+	- Passe Zona 1:
+		Acontecer:**35%**
+		Sucesso:**+10%**
+	- Passe Zona 2:
+		Acontecer:**35%**
+		Sucesso:**-10%**
+	- Passe Zona 3:
+		Acontecer:**25%**
+		Sucesso:**-15%**
+	- Oportunidade de Golo:
+		Acontecer:**5%**
+		Sucesso:**-65%**
+
+- ## ZONA 3
+	- Passe Zona 1:
+		Acontecer:**10%**
+		Sucesso:**-5%**
+	- Passe Zona 2:
+		Acontecer:**35%**
+		Sucesso:**-10%**
+	- Passe Zona 3:
+		Acontecer:**35%**
+		Sucesso:**-20%**
+	- Oportunidade de Golo:
+		Acontecer:**20%**
+		Sucesso:**-10%**
+
+## Método calcular probabilidade de suceder
+	1. Média dos jogadores da zona
+	2. Adicionar diferença da média dos jogadores adversários da zona
+	3. Adicionar probablidade de suceder
 
