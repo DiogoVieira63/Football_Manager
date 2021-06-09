@@ -1,11 +1,14 @@
 import Atributo.*;
 
+import javax.management.ObjectName;
+import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public abstract class Jogador {
+public abstract class Jogador implements Serializable {
+    private static final long serialVersionUID = 515493778716284726L;
     private String name;
-    private String id; //número da camisola
+    private Integer id; //número da camisola
     private Map<Double, List<Atributo>> atributos;
     private List<String> historico;
 
@@ -13,12 +16,12 @@ public abstract class Jogador {
 
     public Jogador(){
         this.name = "";
-        this.id = "";
+        this.id = 0;
         this.atributos = new HashMap<>();
         this.historico = new ArrayList<>();
     }
 
-    public Jogador(String name, String id, Map<Double, List<Atributo>> atributos,
+    public Jogador(String name, Integer id, Map<Double, List<Atributo>> atributos,
                    List<String> historico)
     {
         this.name = name;
@@ -51,11 +54,11 @@ public abstract class Jogador {
         this.name = name;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -115,6 +118,32 @@ public abstract class Jogador {
 
     public abstract Jogador clone();
 
+    public List<Object> infoJogador (){
+        List <Object> list = new ArrayList<>();
+        list.add(Map.entry("Name:",name));
+        list.add(Map.entry("Número:",id));
+        list.add(Map.entry("Posição:",this.getClass().getSimpleName()));
+        list.add(Map.entry("Historico:",""));
+        for (String str : historico)
+            list.add(Map.entry(str,""));
+        list.add(Map.entry("",""));
+        list.add(Map.entry("Atributos",""));
+        for (List<Atributo> listas:  this.atributos.values())
+            for (Atributo atributo : listas)
+                list.add(Map.entry(atributo.getClass().getSimpleName() + ":", atributo.valor()));
+        return list;
+    }
+
+    public static void addToMapa (Atributo atributo,double percentagem, Map<Double,List<Atributo>> mapa){
+        mapa.putIfAbsent(percentagem,new ArrayList<>());
+        mapa.get(percentagem).add(atributo);
+    }
+
+
+    public static int randomBetween (int low, int high){
+        Random r = new Random();
+        return r.nextInt(high-low) + low;
+    }
     /*
     public String toString() {
         StringBuilder sb = new StringBuilder();

@@ -1,10 +1,11 @@
 import Atributo.*;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Medio extends Jogador{
+public class Medio extends Jogador implements Serializable {
+    private static final long serialVersionUID = -5533892077751032795L;
     private int recuperacaoBola;
-    private int visao;
     private boolean lateral;
 
     //              Constructors                //
@@ -12,31 +13,28 @@ public class Medio extends Jogador{
     public Medio(){
         super();
         this.recuperacaoBola = 0;
-        this.visao = 0;
         this.lateral = false;
     }
 
-    public Medio(String name, String id, Map<Double, List<Atributo>> atributos,
-                 List<String> historico, int recuperacaoBola, int visao, boolean lateral)
+    public Medio(String name, Integer id, Map<Double, List<Atributo>> atributos,
+                 List<String> historico, int recuperacaoBola, boolean lateral)
     {
         super(name, id, atributos, historico);
         this.recuperacaoBola = recuperacaoBola;
-        this.visao = visao;
         this.lateral = lateral;
     }
 
     public Medio(Medio medio){
         super(medio);
         this.recuperacaoBola = medio.getRecuperacaoBola();
-        this.visao = medio.getVisao();
         this.lateral = medio.getLateral();
     }
 
     public static Medio parse(String input, boolean lateral){
 
-        String[] campos = input.split(",", 9);
+        String[] campos = input.split(",");
         String nome = campos[0];
-        String id = campos[1];
+        int id = Integer.parseInt(campos[1]);
         int velocidade = Integer.parseInt(campos[2]);
         int resistencia = Integer.parseInt(campos[3]);
         int destreza = Integer.parseInt(campos[4]);
@@ -108,7 +106,7 @@ public class Medio extends Jogador{
 
         List<String> historico = new ArrayList<>();
 
-        return new Medio(nome, id, mapa, historico, recuperacaoBoLA, 50, lateral);
+        return new Medio(nome, id, mapa, historico, recuperacaoBoLA, lateral);
     }
 
     //              Getters and Setters             //
@@ -121,14 +119,6 @@ public class Medio extends Jogador{
         this.recuperacaoBola = recuperacaoBola;
     }
 
-    public int getVisao() {
-        return visao;
-    }
-
-    public void setVisao(int visao) {
-        this.visao = visao;
-    }
-
     public boolean getLateral() {
         return lateral;
     }
@@ -138,10 +128,23 @@ public class Medio extends Jogador{
     }
 
     public int habilidadeGeralEspecifica() {
-        return (int) (super.habilidadeGeral() + (this.recuperacaoBola * 0.1 + this.visao * 0.1));
+        return (int) (super.habilidadeGeral() + (this.recuperacaoBola * 0.2));
     }
 
     public Jogador clone() {
         return new Medio(this);
     }
+
+    public List<Object> infoJogador (){
+        List<Object> list = super.infoJogador();
+        if (lateral)
+            list.set(2,Map.entry("Posição:","Medio Lateral"));
+        else
+            list.set(2,Map.entry("Posição:","Medio Central"));
+        list.add(Map.entry("RecuperaçãoDeBola:",recuperacaoBola));
+        list.add(Map.entry("",""));
+        list.add(Map.entry("Overall:",habilidadeGeralEspecifica()));
+        return list;
+    }
+
 }

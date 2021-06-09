@@ -1,13 +1,16 @@
 import Exceptions.SubstituicaoException;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class EquipaJogo {
+public class EquipaJogo implements Serializable {
+    private static final long serialVersionUID = 3167795678329552037L;
     private String idEquipa;
     private EsquemaTatico esquemaTatico;
-    private Map<String, Double> titulares;
-    private HashSet<String> suplentes;
-    private Map<String, String> substituições;
+    private Map<Integer, Double> titulares;
+    private HashSet<Integer> suplentes;
+    private Map<Integer, Integer> substituições;
+
 
     //              Constructors                //
 
@@ -19,15 +22,6 @@ public class EquipaJogo {
         this.substituições = new HashMap<>();
     }
 
-    public EquipaJogo(String idEquipa, EsquemaTatico esquemaTatico, Map<String, Double> titulares, HashSet<String> suplentes,
-                      Map<String, String> substituições){
-        this.idEquipa = idEquipa;
-        this.esquemaTatico = esquemaTatico.clone();
-        this.titulares = new HashMap<String, Double>(titulares);
-        this.suplentes = new HashSet<String>(suplentes);
-        this.substituições = new HashMap<String, String>(substituições);
-    }
-
     public EquipaJogo(EquipaJogo equipa){
         this.idEquipa = equipa.getIdEquipa();
         this.titulares = equipa.getTitulares();
@@ -35,7 +29,7 @@ public class EquipaJogo {
         this.substituições = equipa.getSubstituições();
     }
 
-    public void substituicao(String n1, String n2) throws SubstituicaoException{
+    public void substituicao(Integer n1, Integer n2) throws SubstituicaoException{
         // n1 é o que sai, n2 entra
         if (!(this.titulares.containsKey(n1)) || !(this.suplentes.contains(n2))){
             throw new SubstituicaoException("Não é possível realizar esta substituição");
@@ -50,8 +44,8 @@ public class EquipaJogo {
 
     public double mediaGeralTitulares (Equipa equipa){
         double total=0;
-        for (String titul : this.titulares.keySet()){
-            total += equipa.getJogador(titul).habilidadeGeralEspecifica();
+        for (Integer number : this.titulares.keySet()){
+            total += equipa.getJogador(number).habilidadeGeralEspecifica();
         }
         return total/this.titulares.size();
     }
@@ -66,28 +60,28 @@ public class EquipaJogo {
         this.idEquipa = idEquipa;
     }
 
-    public Map<String, Double> getTitulares() {
-        return new HashMap<String, Double>(this.titulares);
+    public Map<Integer, Double> getTitulares() {
+        return new HashMap<Integer, Double>(this.titulares);
     }
 
-    public void setTitulares(Map<String, Double> titulares) {
-        this.titulares = new HashMap<String, Double>(titulares);
+    public void setTitulares(Map<Integer, Double> titulares) {
+        this.titulares = new HashMap<Integer, Double>(titulares);
     }
 
-    public HashSet<String> getSuplentes() {
-        return new HashSet<String>(this.suplentes);
+    public HashSet<Integer> getSuplentes() {
+        return new HashSet<Integer>(this.suplentes);
     }
 
-    public void setSuplentes(HashSet<String> suplentes) {
-        this.suplentes = new HashSet<String>(suplentes);
+    public void setSuplentes(HashSet<Integer> suplentes) {
+        this.suplentes = new HashSet<Integer>(suplentes);
     }
 
-    public Map<String, String> getSubstituições() {
-        return new HashMap<String, String>(this.substituições);
+    public Map<Integer,Integer> getSubstituições() {
+        return new HashMap<Integer, Integer>(this.substituições);
     }
 
-    public void setSubstituições(Map<String, String> substituições) {
-        this.substituições = new HashMap<String, String>(substituições);
+    public void setSubstituições(Map<Integer, Integer> substituições) {
+        this.substituições = new HashMap<Integer, Integer>(substituições);
     }
 
     public EquipaJogo clone(){

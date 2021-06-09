@@ -1,7 +1,9 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
-public class Jogo {
+public class Jogo implements Serializable {
+    private static final long serialVersionUID = 7389363689072708873L;
     private EquipaJogo casa;
     private Equipa casaEquipa;
     private EquipaJogo fora;
@@ -9,6 +11,7 @@ public class Jogo {
     private int golosCasa;
     private int golosFora;
     private LocalDate date;
+    private boolean realizado;
 
     //              Constructors                //
 
@@ -18,6 +21,7 @@ public class Jogo {
         this.golosCasa = 0;
         this.golosFora = 0;
         this.date = LocalDate.now();
+        this.realizado = false;
     }
 
     public Jogo (EquipaJogo casa, EquipaJogo fora, int golosCasa, int golosFora, LocalDate data){
@@ -26,6 +30,7 @@ public class Jogo {
         this.golosCasa = golosCasa;
         this.golosFora = golosFora;
         this.date = data;
+        this.realizado = false;
     }
 
     public Jogo(Jogo jogo){
@@ -36,6 +41,15 @@ public class Jogo {
         this.golosCasa = jogo.getGolosCasa();
         this.golosFora = jogo.getGolosFora();
         this.date = jogo.getDate();
+        this.realizado = jogo.isRealizado();
+    }
+
+    public boolean isRealizado() {
+        return realizado;
+    }
+
+    public void setRealizado(boolean realizado) {
+        this.realizado = realizado;
     }
 
     public void goloCasa(){
@@ -86,7 +100,7 @@ public class Jogo {
         for (String id : jc){
             titularesCasa.put(id, 0.0);
         }
-
+/*
         EquipaJogo casa = new EquipaJogo(campos[0], esquema, titularesCasa, suplentes, subsC);
 
         for (String id : jf){
@@ -94,8 +108,8 @@ public class Jogo {
         }
 
         EquipaJogo fora = new EquipaJogo(campos[0], esquema, titularesFora, suplentes, subsC);
-
-        return new Jogo(casa, fora, 0, 0, dataJogo);
+*/
+        return new Jogo(null,null, 0, 0, dataJogo);
     }
 
     //              Getters and Setters             //

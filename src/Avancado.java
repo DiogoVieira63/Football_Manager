@@ -1,8 +1,10 @@
 import Atributo.*;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Avancado extends Jogador {
+public class Avancado extends Jogador implements Serializable{
+    private static final long serialVersionUID = 3445221744695962821L;
     private int finalizacao;
     private boolean lateral;
 
@@ -14,7 +16,7 @@ public class Avancado extends Jogador {
         this.lateral = false;
     }
 
-    public Avancado(String name, String id, Map<Double, List<Atributo>> atributos,
+    public Avancado(String name, Integer id, Map<Double, List<Atributo>> atributos,
                     List<String> historico, int finalizacao, boolean lateral)
     {
         super(name, id, atributos, historico);
@@ -30,9 +32,9 @@ public class Avancado extends Jogador {
 
     public static Avancado parse(String input, boolean lateral){
 
-        String[] campos = input.split(",", 9);
+        String[] campos = input.split(",");
         String nome = campos[0];
-        String id = campos[1];
+        int id = Integer.parseInt(campos[1]);
         int velocidade = Integer.parseInt(campos[2]);
         int resistencia = Integer.parseInt(campos[3]);
         int destreza = Integer.parseInt(campos[4]);
@@ -40,8 +42,8 @@ public class Avancado extends Jogador {
         int jogocabeca = Integer.parseInt(campos[6]);
         int remate = Integer.parseInt(campos[7]);
         int capacidadePasse = Integer.parseInt(campos[8]);
-        int finalizacao = Integer.parseInt(campos[9]);
         Random rand = new Random();
+        int finalizacao = rand.nextInt();
 
         //                  Atributos dados                 //
 
@@ -134,5 +136,17 @@ public class Avancado extends Jogador {
 
     public Jogador clone() {
         return new Avancado(this);
+    }
+
+    public List<Object> infoJogador (){
+        List<Object> list = super.infoJogador();
+        if (lateral)
+            list.set(2,Map.entry("Posição:","Avancado Lateral"));
+        else
+            list.set(2,Map.entry("Posição:","Avancado Central"));
+        list.add(Map.entry("Finalização:",finalizacao));
+        list.add(Map.entry("",""));
+        list.add(Map.entry("Overall:",habilidadeGeralEspecifica()));
+        return list;
     }
 }

@@ -1,8 +1,10 @@
 import Atributo.*;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Defesa extends Jogador{
+public class Defesa extends Jogador implements Serializable {
+    private static final long serialVersionUID = -4994171854769561001L;
     private int marcacao;
     private boolean lateral;
 
@@ -14,8 +16,8 @@ public class Defesa extends Jogador{
         this.lateral = false;
     }
 
-    public Defesa(String name, String id, Map<Double, List<Atributo>> atributos,
-                 List<String> historico, int marcacao, boolean lateral)
+    public Defesa(String name, Integer id, Map<Double, List<Atributo>> atributos,
+                  List<String> historico, int marcacao, boolean lateral)
     {
         super(name, id, atributos, historico);
         this.marcacao = marcacao;
@@ -30,9 +32,9 @@ public class Defesa extends Jogador{
 
     public static Defesa parse(String input, boolean lateral){
 
-        String[] campos = input.split(",", 9);
+        String[] campos = input.split(",");
         String nome = campos[0];
-        String id = campos[1];
+        int id = Integer.parseInt(campos[1]);
         int velocidade = Integer.parseInt(campos[2]);
         int resistencia = Integer.parseInt(campos[3]);
         int destreza = Integer.parseInt(campos[4]);
@@ -40,8 +42,8 @@ public class Defesa extends Jogador{
         int jogocabeca = Integer.parseInt(campos[6]);
         int remate = Integer.parseInt(campos[7]);
         int capacidadePasse = Integer.parseInt(campos[8]);
-        int marcacao = Integer.parseInt(campos[9]);
         Random rand = new Random();
+        int marcacao = rand.nextInt(100);
 
         //                  Atributos dados                 //
 
@@ -128,5 +130,18 @@ public class Defesa extends Jogador{
 
     public Jogador clone() {
         return new Defesa(this);
+    }
+
+
+    public List<Object> infoJogador (){
+        List<Object> list = super.infoJogador();
+        if (lateral)
+            list.set(2,Map.entry("Posição:","Defesa Lateral"));
+        else
+            list.set(2,Map.entry("Posição:","Defesa Central"));
+        list.add(Map.entry("Marcação:",marcacao));
+        list.add(Map.entry("",""));
+        list.add(Map.entry("Overall:",habilidadeGeralEspecifica()));
+        return list;
     }
 }

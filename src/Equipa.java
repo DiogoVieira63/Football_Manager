@@ -1,27 +1,27 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.Serializable;
+import java.sql.ClientInfoStatus;
+import java.util.*;
 import java.util.stream.Collectors;
 import Exceptions.*;
 
-public class Equipa {
+public class Equipa implements Serializable {
+    private static final long serialVersionUID = -5626352478359403106L;
     private String name;
-    private Map<String, Jogador> listaJogadores;
+    private Map<Integer, Jogador> listaJogadores;
 
     //              Constructors                //
 
     public Equipa() {
         this.name = "";
-        this.listaJogadores = new HashMap<>();
+        this.listaJogadores = new HashMap<Integer, Jogador>();
     }
 
     public Equipa(String name){
         this.name = name;
-        this.listaJogadores = new HashMap<>();
+        this.listaJogadores = new HashMap<Integer, Jogador>();
     }
 
-    public Equipa (String name, Map<String, Jogador> listaJogadores, boolean lateral){
+    public Equipa (String name, Map<Integer, Jogador> listaJogadores, boolean lateral){
         this.name = name;
         this.listaJogadores = listaJogadores
                 .entrySet()
@@ -62,7 +62,7 @@ public class Equipa {
         return total/this.listaJogadores.size();
     }
 
-    public Jogador getJogador(String idJog){
+    public Jogador getJogador(Integer idJog){
         return this.listaJogadores.get(idJog).clone();
     }
 
@@ -114,18 +114,34 @@ public class Equipa {
         this.name = name;
     }
 
-    public Map<String, Jogador> getListaJogadores() {
+    public Map<Integer, Jogador> getListaJogadores() {
         return listaJogadores
                 .entrySet()
                 .stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, j -> j.getValue().clone()));
     }
 
-    public void setListaJogadores(Map<String, Jogador> listaJogadores) {
+
+    public void setListaJogadores(Map<Integer, Jogador> listaJogadores) {
         this.listaJogadores = listaJogadores
                 .entrySet()
                 .stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, j -> j.getValue().clone()));
+    }
+
+
+    public List<Object> organizadoNumero (){
+        Set<Integer> set = new TreeSet<>(listaJogadores.keySet());
+        List <Object> list = new ArrayList<>();
+        for (Integer number : set){
+            String name = listaJogadores.get(number).getName();
+            list.add(Map.entry(number,name));
+        }
+        return list;
+    }
+
+    public List<Object> infoJogador (int number){
+        return listaJogadores.get(number).infoJogador();
     }
 
     public Equipa clone(){

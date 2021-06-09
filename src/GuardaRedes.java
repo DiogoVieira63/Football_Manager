@@ -1,8 +1,11 @@
 import Atributo.*;
 
+import java.io.Serializable;
+import java.rmi.MarshalledObject;
 import java.util.*;
 
-public class GuardaRedes extends Jogador {
+public class GuardaRedes extends Jogador implements Serializable {
+    private static final long serialVersionUID = -8649963430663159313L;
     private int elasticidade;
     private int reflexos;
 
@@ -14,7 +17,7 @@ public class GuardaRedes extends Jogador {
         this.reflexos = 0;
     }
 
-    public GuardaRedes(String name, String id, Map<Double, List<Atributo>> atributos,
+    public GuardaRedes(String name, Integer id, Map<Double, List<Atributo>> atributos,
                        List<String> historico, int elasticidade, int reflexos){
         super(name, id, atributos, historico);
         this.elasticidade = elasticidade;
@@ -29,55 +32,41 @@ public class GuardaRedes extends Jogador {
 
     public static GuardaRedes parse(String input){
 
-        String[] campos = input.split(",", 9);
+        String[] campos = input.split(",");
         String nome = campos[0];
-        String id = campos[1];
-        int velocidade = Integer.parseInt(campos[2]);
-        int resistencia = Integer.parseInt(campos[3]);
-        int destreza = Integer.parseInt(campos[4]);
-        int impulso = Integer.parseInt(campos[5]);
-        int jogocabeca = Integer.parseInt(campos[6]);
-        int remate = Integer.parseInt(campos[7]);
-        int capacidadePasse = Integer.parseInt(campos[8]);
+        Integer id = Integer.parseInt(campos[1]);
+        Map<Double, List<Atributo>> mapa = new HashMap<>();
+        Velocidade velocidade = new Velocidade(Integer.parseInt(campos[2]));
+        Jogador.addToMapa(velocidade,0.01,mapa);
+        Resistencia resistencia = new Resistencia(Integer.parseInt(campos[3]));
+        Jogador.addToMapa(resistencia,0.0075,mapa);
+        Destreza destreza = new Destreza(Integer.parseInt(campos[4]));
+        Jogador.addToMapa(destreza,0.0075,mapa);
+        Impulsao impulso = new Impulsao(Integer.parseInt(campos[5]));
+        Jogador.addToMapa(impulso,0.05,mapa);
+        JogoDeCabeca jogocabeca = new JogoDeCabeca(Integer.parseInt(campos[6]));
+        Jogador.addToMapa(jogocabeca,0.005,mapa);
+        Remate remate = new Remate(Integer.parseInt(campos[7]));
+        Jogador.addToMapa(remate,0.005,mapa);
+        CapacidadeDePasse capacidadePasse = new CapacidadeDePasse(Integer.parseInt(campos[8]));
+        Jogador.addToMapa(capacidadePasse,0.01,mapa);
         int elasticidade = Integer.parseInt(campos[9]);
 
-        Random rand = new Random();
-        int reflexos = rand.nextInt(100);
+        int total = 0;
+        for (int i = 2; i< 10; i++){
+            total += Integer.parseInt(campos[i]);
+        }
+        double media = (double) total/8;
 
-        //                  Atributos dados                 //
-
-        Velocidade velocidadeA = new Velocidade(velocidade);
-        Resistencia resistenciaA = new Resistencia(resistencia);
-        Destreza destrezaA = new Destreza(destreza);
-        Impulsao impulsaoA = new Impulsao(impulso);
-        JogoDeCabeca jogoDeCabecaA = new JogoDeCabeca(jogocabeca);
-        Remate remateA = new Remate(remate);
-        CapacidadeDePasse capacidadeDePasseA = new CapacidadeDePasse(capacidadePasse);
-
-        // os restantes
-
-        CapacidadeDefensiva capacidadeDefensivaA = new CapacidadeDefensiva(rand.nextInt(100));
-        Motivacao motivacaoA = new Motivacao(rand.nextInt(100));
-        Posicionamento posicionamentoA = new Posicionamento(rand.nextInt(100));
-
-        List<Atributo> atributos1 = new ArrayList<>(); // 0.005
-        List<Atributo> atributos2 = new ArrayList<>(); // 0.0075
-        List<Atributo> atributos3 = new ArrayList<>(); // 0.01
-        List<Atributo> atributos4 = new ArrayList<>(); // 0.05
-        List<Atributo> atributos5 = new ArrayList<>(); // 0.01
-
-        atributos1.add(remateA);
-        atributos1.add(jogoDeCabecaA);
-        atributos2.add(resistenciaA);
-        atributos2.add(destrezaA);
-        atributos3.add(capacidadeDefensivaA);
-        atributos3.add(velocidadeA);
-        atributos3.add(capacidadeDePasseA);
-        atributos4.add(impulsaoA);
-        atributos4.add(motivacaoA);
-        atributos5.add(posicionamentoA);
-
-        Map<Double, List<Atributo>> mapa = new HashMap<>();
+        int high = (int) media + 10;
+        int low = (int) media - 10;
+        int reflexos = Jogador.randomBetween(low,high);
+        CapacidadeDefensiva capacidadeDefensiva = new CapacidadeDefensiva(Jogador.randomBetween(low,high));
+        Jogador.addToMapa(capacidadeDefensiva,0.01,mapa);
+        Motivacao motivacao= new Motivacao(50);
+        Jogador.addToMapa(motivacao,0.05,mapa);
+        Posicionamento posicionamento = new Posicionamento(Jogador.randomBetween(low,high));
+        Jogador.addToMapa(posicionamento,0.10,mapa);
 
         List<String> historico = new ArrayList<>();
 
@@ -110,6 +99,15 @@ public class GuardaRedes extends Jogador {
         return new GuardaRedes(this);
     }
 
+
+    public List<Object> infoJogador (){
+        List<Object> list = super.infoJogador();
+        list.add(Map.entry("Elasticidade:",elasticidade));
+        list.add(Map.entry("Reflexos:",reflexos));
+        list.add(Map.entry("",""));
+        list.add(Map.entry("Overall:",habilidadeGeralEspecifica()));
+        return list;
+    }
     /*
     public String toString(){
         String jog = super.toString();

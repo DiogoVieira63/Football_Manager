@@ -1,4 +1,7 @@
-public class EsquemaTatico {
+import java.io.Serializable;
+
+public class EsquemaTatico implements Serializable {
+    private static final long serialVersionUID = 6773379586863421241L;
     private int defesas;
     private int medios;
     private int atacantes;
