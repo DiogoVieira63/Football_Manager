@@ -3,6 +3,10 @@ package Atributo;
 public class Posicionamento implements Atributo {
     private int valor;
 
+    public Posicionamento(int valor){
+        this.valor = valor;
+    }
+
     public Posicionamento(Posicionamento posicionamento) {
         this.valor = posicionamento.getValor();
     }

@@ -1,9 +1,6 @@
 import Atributo.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Defesa extends Jogador{
     private int marcacao;
@@ -31,8 +28,7 @@ public class Defesa extends Jogador{
         this.lateral = defesa.getLateral();
     }
 
-    public static Defesa parse(String input){
-
+    public static Defesa parse(String input, boolean lateral){
 
         String[] campos = input.split(",", 9);
         String nome = campos[0];
@@ -44,30 +40,68 @@ public class Defesa extends Jogador{
         int jogocabeca = Integer.parseInt(campos[6]);
         int remate = Integer.parseInt(campos[7]);
         int capacidadePasse = Integer.parseInt(campos[8]);
-        int marcacaO = Integer.parseInt(campos[9]);
+        int marcacao = Integer.parseInt(campos[9]);
+        Random rand = new Random();
 
-        Fisico fisico = new Fisico(velocidade, resistencia);
-        Tecnico tecnico = new Tecnico(capacidadePasse, destreza);
-        Defensivo defensivo = new Defensivo(impulso, 50);
-        Atacante atacante = new Atacante(remate, jogocabeca);
-        MentalTatico mentalTatico = new MentalTatico(50, 50);
+        //                  Atributos dados                 //
 
-        List<Atributo> bestAtributos = new ArrayList<>();
-        List<Atributo> atributos = new ArrayList<>();
+        Velocidade velocidadeA = new Velocidade(velocidade);
+        Resistencia resistenciaA = new Resistencia(resistencia);
+        Destreza destrezaA = new Destreza(destreza);
+        Impulsao impulsaoA = new Impulsao(impulso);
+        JogoDeCabeca jogoDeCabecaA = new JogoDeCabeca(jogocabeca);
+        Remate remateA = new Remate(remate);
+        CapacidadeDePasse capacidadeDePasseA = new CapacidadeDePasse(capacidadePasse);
 
-        bestAtributos.add(defensivo);
-        bestAtributos.add(mentalTatico);
-        atributos.add(atacante);
-        atributos.add(tecnico);
-        atributos.add(fisico);
+        //                  Atributos extras nossos         //
+
+        CapacidadeDefensiva capacidadeDefensivaA = new CapacidadeDefensiva(rand.nextInt(100));
+        Motivacao motivacaoA = new Motivacao(rand.nextInt(100));
+        Posicionamento posicionamentoA = new Posicionamento(rand.nextInt(100));
+
+        List<Atributo> atributos1 = new ArrayList<>(); // 0.01
+        List<Atributo> atributos2 = new ArrayList<>(); // 0.05
+        List<Atributo> atributos3 = new ArrayList<>(); // 0.07
+        List<Atributo> atributos4 = new ArrayList<>(); // 0.1
+        List<Atributo> atributos5 = new ArrayList<>(); // 0.15
+
+        if (lateral){
+            Cruzamento cruzamentoA = new Cruzamento(rand.nextInt(100));
+            atributos1.add(remateA);
+            atributos2.add(jogoDeCabecaA);
+            atributos2.add(impulsaoA);
+            atributos2.add(destrezaA);
+            atributos2.add(motivacaoA);
+            atributos3.add(resistenciaA);
+            atributos3.add(capacidadeDePasseA);
+            atributos4.add(velocidadeA);
+            atributos4.add(posicionamentoA);
+            atributos4.add(cruzamentoA);
+            atributos5.add(capacidadeDePasseA);
+        }
+        else {
+            atributos1.add(remateA);
+            atributos2.add(destrezaA);
+            atributos2.add(motivacaoA);
+            atributos3.add(velocidadeA);
+            atributos3.add(resistenciaA);
+            atributos4.add(jogoDeCabecaA);
+            atributos4.add(impulsaoA);
+            atributos4.add(capacidadeDePasseA);
+            atributos4.add(posicionamentoA);
+            atributos5.add(capacidadeDefensivaA);
+        }
 
         Map<Double, List<Atributo>> mapa = new HashMap<>();
+        mapa.put(0.01, atributos1);
+        mapa.put(0.05, atributos2);
+        mapa.put(0.07, atributos3);
+        mapa.put(0.1, atributos4);
+        mapa.put(0.15, atributos5);
+
         List<String> historico = new ArrayList<>();
 
-        mapa.put(0.125, bestAtributos);
-        mapa.put(0.1, atributos);
-
-        return new Defesa(nome, id, mapa, historico, marcacaO, true);
+        return new Defesa(nome, id, mapa, historico, marcacao, lateral);
     }
 
     //              Getters and Setters             //
@@ -89,7 +123,7 @@ public class Defesa extends Jogador{
     }
 
     public int habilidadeGeralEspecifica() {
-        return (int) (super.habilidadeGeral() + (this.marcacao * 0.3));
+        return (int) (super.habilidadeGeral() + (this.marcacao * 0.2));
     }
 
     public Jogador clone() {

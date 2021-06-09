@@ -98,7 +98,7 @@ public abstract class Jogador {
         for (Map.Entry<Double, List<Atributo>> entry : this.atributos.entrySet()){
             Double d = entry.getKey();
             for (Atributo atributo : entry.getValue()){
-                total += atributo.media() * d;
+                total += atributo.valor() * d;
             }
         }
         return (int) (total);

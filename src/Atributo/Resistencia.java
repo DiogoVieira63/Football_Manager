@@ -3,6 +3,10 @@ package Atributo;
 public class Resistencia implements Atributo{
     private int valor;
 
+    public Resistencia(int valor){
+        this.valor = valor;
+    }
+
     public Resistencia(Resistencia resistencia){
         this.valor = resistencia.getValor();
     }

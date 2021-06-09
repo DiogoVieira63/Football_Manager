@@ -3,6 +3,10 @@ package Atributo;
 public class Destreza implements Atributo{
     private int valor;
 
+    public Destreza(int valor){
+        this.valor = valor;
+    }
+
     public Destreza(Destreza destreza){
         this.valor = destreza.getValor();
     }

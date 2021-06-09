@@ -3,6 +3,10 @@ package Atributo;
 public class CapacidadeDePasse implements Atributo{
     private int valor;
 
+    public CapacidadeDePasse(int valor){
+        this.valor = valor;
+    }
+
     public CapacidadeDePasse(CapacidadeDePasse capacidadeDePasse){
         this.valor = capacidadeDePasse.getValor();
     }

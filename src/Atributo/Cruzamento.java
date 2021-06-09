@@ -3,6 +3,10 @@ package Atributo;
 public class Cruzamento implements Atributo{
     private int valor;
 
+    public Cruzamento(int valor){
+        this.valor = valor;
+    }
+
     public Cruzamento(Cruzamento cruzamento){
         this.valor = cruzamento.getValor();
     }

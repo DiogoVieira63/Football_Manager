@@ -3,6 +3,10 @@ package Atributo;
 public class CapacidadeDefensiva implements Atributo{
     private int valor;
 
+    public CapacidadeDefensiva(int valor){
+        this.valor = valor;
+    }
+
     public CapacidadeDefensiva(CapacidadeDefensiva capacidadeDefensiva){
         this.valor = capacidadeDefensiva.getValor();
     }

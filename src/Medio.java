@@ -1,9 +1,6 @@
 import Atributo.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Medio extends Jogador{
     private int recuperacaoBola;
@@ -35,9 +32,7 @@ public class Medio extends Jogador{
         this.lateral = medio.getLateral();
     }
 
-    public static Medio parse(String input){
-
-        //meti valores atoa
+    public static Medio parse(String input, boolean lateral){
 
         String[] campos = input.split(",", 9);
         String nome = campos[0];
@@ -51,28 +46,69 @@ public class Medio extends Jogador{
         int capacidadePasse = Integer.parseInt(campos[8]);
         int recuperacaoBoLA = Integer.parseInt(campos[9]);
 
-        Fisico fisico = new Fisico(velocidade, resistencia);
-        Tecnico tecnico = new Tecnico(capacidadePasse, destreza);
-        Defensivo defensivo = new Defensivo(impulso, 50);
-        Atacante atacante = new Atacante(remate, jogocabeca);
-        MentalTatico mentalTatico = new MentalTatico(50, 50);
+        Random rand = new Random();
 
-        List<Atributo> bestAtributos = new ArrayList<>();
-        List<Atributo> atributos = new ArrayList<>();
+        //                  Atributos dados                 //
 
-        bestAtributos.add(tecnico);
-        bestAtributos.add(fisico);
-        atributos.add(defensivo);
-        atributos.add(atacante);
-        atributos.add(mentalTatico);
+        Velocidade velocidadeA = new Velocidade(velocidade);
+        Resistencia resistenciaA = new Resistencia(resistencia);
+        Destreza destrezaA = new Destreza(destreza);
+        Impulsao impulsaoA = new Impulsao(impulso);
+        JogoDeCabeca jogoDeCabecaA = new JogoDeCabeca(jogocabeca);
+        Remate remateA = new Remate(remate);
+        CapacidadeDePasse capacidadeDePasseA = new CapacidadeDePasse(capacidadePasse);
+
+        //                  Atributos extras nossos         //
+
+        CapacidadeDefensiva capacidadeDefensivaA = new CapacidadeDefensiva(rand.nextInt(100));
+        Motivacao motivacaoA = new Motivacao(rand.nextInt(100));
+        Posicionamento posicionamentoA = new Posicionamento(rand.nextInt(100));
+
+        List<Atributo> atributos1 = new ArrayList<>(); // 0.03
+        List<Atributo> atributos2 = new ArrayList<>(); // 0.05
+        List<Atributo> atributos3 = new ArrayList<>(); // 0.1
+        List<Atributo> atributos4 = new ArrayList<>(); // 0.12
+        List<Atributo> atributos5 = new ArrayList<>(); // 0.15
 
         Map<Double, List<Atributo>> mapa = new HashMap<>();
+
+        if (lateral){
+            Cruzamento cruzamentoA = new Cruzamento(rand.nextInt(100));
+            atributos1.add(impulsaoA);
+            atributos2.add(remateA);
+            atributos2.add(jogoDeCabecaA);
+            atributos2.add(capacidadeDefensivaA);
+            atributos2.add(posicionamentoA);
+            atributos2.add(motivacaoA);
+            atributos3.add(velocidadeA);
+            atributos3.add(resistenciaA);
+            atributos3.add(destrezaA);
+            atributos3.add(cruzamentoA);
+            atributos4.add(capacidadeDePasseA);
+            mapa.put(0.03, atributos1);
+            mapa.put(0.05, atributos2);
+            mapa.put(0.1, atributos3);
+            mapa.put(0.12, atributos4);
+        }
+        else {
+            atributos2.add(jogoDeCabecaA);
+            atributos2.add(impulsaoA);
+            atributos2.add(capacidadeDefensivaA);
+            atributos2.add(posicionamentoA);
+            atributos2.add(motivacaoA);
+            atributos3.add(remateA);
+            atributos3.add(velocidadeA);
+            atributos3.add(resistenciaA);
+            atributos3.add(destrezaA);
+            atributos5.add(capacidadeDePasseA);
+            mapa.put(0.05, atributos2);
+            mapa.put(0.1, atributos3);
+            mapa.put(0.15, atributos5);
+        }
+
         List<String> historico = new ArrayList<>();
 
-        mapa.put(0.125, bestAtributos);
-        mapa.put(0.1, atributos);
-
-        return new Medio(nome, id, mapa, historico, recuperacaoBoLA, 50, false);
+        return new Medio(nome, id, mapa, historico, recuperacaoBoLA, 50, lateral);
     }
 
     //              Getters and Setters             //
@@ -102,7 +138,7 @@ public class Medio extends Jogador{
     }
 
     public int habilidadeGeralEspecifica() {
-        return (int) (super.habilidadeGeral() + (this.recuperacaoBola * 0.20 + this.visao * 0.15));
+        return (int) (super.habilidadeGeral() + (this.recuperacaoBola * 0.1 + this.visao * 0.1));
     }
 
     public Jogador clone() {

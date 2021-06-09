@@ -3,6 +3,10 @@ package Atributo;
 public class Remate implements Atributo{
     private int valor;
 
+    public Remate(int valor){
+        this.valor = valor;
+    }
+
     public Remate(Remate remate){
         this.valor = remate.getValor();
     }

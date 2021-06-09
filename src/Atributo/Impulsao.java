@@ -3,6 +3,10 @@ package Atributo;
 public class Impulsao implements Atributo{
     private int valor;
 
+    public Impulsao(int valor){
+        this.valor = valor;
+    }
+
     public Impulsao(Impulsao impulsao){
         this.valor = impulsao.getValor();
     }

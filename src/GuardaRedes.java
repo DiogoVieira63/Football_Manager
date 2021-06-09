@@ -29,8 +29,6 @@ public class GuardaRedes extends Jogador {
 
     public static GuardaRedes parse(String input){
 
-        //meti valores default nos atributos não dados pelos stores
-
         String[] campos = input.split(",", 9);
         String nome = campos[0];
         String id = campos[1];
@@ -43,28 +41,47 @@ public class GuardaRedes extends Jogador {
         int capacidadePasse = Integer.parseInt(campos[8]);
         int elasticidade = Integer.parseInt(campos[9]);
 
-        Fisico fisico = new Fisico(velocidade, resistencia);
-        Tecnico tecnico = new Tecnico(capacidadePasse, destreza);
-        Defensivo defensivo = new Defensivo(impulso, 50);
-        Atacante atacante = new Atacante(remate, jogocabeca);
-        MentalTatico mentalTatico = new MentalTatico(50, 50);
+        Random rand = new Random();
+        int reflexos = rand.nextInt(100);
 
-        List<Atributo> bestAtributos = new ArrayList<>();
-        List<Atributo> atributos = new ArrayList<>();
+        //                  Atributos dados                 //
 
-        bestAtributos.add(mentalTatico);
-        atributos.add(fisico);
-        atributos.add(tecnico);
-        atributos.add(defensivo);
-        atributos.add(atacante);
+        Velocidade velocidadeA = new Velocidade(velocidade);
+        Resistencia resistenciaA = new Resistencia(resistencia);
+        Destreza destrezaA = new Destreza(destreza);
+        Impulsao impulsaoA = new Impulsao(impulso);
+        JogoDeCabeca jogoDeCabecaA = new JogoDeCabeca(jogocabeca);
+        Remate remateA = new Remate(remate);
+        CapacidadeDePasse capacidadeDePasseA = new CapacidadeDePasse(capacidadePasse);
+
+        // os restantes
+
+        CapacidadeDefensiva capacidadeDefensivaA = new CapacidadeDefensiva(rand.nextInt(100));
+        Motivacao motivacaoA = new Motivacao(rand.nextInt(100));
+        Posicionamento posicionamentoA = new Posicionamento(rand.nextInt(100));
+
+        List<Atributo> atributos1 = new ArrayList<>(); // 0.005
+        List<Atributo> atributos2 = new ArrayList<>(); // 0.0075
+        List<Atributo> atributos3 = new ArrayList<>(); // 0.01
+        List<Atributo> atributos4 = new ArrayList<>(); // 0.05
+        List<Atributo> atributos5 = new ArrayList<>(); // 0.01
+
+        atributos1.add(remateA);
+        atributos1.add(jogoDeCabecaA);
+        atributos2.add(resistenciaA);
+        atributos2.add(destrezaA);
+        atributos3.add(capacidadeDefensivaA);
+        atributos3.add(velocidadeA);
+        atributos3.add(capacidadeDePasseA);
+        atributos4.add(impulsaoA);
+        atributos4.add(motivacaoA);
+        atributos5.add(posicionamentoA);
 
         Map<Double, List<Atributo>> mapa = new HashMap<>();
+
         List<String> historico = new ArrayList<>();
 
-        mapa.put(0.25, bestAtributos);
-        mapa.put(0.1, atributos);
-
-        return new GuardaRedes(nome, id, mapa, historico, elasticidade, 50);
+        return new GuardaRedes(nome, id, mapa, historico, elasticidade, reflexos);
     }
 
     //              Getters and Setters             //
@@ -86,7 +103,7 @@ public class GuardaRedes extends Jogador {
     }
 
     public int habilidadeGeralEspecifica (){
-        return (int) (super.habilidadeGeral() + (this.elasticidade * 0.20 + this.reflexos * 0.15));
+        return (int) (super.habilidadeGeral() + (this.elasticidade * 0.375 + this.reflexos * 0.375));
     }
 
     public Jogador clone(){
