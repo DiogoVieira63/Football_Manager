@@ -57,6 +57,13 @@ public class Defesa extends Jogador implements Serializable {
         int low = (int) media - 10;
         int marcacao = Jogador.randomBetween(low, high);
 
+        CapacidadeDefensiva capacidadeDefensiva = new CapacidadeDefensiva(Jogador.randomBetween(low,high));
+        Jogador.addToMapa(capacidadeDefensiva,0.15,mapa);
+        Motivacao motivacao = new Motivacao(50);
+        Jogador.addToMapa(motivacao,0.05,mapa);
+        Posicionamento posicionamento = new Posicionamento(Jogador.randomBetween(low,high));
+        Jogador.addToMapa(posicionamento,0.1,mapa);
+
         if (lateral){
             Jogador.addToMapa(jogocabeca, 0.05, mapa);
             Jogador.addToMapa(impulso, 0.05, mapa);
@@ -95,7 +102,15 @@ public class Defesa extends Jogador implements Serializable {
         Jogador.addToMapa(remate, 0.01, mapa);
         CapacidadeDePasse capacidadePasse = new CapacidadeDePasse(Integer.parseInt(campos[8]));
 
-        int marcacao = Integer.parseInt(campos[9]);
+
+        CapacidadeDefensiva capacidadeDefensiva = new CapacidadeDefensiva(Integer.parseInt(campos[9]));
+        Jogador.addToMapa(capacidadeDefensiva,0.15,mapa);
+        Motivacao motivacao = new Motivacao(Integer.parseInt(campos[10]));
+        Jogador.addToMapa(motivacao,0.05,mapa);
+        Posicionamento posicionamento = new Posicionamento(Integer.parseInt(campos[11]));
+        Jogador.addToMapa(posicionamento,0.1,mapa);
+
+        int marcacao = Integer.parseInt(campos[12]);
 
         if (lateral){
             Jogador.addToMapa(jogocabeca, 0.05, mapa);

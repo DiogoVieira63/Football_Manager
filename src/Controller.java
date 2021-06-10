@@ -233,132 +233,166 @@ public class Controller {
                     }
                     break;
                 case 3:
+                    View.clearScreen();
                     View.printOpcao("0. Jogador");
                     View.printOpcao("1. Equipa");
+                    View.printPrompt("Choose Option");
                     String str = scanner.next();
-                    if (str.equals("0")){
+                    if (str.equals("0")) {
                         StringBuilder sb = new StringBuilder();
                         View.printTitulo("Nome do Jogador: ");
                         String nome = scanner.next();
                         sb.append(nome);
                         View.printTitulo("Número da Camisola: ");
-                        while(!scanner.hasNextInt()){
+                        while (!scanner.hasNextInt()) {
                             View.printFrase("Insira um número válido.");
                         }
                         int num = scanner.nextInt();
                         sb.append(num);
+                        View.printTitulo("Posição:");
                         View.printOpcao("0. Guarda-Redes");
                         View.printOpcao("1. Defesa");
                         View.printOpcao("2. Médio");
                         View.printOpcao("3. Avançado");
-                        while(!scanner.hasNextInt()){
+                        while (!scanner.hasNextInt()) {
                             View.printFrase("Insira uma opção válida.");
                         }
                         int posicao = scanner.nextInt();
                         int valor = askAtributo("Velocidade: ");
-                        while(valor == 0){
+                        while (valor == 0) {
                             valor = askAtributo("Velocidade: ");
                         }
                         sb.append(valor);
                         int valor2 = askAtributo("Resistência: ");
-                        while(valor2 == 0){
+                        while (valor2 == 0) {
                             valor2 = askAtributo("Resistência: ");
                         }
                         sb.append(valor2);
                         int valor3 = askAtributo("Destreza: ");
-                        while(valor3 == 0){
+                        while (valor3 == 0) {
                             valor3 = askAtributo("Destreza: ");
                         }
                         sb.append(valor3);
                         int valor4 = askAtributo("Impulsão: ");
-                        while(valor4 == 0){
+                        while (valor4 == 0) {
                             valor4 = askAtributo("Impulsão: ");
                         }
                         sb.append(valor4);
                         int valor5 = askAtributo("Jogo de Cabeça: ");
-                        while(valor5 == 0){
+                        while (valor5 == 0) {
                             valor5 = askAtributo("Jogo de Cabeça: ");
                         }
                         sb.append(valor5);
                         int valor6 = askAtributo("Remate: ");
-                        while(valor6 == 0){
+                        while (valor6 == 0) {
                             valor6 = askAtributo("Remate: ");
                         }
                         sb.append(valor6);
                         int valor7 = askAtributo("Capacidade de Passe: ");
-                        while(valor7 == 0){
+                        while (valor7 == 0) {
                             valor7 = askAtributo("Capacidade de Passe: ");
                         }
                         sb.append(valor7);
                         int valor9 = askAtributo("Capacidade Defensiva: ");
-                        while(valor9 == 0){
+                        while (valor9 == 0) {
                             valor9 = askAtributo("Capacidade Defensiva: ");
                         }
                         sb.append(valor9);
                         int valor10 = askAtributo("Motivação: ");
-                        while(valor10 == 0){
+                        while (valor10 == 0) {
                             valor10 = askAtributo("Motivação: ");
                         }
                         sb.append(valor10);
                         int valor11 = askAtributo("Posicionamento: ");
-                        while(valor11 == 0){
+                        while (valor11 == 0) {
                             valor11 = askAtributo("Posicionamento: ");
                         }
                         sb.append(valor11);
-                        if (posicao == 0){
+                        if (posicao == 0) {
                             int valor12 = askAtributo("Reflexos: ");
-                            while(valor12 == 0){
+                            while (valor12 == 0) {
                                 valor12 = askAtributo("Reflexos: ");
                             }
                             sb.append(valor12);
                             int valor8 = askAtributo("Elasticidade: ");
-                            while(valor8 == 0){
+                            while (valor8 == 0) {
                                 valor8 = askAtributo("Elasticidade: ");
                             }
                             sb.append(valor8);
                             GuardaRedes guardaRedes = GuardaRedes.parseControlador(sb.toString());
                         }
-                        if (posicao == 1){
+                        if (posicao == 1) {
                             int marcacao = askAtributo("Marcação: ");
-                            while(marcacao == 0){
+                            while (marcacao == 0) {
                                 marcacao = askAtributo("Marcação: ");
                             }
                             sb.append(marcacao);
                             View.printOpcao("0. Defesa Normal");
                             View.printOpcao("1. Defesa Lateral");
-                            while(!scanner.hasNextInt()){
+                            View.printPrompt("Choose Option");
+                            while (!scanner.hasNextInt()) {
                                 View.printFrase("Insira uma opção válida.");
                             }
                             int lateral = scanner.nextInt();
-                            if (lateral == 0){
+                            if (lateral == 0) {
                                 Defesa defesa = Defesa.parseControlador(sb.toString(), false);
-                            }
-                            else {
+                            } else {
                                 int cruzamento = askAtributo("Cruza: ");
-                                while(cruzamento == 0){
+                                while (cruzamento == 0) {
                                     cruzamento = askAtributo("Marcação: ");
                                 }
                                 sb.append(cruzamento);
                                 Defesa defesaLateral = Defesa.parseControlador(sb.toString(), true);
                             }
                         }
-                        if (posicao == 2){
+                        if (posicao == 2) {
                             int recuperacao = askAtributo("Recuperação de Bola: ");
-                            while(recuperacao == 0){
+                            while (recuperacao == 0) {
                                 recuperacao = askAtributo("Recuperação de Bola: ");
                             }
                             sb.append(recuperacao);
                             View.printOpcao("0. Médio Normal");
                             View.printOpcao("1. Médio Lateral");
-                            while(!scanner.hasNextInt()){
+                            while (!scanner.hasNextInt()) {
                                 View.printFrase("Insira uma opção válida.");
                             }
                             int lateral = scanner.nextInt();
-                            if (lateral == 0){
+                            if (lateral == 0) {
                                 Medio medio = Medio.parseControlador(sb.toString(), false);
+                            } else {
+                                int cruzamento = askAtributo("Cruza: ");
+                                while (cruzamento == 0) {
+                                    cruzamento = askAtributo("Marcação: ");
+                                }
+                                sb.append(cruzamento);
+                                Medio medioLateral = Medio.parseControlador(sb.toString(), true);
+                            }
+                        }
+                        if (posicao == 3) {
+                            int finalizacao = askAtributo("Finalização: ");
+                            while (finalizacao == 0) {
+                                finalizacao = askAtributo("Finalização: ");
+                            }
+                            sb.append(finalizacao);
+                            View.printOpcao("0. Avançado Normal");
+                            View.printOpcao("1. Avançado Lateral");
+                            while (!scanner.hasNextInt()) {
+                                View.printFrase("Insira uma opção válida.");
+                            }
+                            int lateral = scanner.nextInt();
+                            if (lateral == 0) {
+                                Avancado avancado = Avancado.parseControlador(sb.toString(), false);
+                            } else {
+                                int cruzamento = askAtributo("Cruza: ");
+                                while (cruzamento == 0) {
+                                    cruzamento = askAtributo("Marcação: ");
+                                }
+                                sb.append(cruzamento);
+                                Avancado avancadoLateral = Avancado.parseControlador(sb.toString(), true);
                             }
                         }
                     }
+                    //add equipa
                     break;
                 case 4:
                     View.printTitulo("Load from file");

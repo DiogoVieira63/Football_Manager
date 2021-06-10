@@ -84,6 +84,53 @@ public class Avancado extends Jogador implements Serializable{
         return new Avancado(nome, id, mapa, historico, finalizacao, lateral);
     }
 
+    public static Avancado parseControlador(String input, boolean lateral){
+
+        String[] campos = input.split(",");
+        String nome = campos[0];
+        Integer id = Integer.parseInt(campos[1]);
+        Map<Double, List<Atributo>> mapa = new HashMap<>();
+
+        Velocidade velocidade = new Velocidade(Integer.parseInt(campos[2]));
+        Jogador.addToMapa(velocidade,0.1,mapa);
+        Resistencia resistencia = new Resistencia(Integer.parseInt(campos[3]));
+        Jogador.addToMapa(resistencia,0.07,mapa);
+        Destreza destreza = new Destreza(Integer.parseInt(campos[4]));
+        Impulsao impulso = new Impulsao(Integer.parseInt(campos[5]));
+        JogoDeCabeca jogocabeca = new JogoDeCabeca(Integer.parseInt(campos[6]));
+        Remate remate = new Remate(Integer.parseInt(campos[7]));
+        CapacidadeDePasse capacidadePasse = new CapacidadeDePasse(Integer.parseInt(campos[8]));
+        Jogador.addToMapa(capacidadePasse,0.07,mapa);
+
+        CapacidadeDefensiva capacidadeDefensiva = new CapacidadeDefensiva(Integer.parseInt(campos[9]));
+        Jogador.addToMapa(capacidadeDefensiva,0.01,mapa);
+        Motivacao motivacao = new Motivacao(Integer.parseInt(campos[10]));
+        Jogador.addToMapa(motivacao,0.05,mapa);
+        Posicionamento posicionamento = new Posicionamento(Integer.parseInt(campos[11]));
+        Jogador.addToMapa(posicionamento,0.05,mapa);
+        int finalizacao = Integer.parseInt(campos[12]);
+
+        if (lateral){
+            Jogador.addToMapa(remate, 0.15, mapa);
+            Jogador.addToMapa(jogocabeca, 0.05, mapa);
+            Jogador.addToMapa(impulso, 0.05, mapa);
+            Jogador.addToMapa(destreza, 0.1, mapa);
+            Cruzamento cruzamento = new Cruzamento(Integer.parseInt(campos[13]));
+            Jogador.addToMapa(cruzamento, 0.1, mapa);
+        }
+        else {
+            Jogador.addToMapa(remate, 0.2, mapa);
+            Jogador.addToMapa(jogocabeca, 0.1, mapa);
+            Jogador.addToMapa(impulso, 0.1, mapa);
+            Jogador.addToMapa(destreza, 0.05, mapa);
+        }
+
+        List<String> historico = new ArrayList<>();
+
+        return new Avancado(nome, id, mapa, historico, finalizacao, lateral);
+
+    }
+
     //              Getters and Setters             //
 
     public int getFinalizacao() {

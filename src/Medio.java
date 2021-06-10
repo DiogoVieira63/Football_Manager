@@ -90,6 +90,48 @@ public class Medio extends Jogador implements Serializable {
 
     public static Medio parseControlador(String input, boolean lateral){
 
+        String[] campos = input.split(",");
+        String nome = campos[0];
+        Integer id = Integer.parseInt(campos[1]);
+        Map<Double, List<Atributo>> mapa = new HashMap<>();
+
+        Velocidade velocidade = new Velocidade(Integer.parseInt(campos[2]));
+        Jogador.addToMapa(velocidade,0.1,mapa);
+        Resistencia resistencia = new Resistencia(Integer.parseInt(campos[3]));
+        Jogador.addToMapa(resistencia,0.1,mapa);
+        Destreza destreza = new Destreza(Integer.parseInt(campos[4]));
+        Jogador.addToMapa(destreza,0.1,mapa);
+        Impulsao impulso = new Impulsao(Integer.parseInt(campos[5]));
+        JogoDeCabeca jogocabeca = new JogoDeCabeca(Integer.parseInt(campos[6]));
+        Jogador.addToMapa(jogocabeca,0.05,mapa);
+        Remate remate = new Remate(Integer.parseInt(campos[7]));
+        CapacidadeDePasse capacidadePasse = new CapacidadeDePasse(Integer.parseInt(campos[8]));
+
+        CapacidadeDefensiva capacidadeDefensiva = new CapacidadeDefensiva(Integer.parseInt(campos[9]));
+        Jogador.addToMapa(capacidadeDefensiva,0.05,mapa);
+        Motivacao motivacao = new Motivacao(Integer.parseInt(campos[10]));
+        Jogador.addToMapa(motivacao,0.05,mapa);
+        Posicionamento posicionamento = new Posicionamento(Integer.parseInt(campos[11]));
+        Jogador.addToMapa(posicionamento,0.05,mapa);
+
+        int recuperacaoBola = Integer.parseInt(campos[12]);
+
+        if (lateral){
+            Jogador.addToMapa(remate, 0.05, mapa);
+            Jogador.addToMapa(impulso, 0.03, mapa);
+            Jogador.addToMapa(capacidadePasse, 0.12, mapa);
+            Cruzamento cruzamento = new Cruzamento(Integer.parseInt(campos[13]));
+            Jogador.addToMapa(cruzamento, 0.1, mapa);
+        }
+        else {
+            Jogador.addToMapa(remate, 0.1, mapa);
+            Jogador.addToMapa(impulso, 0.05, mapa);
+            Jogador.addToMapa(capacidadePasse, 0.15, mapa);
+        }
+
+        List<String> historico = new ArrayList<>();
+
+        return new Medio(nome, id, mapa, historico, recuperacaoBola, lateral);
     }
 
     //              Getters and Setters             //
