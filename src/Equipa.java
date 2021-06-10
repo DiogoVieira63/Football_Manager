@@ -38,19 +38,24 @@ public class Equipa implements Serializable {
         if (this.listaJogadores.containsKey(jogador.getId()))
             throw new JogadorExistenteException("O Jogador " + jogador.getName() + "já pertence à equipa " + this.name);
         else {
-            this.listaJogadores.put(jogador.getId(), jogador.clone());
-            jogador.getHistorico().add(this.name);
+            this.listaJogadores.put(jogador.getId(), jogador);
+            jogador.addEquipaHistorico(this.name);
         }
     }
 
-    public void transferenciaJogador (Jogador jogador, Equipa novaEquipa) throws JogadorExistenteException {
+    public void transferenciaJogador (int Idjogador, Equipa novaEquipa) throws JogadorExistenteException {
+        Jogador jogador = listaJogadores.get(Idjogador);
         int size = jogador.getHistorico().size();
-        if (novaEquipa.getListaJogadores().containsKey(jogador.getId()) || jogador.getHistorico().get(size-1).equals(novaEquipa.name))
+        if (jogador.getHistorico().get(size-1).equals(novaEquipa.name))
             throw new JogadorExistenteException("O Jogador " + jogador.getName() +"já pertence à equipa " + novaEquipa.getName());
         else{
             this.listaJogadores.remove(jogador.getId());
-            novaEquipa.addJogador(jogador.clone());
-            jogador.getHistorico().add(novaEquipa.getName());
+            int number = jogador.getId();
+            while (novaEquipa.containsId(number)){
+                number = Jogador.randomBetween(0,100);
+            }
+            jogador.setId(number);
+            novaEquipa.addJogador(jogador);
         }
     }
 
@@ -137,6 +142,8 @@ public class Equipa implements Serializable {
             String name = listaJogadores.get(number).getName();
             list.add(Map.entry(number,name));
         }
+        list.add(Map.entry("",""));
+        list.add(Map.entry("Overall Equipa:",this.habilidadeEquipa()));
         return list;
     }
 
@@ -147,4 +154,33 @@ public class Equipa implements Serializable {
     public Equipa clone(){
         return new Equipa(this);
     }
+
+    public Set<Integer> getNumeros (){
+        return listaJogadores.keySet();
+    }
+
+
+    public boolean containsId (int id){
+        return listaJogadores.containsKey(id);
+    }
+
+    public Map<Integer,Integer> mapOverall (){
+        Map<Integer,Integer> map = new HashMap<>();
+        for (Jogador jogador : listaJogadores.values()){
+            map.put(jogador.getId(), jogador.habilidadeGeralEspecifica());
+        }
+        return map;
+    }
+
+
+    public List<Object> possiveisPosicao (String posicao,boolean lateral){
+        List<Object> list = new ArrayList<>();
+        for (Jogador jogador : listaJogadores.values()){
+            if (jogador.getClass().getName().equals(posicao) || (!posicao.equals("GuardaRedes") && lateral == jogador.isLateral())){
+                list.add(Map.entry(jogador.getId() + " - " + jogador.getName() +  " - ",jogador.habilidadeGeralEspecifica()));
+            }
+        }
+        return list;
+    }
+
 }

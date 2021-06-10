@@ -27,7 +27,7 @@ public class Defesa extends Jogador implements Serializable {
     public Defesa(Defesa defesa){
         super(defesa);
         this.marcacao = defesa.getMarcacao();
-        this.lateral = defesa.getLateral();
+        this.lateral = defesa.isLateral();
     }
 
     public static Defesa parse(String input, boolean lateral){
@@ -77,6 +77,47 @@ public class Defesa extends Jogador implements Serializable {
         return new Defesa(nome, id, mapa, historico, marcacao, lateral);
     }
 
+    public static Defesa parseControlador(String input, boolean lateral){
+
+        String[] campos = input.split(",");
+        String nome = campos[0];
+        Integer id = Integer.parseInt(campos[1]);
+        Map<Double, List<Atributo>> mapa = new HashMap<>();
+
+        Velocidade velocidade = new Velocidade(Integer.parseInt(campos[2]));
+        Resistencia resistencia = new Resistencia(Integer.parseInt(campos[3]));
+        Jogador.addToMapa(resistencia,0.07,mapa);
+        Destreza destreza = new Destreza(Integer.parseInt(campos[4]));
+        Jogador.addToMapa(destreza, 0.05, mapa);
+        Impulsao impulso = new Impulsao(Integer.parseInt(campos[5]));
+        JogoDeCabeca jogocabeca = new JogoDeCabeca(Integer.parseInt(campos[6]));
+        Remate remate = new Remate(Integer.parseInt(campos[7]));
+        Jogador.addToMapa(remate, 0.01, mapa);
+        CapacidadeDePasse capacidadePasse = new CapacidadeDePasse(Integer.parseInt(campos[8]));
+
+        int marcacao = Integer.parseInt(campos[9]);
+
+        if (lateral){
+            Jogador.addToMapa(jogocabeca, 0.05, mapa);
+            Jogador.addToMapa(impulso, 0.05, mapa);
+            Jogador.addToMapa(velocidade, 0.1, mapa);
+            Jogador.addToMapa(capacidadePasse, 0.07, mapa);
+            Cruzamento cruzamento = new Cruzamento(Integer.parseInt(campos[10]));
+            Jogador.addToMapa(cruzamento, 0.1, mapa);
+        }
+        else {
+            Jogador.addToMapa(jogocabeca, 0.1, mapa);
+            Jogador.addToMapa(impulso, 0.1, mapa);
+            Jogador.addToMapa(velocidade, 0.07, mapa);
+            Jogador.addToMapa(capacidadePasse, 0.1, mapa);
+        }
+
+        List<String> historico = new ArrayList<>();
+
+        return new Defesa(nome, id, mapa, historico, marcacao, lateral);
+
+    }
+
     //              Getters and Setters             //
 
     public int getMarcacao() {
@@ -87,7 +128,7 @@ public class Defesa extends Jogador implements Serializable {
         this.marcacao = marcacao;
     }
 
-    public boolean getLateral() {
+    public boolean isLateral() {
         return lateral;
     }
 

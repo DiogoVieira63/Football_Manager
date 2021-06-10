@@ -73,6 +73,40 @@ public class GuardaRedes extends Jogador implements Serializable {
         return new GuardaRedes(nome, id, mapa, historico, elasticidade, reflexos);
     }
 
+    public static GuardaRedes parseControlador(String input){
+
+        String[] campos = input.split(",");
+        String nome = campos[0];
+        Integer id = Integer.parseInt(campos[1]);
+        Map<Double, List<Atributo>> mapa = new HashMap<>();
+        Velocidade velocidade = new Velocidade(Integer.parseInt(campos[2]));
+        Jogador.addToMapa(velocidade,0.01,mapa);
+        Resistencia resistencia = new Resistencia(Integer.parseInt(campos[3]));
+        Jogador.addToMapa(resistencia,0.0075,mapa);
+        Destreza destreza = new Destreza(Integer.parseInt(campos[4]));
+        Jogador.addToMapa(destreza,0.0075,mapa);
+        Impulsao impulso = new Impulsao(Integer.parseInt(campos[5]));
+        Jogador.addToMapa(impulso,0.05,mapa);
+        JogoDeCabeca jogocabeca = new JogoDeCabeca(Integer.parseInt(campos[6]));
+        Jogador.addToMapa(jogocabeca,0.005,mapa);
+        Remate remate = new Remate(Integer.parseInt(campos[7]));
+        Jogador.addToMapa(remate,0.005,mapa);
+        CapacidadeDePasse capacidadePasse = new CapacidadeDePasse(Integer.parseInt(campos[8]));
+        Jogador.addToMapa(capacidadePasse,0.01,mapa);
+        int elasticidade = Integer.parseInt(campos[9]);
+        CapacidadeDefensiva capacidadeDefensiva = new CapacidadeDefensiva(Integer.parseInt(campos[10]));
+        Jogador.addToMapa(capacidadeDefensiva, 0.01, mapa);
+        Motivacao motivacao = new Motivacao(Integer.parseInt(campos[11]));
+        Jogador.addToMapa(motivacao,0.05, mapa);
+        Posicionamento posicionamento = new Posicionamento(Integer.parseInt(campos[12]));
+        Jogador.addToMapa(posicionamento,0.10, mapa);
+        int reflexos = Integer.parseInt(campos[13]);
+
+        List<String> historico = new ArrayList<>();
+
+        return new GuardaRedes(nome, id, mapa, historico, elasticidade, reflexos);
+    }
+
     //              Getters and Setters             //
 
     public int getElasticidade() {

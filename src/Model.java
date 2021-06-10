@@ -59,4 +59,58 @@ public class Model implements Serializable {
         return catalogoEquipas.infoJogador(equipa,jogador);
     }
 
+    public void transferirJogador (String equipa, int jogador, String novaEquipa){
+        catalogoEquipas.transferirJogador (equipa,jogador,novaEquipa);
+    }
+
+    public CatalogoEquipas getCatalogoEquipas() {
+        return catalogoEquipas;
+    }
+
+    public void addJogo (Jogo jogo){
+        jogos.add(jogo);
+    }
+
+    public void printJogos (){
+        for (Jogo jogo : jogos){
+            System.out.println(jogo.getCasa().getIdEquipa() + "-> " + jogo.getGolosCasa());
+            System.out.println(jogo.getFora().getIdEquipa() + "-> " + jogo.getGolosFora());
+            System.out.println();
+        }
+    }
+
+    public List<Object> getJogosEquipa (String equipa){
+        List<Object> list = new ArrayList<>();
+        for (Jogo jogo : jogos){
+            String nameCasa = jogo.getCasa().getIdEquipa();
+            String nameFora = jogo.getFora().getIdEquipa();
+            if (nameCasa.equals(equipa) || nameFora.equals(equipa)){
+                list.add(Map.entry(nameCasa +  " vs ", nameFora));
+                list.add(Map.entry(jogo.getGolosCasa() + " - ",jogo.getGolosFora()));
+            }
+        }
+        return list;
+    }
+
+    public EquipaJogo getEquipaJogo (int i){
+        return jogos.get(i).getCasa();
+    }
+
+    public Set<Integer> getNumeros (String equipa){
+        return catalogoEquipas.getNumeros (equipa);
+    }
+
+    public void efetuarJogo (EquipaJogo casa, EquipaJogo fora){
+        Jogo jogo = new Jogo(casa,fora);
+        String nomeCasa = casa.getIdEquipa();
+        String nomeFora = casa.getIdEquipa();
+        Map<Integer,Integer> overallCasa = catalogoEquipas.overallJogadores (nomeCasa);
+        Map<Integer,Integer> overallFora = catalogoEquipas.overallJogadores(nomeFora);
+        jogo.calculaJogo(overallCasa,overallFora);
+    }
+
+    public List<Object> possiveisPosicao (String equipa,String posicao, boolean lateral){
+        return catalogoEquipas.possiveisPosicao(equipa,posicao,lateral);
+    }
+
 }

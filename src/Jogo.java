@@ -5,9 +5,7 @@ import java.util.*;
 public class Jogo implements Serializable {
     private static final long serialVersionUID = 7389363689072708873L;
     private EquipaJogo casa;
-    private Equipa casaEquipa;
     private EquipaJogo fora;
-    private Equipa foraEquipa;
     private int golosCasa;
     private int golosFora;
     private LocalDate date;
@@ -24,20 +22,27 @@ public class Jogo implements Serializable {
         this.realizado = false;
     }
 
-    public Jogo (EquipaJogo casa, EquipaJogo fora, int golosCasa, int golosFora, LocalDate data){
-        this.casa = casa.clone();
-        this.fora = fora.clone();
+    public Jogo (EquipaJogo casa,EquipaJogo fora){
+        golosCasa = 0;
+        golosFora = 0;
+        this.casa = casa;
+        this.fora = fora;
+        date = LocalDate.now();
+        realizado = false;
+    }
+
+    public Jogo (EquipaJogo casa, EquipaJogo fora, int golosCasa, int golosFora, LocalDate data, boolean realizado){
+        this.casa = casa;
+        this.fora = fora;
         this.golosCasa = golosCasa;
         this.golosFora = golosFora;
         this.date = data;
-        this.realizado = false;
+        this.realizado = realizado;
     }
 
     public Jogo(Jogo jogo){
         this.casa = jogo.getCasa();
-        this.casaEquipa = jogo.getCasaEquipa();
         this.fora = jogo.getFora();
-        this.foraEquipa = jogo.getForaEquipa();
         this.golosCasa = jogo.getGolosCasa();
         this.golosFora = jogo.getGolosFora();
         this.date = jogo.getDate();
@@ -66,50 +71,43 @@ public class Jogo implements Serializable {
     }
      */
 
-    public static Jogo parse(String input){
+    //Jogo:<EquipaCasa>,<EquipaFora>,<ScoreCasa>,<ScoreFora>,<Data>,<JogadoresCasa>,<SubstituicoesCasa>,<JogadoresFora>,<SubstituicoesFora>
+
+    public static Jogo parse(String input,CatalogoEquipas equipas){
         String[] campos = input.split(",");
+        Equipa casa = equipas.getEquipa(campos[0]);
+        Equipa fora = equipas.getEquipa(campos[1]);
+        int golosCasa = Integer.parseInt(campos[2]);
+        int golosFora = Integer.parseInt(campos[3]);
+
         String[] data = campos[4].split("-");
+        LocalDate dataJogo = LocalDate.of(Integer.parseInt(data[0]), Integer.parseInt(data[1]), Integer.parseInt(data[2]));
 
-        List<String> jc = new ArrayList<>(); //jogadores casa
-        List<String> jf = new ArrayList<>(); //jogadores fora
-
-        Map<String, String> subsC = new HashMap<>(); // substituições casa
-        Map<String, String> subsF = new HashMap<>(); // substituições fora
+        EquipaJogo equipaJogoCasa = new EquipaJogo(campos[0],casa.getNumeros());
+        EquipaJogo equipaJogoFora = new EquipaJogo(campos[1],fora.getNumeros());
 
         for (int i = 5; i < 16; i++){
-            jc.add(campos[i]);
+            int id = Integer.parseInt(campos[i]);
+            if (casa.containsId(id)) equipaJogoCasa.addTitular(id);
         }
         for (int i = 16; i < 19; i++){
             String[] sub = campos[i].split("->");
-            subsC.put(sub[0], sub[1]);
+            int out = Integer.parseInt(sub[0]);
+            int in = Integer.parseInt(sub[1]);
+            if (equipaJogoCasa.isTitular(out) && equipaJogoCasa.isSuplente(in)) equipaJogoCasa.addSubstituicao(out,in);
         }
         for (int i = 19; i < 30; i++){
-            jf.add(campos[i]);
+            int id = Integer.parseInt(campos[i]);
+            if (fora.containsId(id)) equipaJogoFora.addTitular(Integer.parseInt(campos[i]));
         }
         for (int i = 30; i < 33; i++){
             String[] sub = campos[i].split("->");
-            subsF.put(sub[0], sub[1]);
+            int out = Integer.parseInt(sub[0]);
+            int in = Integer.parseInt(sub[1]);
+            if (equipaJogoCasa.isTitular(out) && equipaJogoCasa.isSuplente(in)) equipaJogoFora.addSubstituicao(out,in);
         }
 
-        LocalDate dataJogo = LocalDate.of(Integer.parseInt(data[0]), Integer.parseInt(data[1]), Integer.parseInt(data[2]));
-        EsquemaTatico esquema = new EsquemaTatico();
-        HashSet<String> suplentes = new HashSet<>();
-        Map<String, Double> titularesCasa = new HashMap<>();
-        Map<String, Double> titularesFora = new HashMap<>();
-
-        for (String id : jc){
-            titularesCasa.put(id, 0.0);
-        }
-/*
-        EquipaJogo casa = new EquipaJogo(campos[0], esquema, titularesCasa, suplentes, subsC);
-
-        for (String id : jf){
-            titularesFora.put(id, 0.0);
-        }
-
-        EquipaJogo fora = new EquipaJogo(campos[0], esquema, titularesFora, suplentes, subsC);
-*/
-        return new Jogo(null,null, 0, 0, dataJogo);
+        return new Jogo(equipaJogoCasa,equipaJogoFora,golosCasa, golosFora, dataJogo,true);
     }
 
     //              Getters and Setters             //
@@ -154,19 +152,51 @@ public class Jogo implements Serializable {
         this.date = date;
     }
 
-    public Equipa getCasaEquipa() {
-        return casaEquipa;
+
+    public int mediaZona (List<Integer> list, Map <Integer,Integer> overall){
+        int total = 0;
+        for (int number : list){
+            total += overall.get(number);
+        }
+        return (int) total/list.size();
     }
 
-    public void setCasaEquipa(Equipa casaEquipa) {
-        this.casaEquipa = casaEquipa;
+
+    public List<Integer> diferencas (Map <Integer,Integer> overallCasa, Map<Integer,Integer> overallFora){
+        List<Integer> list = new ArrayList<>();
+        //  CASA (DEFESA) - FORA (AVANÇADOS)
+        int defesaCasa = mediaZona(casa.getDefesas(),overallCasa);
+        int ataqueFora = mediaZona(fora.getAvancados(),overallFora);
+        list.add((int) defesaCasa-ataqueFora);
+        //  CASA (MEDIOS) - FORA (MEDIOS)
+        int mediosCasa = mediaZona(casa.getMedios(),overallCasa);
+        int mediosFora = mediaZona(fora.getMedios(),overallFora);
+        list.add((int) mediosCasa-mediosFora);
+        //  CASA (AVANÇADOS) - FORA (DEFESA)
+        int ataqueCasa = mediaZona(casa.getAvancados(),overallCasa);
+        int defesaFora = mediaZona(fora.getDefesas(),overallFora);
+        list.add((int) ataqueCasa - defesaFora);
+        return list;
     }
 
-    public Equipa getForaEquipa() {
-        return foraEquipa;
+    public void calculaJogo (Map <Integer,Integer> overallCasa, Map<Integer,Integer> overallFora){
+        List <Integer> list = diferencas(overallCasa,overallFora);
+        MomentoJogo mj = new MomentoJogo(list);
+        Timer t = new Timer();
+        TimerTask tt = new TimerTask() {
+            private int count = 0;
+            @Override
+            public void run() {
+                count++;
+                mj.run();
+                if (count >= 180) {
+                    t.cancel();
+                    t.purge();
+                }
+            }
+        };
+        t.schedule(tt,0,500);
+        this.realizado = true;
     }
 
-    public void setForaEquipa(Equipa foraEquipa) {
-        this.foraEquipa = foraEquipa;
-    }
 }

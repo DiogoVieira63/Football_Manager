@@ -27,7 +27,7 @@ public class Medio extends Jogador implements Serializable {
     public Medio(Medio medio){
         super(medio);
         this.recuperacaoBola = medio.getRecuperacaoBola();
-        this.lateral = medio.getLateral();
+        this.lateral = medio.isLateral();
     }
 
     public static Medio parse(String input, boolean lateral){
@@ -88,6 +88,10 @@ public class Medio extends Jogador implements Serializable {
         return new Medio(nome, id, mapa, historico, recuperacaoBola, lateral);
     }
 
+    public static Medio parseControlador(String input, boolean lateral){
+
+    }
+
     //              Getters and Setters             //
 
     public int getRecuperacaoBola() {
@@ -98,7 +102,7 @@ public class Medio extends Jogador implements Serializable {
         this.recuperacaoBola = recuperacaoBola;
     }
 
-    public boolean getLateral() {
+    public boolean isLateral() {
         return lateral;
     }
 

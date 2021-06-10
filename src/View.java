@@ -1,6 +1,8 @@
+import javax.management.ObjectName;
 import java.io.ObjectStreamException;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.function.IntBinaryOperator;
 
 public class View {
@@ -18,7 +20,7 @@ private static int largura = 40;
     }
 
 
-    public void printOpcao (String string){
+    public static void printOpcao (String string){
         System.out.println("\n"+centerString(largura,string));
     }
 
@@ -34,9 +36,10 @@ private static int largura = 40;
         printTitulo("FOOTBALL MANAGER");
         printOpcao("1.Simular Jogo");
         printOpcao("2.Catálogo de Equipas");
-        printOpcao("3.Load File");
-        printOpcao("4.Save File");
-        printOpcao("5.Exit");
+        printOpcao("3.Criar Equipa/Jogador");
+        printOpcao("4.Load File");
+        printOpcao("5.Save File");
+        printOpcao("6.Exit");
         printPrompt("Choose Option");
     }
 
@@ -73,5 +76,13 @@ private static int largura = 40;
             System.out.println(centerString(largura,entry.getKey() + " " + entry.getValue()));
         }
     }
+
+    @SuppressWarnings("unchecked")
+    public static void printPair (Object obj){
+        Map.Entry<Object,Object> entry = (Map.Entry<Object,Object>) obj;
+        System.out.println(centerString(largura,entry.getKey() + " " + entry.getValue()));
+    }
+
+
 
 }

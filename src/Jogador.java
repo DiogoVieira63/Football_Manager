@@ -123,7 +123,7 @@ public abstract class Jogador implements Serializable {
         list.add(Map.entry("Name:",name));
         list.add(Map.entry("Número:",id));
         list.add(Map.entry("Posição:",this.getClass().getSimpleName()));
-        list.add(Map.entry("Historico:",""));
+        list.add(Map.entry("Historico",""));
         for (String str : historico)
             list.add(Map.entry(str,""));
         list.add(Map.entry("",""));
@@ -143,6 +143,10 @@ public abstract class Jogador implements Serializable {
     public static int randomBetween (int low, int high){
         Random r = new Random();
         return r.nextInt(high-low) + low;
+    }
+
+    public boolean isLateral (){
+        return false;
     }
     /*
     public String toString() {

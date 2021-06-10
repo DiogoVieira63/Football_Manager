@@ -27,7 +27,7 @@ public class Avancado extends Jogador implements Serializable{
     public Avancado(Avancado avancado){
         super(avancado);
         this.finalizacao = avancado.getFinalizacao();
-        this.lateral = avancado.getLateral();
+        this.lateral = avancado.isLateral();
     }
 
     public static Avancado parse(String input, boolean lateral){
@@ -94,7 +94,7 @@ public class Avancado extends Jogador implements Serializable{
         this.finalizacao = finalizacao;
     }
 
-    public boolean getLateral() {
+    public boolean isLateral() {
         return lateral;
     }
 
