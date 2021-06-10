@@ -34,82 +34,54 @@ public class Avancado extends Jogador implements Serializable{
 
         String[] campos = input.split(",");
         String nome = campos[0];
-        int id = Integer.parseInt(campos[1]);
-        int velocidade = Integer.parseInt(campos[2]);
-        int resistencia = Integer.parseInt(campos[3]);
-        int destreza = Integer.parseInt(campos[4]);
-        int impulso = Integer.parseInt(campos[5]);
-        int jogocabeca = Integer.parseInt(campos[6]);
-        int remate = Integer.parseInt(campos[7]);
-        int capacidadePasse = Integer.parseInt(campos[8]);
-        Random rand = new Random();
-        int finalizacao = rand.nextInt();
-
-        //                  Atributos dados                 //
-
-        Velocidade velocidadeA = new Velocidade(velocidade);
-        Resistencia resistenciaA = new Resistencia(resistencia);
-        Destreza destrezaA = new Destreza(destreza);
-        Impulsao impulsaoA = new Impulsao(impulso);
-        JogoDeCabeca jogoDeCabecaA = new JogoDeCabeca(jogocabeca);
-        Remate remateA = new Remate(remate);
-        CapacidadeDePasse capacidadeDePasseA = new CapacidadeDePasse(capacidadePasse);
-
-        //                  Atributos extras nossos         //
-
-        CapacidadeDefensiva capacidadeDefensivaA = new CapacidadeDefensiva(rand.nextInt(100));
-        Motivacao motivacaoA = new Motivacao(rand.nextInt(100));
-        Posicionamento posicionamentoA = new Posicionamento(rand.nextInt(100));
-
-        List<Atributo> atributos1 = new ArrayList<>(); // 0.01
-        List<Atributo> atributos2 = new ArrayList<>(); // 0.05
-        List<Atributo> atributos3 = new ArrayList<>(); // 0.07
-        List<Atributo> atributos4 = new ArrayList<>(); // 0.1
-        List<Atributo> atributos5 = new ArrayList<>(); // 0.15
-        List<Atributo> atributos6 = new ArrayList<>(); // 0.2
-
+        Integer id = Integer.parseInt(campos[1]);
         Map<Double, List<Atributo>> mapa = new HashMap<>();
 
-        if (lateral) {
-            Cruzamento cruzamentoA = new Cruzamento(rand.nextInt(100));
-            atributos1.add(capacidadeDefensivaA);
-            atributos2.add(jogoDeCabecaA);
-            atributos2.add(impulsaoA);
-            atributos2.add(posicionamentoA);
-            atributos2.add(motivacaoA);
-            atributos3.add(resistenciaA);
-            atributos3.add(capacidadeDePasseA);
-            atributos4.add(velocidadeA);
-            atributos4.add(destrezaA);
-            atributos4.add(cruzamentoA);
-            atributos5.add(remateA);
-            mapa.put(0.01, atributos1);
-            mapa.put(0.05, atributos2);
-            mapa.put(0.07, atributos3);
-            mapa.put(0.1, atributos4);
-            mapa.put(0.15, atributos5);
+        Velocidade velocidade = new Velocidade(Integer.parseInt(campos[2]));
+        Jogador.addToMapa(velocidade,0.1,mapa);
+        Resistencia resistencia = new Resistencia(Integer.parseInt(campos[3]));
+        Jogador.addToMapa(resistencia,0.07,mapa);
+        Destreza destreza = new Destreza(Integer.parseInt(campos[4]));
+        Impulsao impulso = new Impulsao(Integer.parseInt(campos[5]));
+        JogoDeCabeca jogocabeca = new JogoDeCabeca(Integer.parseInt(campos[6]));
+        Remate remate = new Remate(Integer.parseInt(campos[7]));
+        CapacidadeDePasse capacidadePasse = new CapacidadeDePasse(Integer.parseInt(campos[8]));
+        Jogador.addToMapa(capacidadePasse,0.07,mapa);
+
+        int total = 0;
+        for (int i = 2; i< 9; i++){
+            total += Integer.parseInt(campos[i]);
+        }
+        double media = (double) total/7;
+        int high = (int) media + 10;
+        int low = (int) media - 10;
+
+        int finalizacao = Jogador.randomBetween(low, high);
+        CapacidadeDefensiva capacidadeDefensiva = new CapacidadeDefensiva(Jogador.randomBetween(low,high));
+        Jogador.addToMapa(capacidadeDefensiva,0.01,mapa);
+        Motivacao motivacao = new Motivacao(50);
+        Jogador.addToMapa(motivacao,0.05,mapa);
+        Posicionamento posicionamento = new Posicionamento(Jogador.randomBetween(low,high));
+        Jogador.addToMapa(posicionamento,0.05,mapa);
+
+        if (lateral){
+            Jogador.addToMapa(remate, 0.15, mapa);
+            Jogador.addToMapa(jogocabeca, 0.05, mapa);
+            Jogador.addToMapa(impulso, 0.05, mapa);
+            Jogador.addToMapa(destreza, 0.1, mapa);
+            Cruzamento cruzamento = new Cruzamento(Integer.parseInt(campos[9]));
+            Jogador.addToMapa(cruzamento, 0.1, mapa);
         }
         else {
-            atributos1.add(capacidadeDefensivaA);
-            atributos2.add(destrezaA);
-            atributos2.add(posicionamentoA);
-            atributos2.add(motivacaoA);
-            atributos3.add(resistenciaA);
-            atributos3.add(capacidadeDePasseA);
-            atributos4.add(jogoDeCabecaA);
-            atributos4.add(impulsaoA);
-            atributos4.add(velocidadeA);
-            atributos6.add(remateA);
-            mapa.put(0.01, atributos1);
-            mapa.put(0.05, atributos2);
-            mapa.put(0.07, atributos3);
-            mapa.put(0.1, atributos4);
-            mapa.put(0.2, atributos6);
+            Jogador.addToMapa(remate, 0.2, mapa);
+            Jogador.addToMapa(jogocabeca, 0.1, mapa);
+            Jogador.addToMapa(impulso, 0.1, mapa);
+            Jogador.addToMapa(destreza, 0.05, mapa);
         }
 
         List<String> historico = new ArrayList<>();
 
-        return new Avancado(nome, id, mapa, historico, finalizacao, true);
+        return new Avancado(nome, id, mapa, historico, finalizacao, lateral);
     }
 
     //              Getters and Setters             //
