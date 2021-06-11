@@ -245,11 +245,10 @@ public class Controller {
                         View.printTitulo("Nome do Jogador: ");
                         String nome = scanner.next();
                         sb.append(nome).append(",");
-                        View.printTitulo("Número da Camisola: ");
-                        while (!scanner.hasNextInt()) {
-                            View.printFrase("Insira um número válido.");
+                        int num = askAtributo("Número da Camisola: ");
+                        while (num == 0){
+                            num = askAtributo("Número da Camisola: ");
                         }
-                        int num = scanner.nextInt();
                         sb.append(num).append(",");;
                         View.printTitulo("Posição:");
                         View.printOpcao("0. Guarda-Redes");
@@ -322,9 +321,8 @@ public class Controller {
                             }
                             sb.append(elasticidade);
                             GuardaRedes guardaRedes = GuardaRedes.parseControlador(sb.toString());
-                            View.clearScreen();
                             addJogador(guardaRedes, titulosEquipas);
-                            break;
+                            menu = 0;
                         }
                         if (posicao == 1) {
                             int marcacao = askAtributo("Marcação: ");
@@ -332,7 +330,7 @@ public class Controller {
                                 marcacao = askAtributo("Marcação: ");
                             }
                             sb.append(marcacao);
-                            View.printOpcao("0. Defesa Normal");
+                            View.printOpcao("0. Defesa Central");
                             View.printOpcao("1. Defesa Lateral");
                             View.printPrompt("Choose Option");
                             while (!scanner.hasNextInt()) {
@@ -342,7 +340,7 @@ public class Controller {
                             if (lateral == 0) {
                                 Defesa defesa = Defesa.parseControlador(sb.toString(), false);
                                 addJogador(defesa, titulosEquipas);
-                                pressAnyKeyToContinue();
+                                menu = 0;
                             } else {
                                 int cruzamento = askAtributo("Cruzamento: ");
                                 while (cruzamento == 0) {
@@ -351,7 +349,7 @@ public class Controller {
                                 sb.append(",").append(cruzamento);
                                 Defesa defesaLateral = Defesa.parseControlador(sb.toString(), true);
                                 addJogador(defesaLateral, titulosEquipas);
-                                pressAnyKeyToContinue();
+                                menu = 0;
                             }
                         }
                         if (posicao == 2) {
@@ -360,7 +358,7 @@ public class Controller {
                                 recuperacao = askAtributo("Recuperação de Bola: ");
                             }
                             sb.append(recuperacao);
-                            View.printOpcao("0. Médio Normal");
+                            View.printOpcao("0. Médio Central");
                             View.printOpcao("1. Médio Lateral");
                             while (!scanner.hasNextInt()) {
                                 View.printFrase("Insira uma opção válida.");
@@ -369,7 +367,7 @@ public class Controller {
                             if (lateral == 0) {
                                 Medio medio = Medio.parseControlador(sb.toString(), false);
                                 addJogador(medio, titulosEquipas);
-                                pressAnyKeyToContinue();
+                                menu = 0;
                             } else {
                                 int cruzamento = askAtributo("Cruza: ");
                                 while (cruzamento == 0) {
@@ -378,7 +376,7 @@ public class Controller {
                                 sb.append(",").append(cruzamento);
                                 Medio medioLateral = Medio.parseControlador(sb.toString(), true);
                                 addJogador(medioLateral, titulosEquipas);
-                                pressAnyKeyToContinue();
+                                menu = 0;
                             }
                         }
                         if (posicao == 3) {
@@ -387,7 +385,7 @@ public class Controller {
                                 finalizacao = askAtributo("Finalização: ");
                             }
                             sb.append(finalizacao);
-                            View.printOpcao("0. Avançado Normal");
+                            View.printOpcao("0. Avançado Central");
                             View.printOpcao("1. Avançado Lateral");
                             while (!scanner.hasNextInt()) {
                                 View.printFrase("Insira uma opção válida.");
@@ -396,16 +394,16 @@ public class Controller {
                             if (lateral == 0) {
                                 Avancado avancado = Avancado.parseControlador(sb.toString(), false);
                                 addJogador(avancado, titulosEquipas);
-                                pressAnyKeyToContinue();
+                                menu = 0;
                             } else {
-                                int cruzamento = askAtributo("Cruza: ");
+                                int cruzamento = askAtributo("Cruzamento: ");
                                 while (cruzamento == 0) {
-                                    cruzamento = askAtributo("Marcação: ");
+                                    cruzamento = askAtributo("Cruzamento: ");
                                 }
                                 sb.append(",").append(cruzamento);
                                 Avancado avancadoLateral = Avancado.parseControlador(sb.toString(), true);
                                 addJogador(avancadoLateral, titulosEquipas);
-                                pressAnyKeyToContinue();
+                                menu = 0;
                             }
                         }
                     }
@@ -469,6 +467,7 @@ public class Controller {
         View.printTitulo(atributo);
         while (!scanner.hasNextInt()){
             View.printFrase("Insira um valor númerico.");
+            scanner.next();
         }
         int valor = scanner.nextInt();
         if (valor > 100 || valor < 0){
