@@ -1,3 +1,5 @@
+import Exceptions.JogadorExistenteException;
+
 import java.io.*;
 import java.util.*;
 
@@ -111,6 +113,10 @@ public class Model implements Serializable {
 
     public List<Object> possiveisPosicao (String equipa,String posicao, boolean lateral){
         return catalogoEquipas.possiveisPosicao(equipa,posicao,lateral);
+    }
+
+    public void addJogador(Jogador jogador, String equipa) throws JogadorExistenteException {
+        catalogoEquipas.addJogador(jogador, equipa);
     }
 
 }

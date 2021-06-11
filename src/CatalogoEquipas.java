@@ -82,4 +82,8 @@ public class CatalogoEquipas implements Serializable {
     public List<Object> possiveisPosicao(String equipa, String posicao, boolean lateral) {
         return catalogoEquipas.get(equipa).possiveisPosicao(posicao,lateral);
     }
+
+    public void addJogador(Jogador jogador, String equipa) throws JogadorExistenteException {
+        catalogoEquipas.get(equipa).addJogador(jogador.clone());
+    }
 }

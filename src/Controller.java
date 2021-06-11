@@ -1,3 +1,5 @@
+import Exceptions.JogadorExistenteException;
+
 import java.io.File;
 import java.math.BigDecimal;
 import java.sql.ClientInfoStatus;
@@ -18,7 +20,7 @@ public class Controller {
         this.menu = 0;
     }
 
-    private void pressAnyKeyToContinue()
+    private static void pressAnyKeyToContinue()
     {
         View.printFrase("Enter para continuar");
         try
@@ -45,7 +47,7 @@ public class Controller {
     }
 
 
-    public int selecionarEquipa (List<String> titulosEquipas){
+    public int selecionarEquipa(List<String> titulosEquipas){
         int opcao = 0;
         Scanner scanner = new Scanner(System.in);
         if (scanner.hasNextInt()) {
@@ -105,7 +107,7 @@ public class Controller {
 
 
     @SuppressWarnings("unchecked")
-    public void run (){
+    public void run () throws JogadorExistenteException {
         boolean out = false;
         Scanner scanner = new Scanner(System.in);
         int opcao = -1;
@@ -131,7 +133,7 @@ public class Controller {
                     }
                     else {
                         scanner.next();
-                        View.printFrase("ERRO -Coloque apenas o número");
+                        View.printFrase("ERRO - Coloque apenas o número");
                         pressAnyKeyToContinue();
                     }
                     break;
@@ -242,13 +244,13 @@ public class Controller {
                         StringBuilder sb = new StringBuilder();
                         View.printTitulo("Nome do Jogador: ");
                         String nome = scanner.next();
-                        sb.append(nome);
+                        sb.append(nome).append(",");
                         View.printTitulo("Número da Camisola: ");
                         while (!scanner.hasNextInt()) {
                             View.printFrase("Insira um número válido.");
                         }
                         int num = scanner.nextInt();
-                        sb.append(num);
+                        sb.append(num).append(",");;
                         View.printTitulo("Posição:");
                         View.printOpcao("0. Guarda-Redes");
                         View.printOpcao("1. Defesa");
@@ -262,64 +264,65 @@ public class Controller {
                         while (valor == 0) {
                             valor = askAtributo("Velocidade: ");
                         }
-                        sb.append(valor);
+                        sb.append(valor).append(",");
                         int valor2 = askAtributo("Resistência: ");
                         while (valor2 == 0) {
                             valor2 = askAtributo("Resistência: ");
                         }
-                        sb.append(valor2);
+                        sb.append(valor2).append(",");
                         int valor3 = askAtributo("Destreza: ");
                         while (valor3 == 0) {
                             valor3 = askAtributo("Destreza: ");
                         }
-                        sb.append(valor3);
+                        sb.append(valor3).append(",");
                         int valor4 = askAtributo("Impulsão: ");
                         while (valor4 == 0) {
                             valor4 = askAtributo("Impulsão: ");
                         }
-                        sb.append(valor4);
+                        sb.append(valor4).append(",");
                         int valor5 = askAtributo("Jogo de Cabeça: ");
                         while (valor5 == 0) {
                             valor5 = askAtributo("Jogo de Cabeça: ");
                         }
-                        sb.append(valor5);
+                        sb.append(valor5).append(",");
                         int valor6 = askAtributo("Remate: ");
                         while (valor6 == 0) {
                             valor6 = askAtributo("Remate: ");
                         }
-                        sb.append(valor6);
+                        sb.append(valor6).append(",");
                         int valor7 = askAtributo("Capacidade de Passe: ");
                         while (valor7 == 0) {
                             valor7 = askAtributo("Capacidade de Passe: ");
                         }
-                        sb.append(valor7);
+                        sb.append(valor7).append(",");
                         int valor9 = askAtributo("Capacidade Defensiva: ");
                         while (valor9 == 0) {
                             valor9 = askAtributo("Capacidade Defensiva: ");
                         }
-                        sb.append(valor9);
+                        sb.append(valor9).append(",");
                         int valor10 = askAtributo("Motivação: ");
                         while (valor10 == 0) {
                             valor10 = askAtributo("Motivação: ");
                         }
-                        sb.append(valor10);
+                        sb.append(valor10).append(",");
                         int valor11 = askAtributo("Posicionamento: ");
                         while (valor11 == 0) {
                             valor11 = askAtributo("Posicionamento: ");
                         }
-                        sb.append(valor11);
+                        sb.append(valor11).append(",");
                         if (posicao == 0) {
                             int valor12 = askAtributo("Reflexos: ");
                             while (valor12 == 0) {
                                 valor12 = askAtributo("Reflexos: ");
                             }
-                            sb.append(valor12);
+                            sb.append(valor12).append(",");;
                             int valor8 = askAtributo("Elasticidade: ");
                             while (valor8 == 0) {
                                 valor8 = askAtributo("Elasticidade: ");
                             }
                             sb.append(valor8);
                             GuardaRedes guardaRedes = GuardaRedes.parseControlador(sb.toString());
+                            addJogador(guardaRedes, titulosEquipas);
                         }
                         if (posicao == 1) {
                             int marcacao = askAtributo("Marcação: ");
@@ -341,7 +344,7 @@ public class Controller {
                                 while (cruzamento == 0) {
                                     cruzamento = askAtributo("Marcação: ");
                                 }
-                                sb.append(cruzamento);
+                                sb.append(",").append(cruzamento);
                                 Defesa defesaLateral = Defesa.parseControlador(sb.toString(), true);
                             }
                         }
@@ -364,7 +367,7 @@ public class Controller {
                                 while (cruzamento == 0) {
                                     cruzamento = askAtributo("Marcação: ");
                                 }
-                                sb.append(cruzamento);
+                                sb.append(",").append(cruzamento);
                                 Medio medioLateral = Medio.parseControlador(sb.toString(), true);
                             }
                         }
@@ -387,8 +390,9 @@ public class Controller {
                                 while (cruzamento == 0) {
                                     cruzamento = askAtributo("Marcação: ");
                                 }
-                                sb.append(cruzamento);
+                                sb.append(",").append(cruzamento);
                                 Avancado avancadoLateral = Avancado.parseControlador(sb.toString(), true);
+                                pressAnyKeyToContinue();
                             }
                         }
                     }
@@ -458,4 +462,19 @@ public class Controller {
         }
         return valor;
     }
+
+
+    public void addJogador(Jogador jogador, List<String> titulosEquipas) throws JogadorExistenteException {
+        View.printTitulo("Selecionar Equipa");
+        View.printSimpleOrganizedCollection(titulosEquipas);
+        View.printPrompt("Choose Option");
+        int opcao;
+        String equipa = "";
+        if ((opcao = selecionarEquipa(titulosEquipas)) != 0){
+            equipa = titulosEquipas.get(opcao-1);
+        }
+        model.addJogador(jogador, equipa);
+        View.printFrase("O Jogador foi adicionado á equipa");
+    }
+
 }
