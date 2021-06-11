@@ -4,10 +4,7 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.sql.ClientInfoStatus;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Controller {
     private Model model;
@@ -241,174 +238,23 @@ public class Controller {
                     View.printPrompt("Choose Option");
                     String str = scanner.next();
                     if (str.equals("0")) {
-                        StringBuilder sb = new StringBuilder();
-                        View.printTitulo("Nome do Jogador: ");
-                        String nome = scanner.next();
-                        sb.append(nome).append(",");
-                        int num = askAtributo("Número da Camisola: ");
-                        while (num == 0){
-                            num = askAtributo("Número da Camisola: ");
-                        }
-                        sb.append(num).append(",");;
-                        View.printTitulo("Posição:");
-                        View.printOpcao("0. Guarda-Redes");
-                        View.printOpcao("1. Defesa");
-                        View.printOpcao("2. Médio");
-                        View.printOpcao("3. Avançado");
-                        while (!scanner.hasNextInt()) {
-                            View.printFrase("Insira uma opção válida.");
-                        }
-                        int posicao = scanner.nextInt();
-                        int velocidade = askAtributo("Velocidade: ");
-                        while (velocidade == 0) {
-                            velocidade = askAtributo("Velocidade: ");
-                        }
-                        sb.append(velocidade).append(",");
-                        int resistencia = askAtributo("Resistência: ");
-                        while (resistencia == 0) {
-                            resistencia = askAtributo("Resistência: ");
-                        }
-                        sb.append(resistencia).append(",");
-                        int destreza = askAtributo("Destreza: ");
-                        while (destreza == 0) {
-                            destreza = askAtributo("Destreza: ");
-                        }
-                        sb.append(destreza).append(",");
-                        int impulsao = askAtributo("Impulsão: ");
-                        while (impulsao == 0) {
-                            impulsao = askAtributo("Impulsão: ");
-                        }
-                        sb.append(impulsao).append(",");
-                        int jogoCabeca = askAtributo("Jogo de Cabeça: ");
-                        while (jogoCabeca == 0) {
-                            jogoCabeca = askAtributo("Jogo de Cabeça: ");
-                        }
-                        sb.append(jogoCabeca).append(",");
-                        int remate = askAtributo("Remate: ");
-                        while (remate == 0) {
-                            remate = askAtributo("Remate: ");
-                        }
-                        sb.append(remate).append(",");
-                        int passe = askAtributo("Capacidade de Passe: ");
-                        while (passe == 0) {
-                            passe = askAtributo("Capacidade de Passe: ");
-                        }
-                        sb.append(passe).append(",");
-                        int capDef = askAtributo("Capacidade Defensiva: ");
-                        while (capDef == 0) {
-                            capDef = askAtributo("Capacidade Defensiva: ");
-                        }
-                        sb.append(capDef).append(",");
-                        int motivacao = askAtributo("Motivação: ");
-                        while (motivacao == 0) {
-                            motivacao = askAtributo("Motivação: ");
-                        }
-                        sb.append(motivacao).append(",");
-                        int posicionamento = askAtributo("Posicionamento: ");
-                        while (posicionamento == 0) {
-                            posicionamento = askAtributo("Posicionamento: ");
-                        }
-                        sb.append(posicionamento).append(",");
-                        if (posicao == 0) {
-                            int reflexos = askAtributo("Reflexos: ");
-                            while (reflexos == 0) {
-                                reflexos = askAtributo("Reflexos: ");
-                            }
-                            sb.append(reflexos).append(",");;
-                            int elasticidade = askAtributo("Elasticidade: ");
-                            while (elasticidade == 0) {
-                                elasticidade = askAtributo("Elasticidade: ");
-                            }
-                            sb.append(elasticidade);
-                            GuardaRedes guardaRedes = GuardaRedes.parseControlador(sb.toString());
-                            addJogador(guardaRedes, titulosEquipas);
-                            menu = 0;
-                        }
-                        if (posicao == 1) {
-                            int marcacao = askAtributo("Marcação: ");
-                            while (marcacao == 0) {
-                                marcacao = askAtributo("Marcação: ");
-                            }
-                            sb.append(marcacao);
-                            View.printOpcao("0. Defesa Central");
-                            View.printOpcao("1. Defesa Lateral");
-                            View.printPrompt("Choose Option");
-                            while (!scanner.hasNextInt()) {
-                                View.printFrase("Insira uma opção válida.");
-                            }
-                            int lateral = scanner.nextInt();
-                            if (lateral == 0) {
-                                Defesa defesa = Defesa.parseControlador(sb.toString(), false);
-                                addJogador(defesa, titulosEquipas);
-                                menu = 0;
-                            } else {
-                                int cruzamento = askAtributo("Cruzamento: ");
-                                while (cruzamento == 0) {
-                                    cruzamento = askAtributo("Cruzamento: ");
-                                }
-                                sb.append(",").append(cruzamento);
-                                Defesa defesaLateral = Defesa.parseControlador(sb.toString(), true);
-                                addJogador(defesaLateral, titulosEquipas);
-                                menu = 0;
-                            }
-                        }
-                        if (posicao == 2) {
-                            int recuperacao = askAtributo("Recuperação de Bola: ");
-                            while (recuperacao == 0) {
-                                recuperacao = askAtributo("Recuperação de Bola: ");
-                            }
-                            sb.append(recuperacao);
-                            View.printOpcao("0. Médio Central");
-                            View.printOpcao("1. Médio Lateral");
-                            while (!scanner.hasNextInt()) {
-                                View.printFrase("Insira uma opção válida.");
-                            }
-                            int lateral = scanner.nextInt();
-                            if (lateral == 0) {
-                                Medio medio = Medio.parseControlador(sb.toString(), false);
-                                addJogador(medio, titulosEquipas);
-                                menu = 0;
-                            } else {
-                                int cruzamento = askAtributo("Cruza: ");
-                                while (cruzamento == 0) {
-                                    cruzamento = askAtributo("Marcação: ");
-                                }
-                                sb.append(",").append(cruzamento);
-                                Medio medioLateral = Medio.parseControlador(sb.toString(), true);
-                                addJogador(medioLateral, titulosEquipas);
-                                menu = 0;
-                            }
-                        }
-                        if (posicao == 3) {
-                            int finalizacao = askAtributo("Finalização: ");
-                            while (finalizacao == 0) {
-                                finalizacao = askAtributo("Finalização: ");
-                            }
-                            sb.append(finalizacao);
-                            View.printOpcao("0. Avançado Central");
-                            View.printOpcao("1. Avançado Lateral");
-                            while (!scanner.hasNextInt()) {
-                                View.printFrase("Insira uma opção válida.");
-                            }
-                            int lateral = scanner.nextInt();
-                            if (lateral == 0) {
-                                Avancado avancado = Avancado.parseControlador(sb.toString(), false);
-                                addJogador(avancado, titulosEquipas);
-                                menu = 0;
-                            } else {
-                                int cruzamento = askAtributo("Cruzamento: ");
-                                while (cruzamento == 0) {
-                                    cruzamento = askAtributo("Cruzamento: ");
-                                }
-                                sb.append(",").append(cruzamento);
-                                Avancado avancadoLateral = Avancado.parseControlador(sb.toString(), true);
-                                addJogador(avancadoLateral, titulosEquipas);
-                                menu = 0;
-                            }
-                        }
+                        Jogador jogador = askJogadores();
+                        addJogador(jogador, titulosEquipas);
+                        menu = 0;
                     }
                     if (str.equals("1")){
-
+                        View.clearScreen();
+                        View.printFrase("Nome da Equipa: ");
+                        String nomeEquipa = scanner.next();
+                        while (model.getCatalogoEquipas().getCatalogoEquipas().containsKey(nomeEquipa)){
+                            View.printFrase("Já existe uma equipa com esse nome. Insira novamente: ");
+                            nomeEquipa = askEquipa();
+                        }
+                        Equipa equipa1 = makeEquipa(nomeEquipa);
+                        model.addEquipa(equipa1);
+                        titulosEquipas = model.nomesEquipasOrdenados();
+                        View.printTitulo("A sua equipa foi adicionada");
+                        menu = 0;
                     }
                     break;
                 case 4:
@@ -472,11 +318,194 @@ public class Controller {
         int valor = scanner.nextInt();
         if (valor > 100 || valor < 0){
             View.printFrase("Insira um valor entre 0-100.");
-            valor = 0;
+            valor = -1;
         }
         return valor;
     }
 
+    public static String askEquipa(){
+        Scanner scanner = new Scanner(System.in);
+        View.printTitulo("Nome da Equipa: ");
+        String equipa = scanner.next();
+        return equipa;
+    }
+
+    public static Equipa makeEquipa(String name) throws JogadorExistenteException {
+        Scanner scanner = new Scanner(System.in);
+        View.printTitulo("Quantos jogadores pretende adcionar? ");
+        while(!scanner.hasNextInt()){
+            View.printFrase("Insira um valor numérico.");
+            scanner.next();
+        }
+        int num = scanner.nextInt();
+        Equipa equipa = new Equipa();
+        equipa.setName(name);
+        for (int i = 0; i <num; i++){
+            View.printFrase("Jogador " + i +": ");
+            Jogador player = askJogadores();
+            equipa.addJogador(player);
+        }
+        return equipa;
+    }
+
+    public static Jogador askJogadores(){
+        Scanner scanner = new Scanner(System.in);
+        StringBuilder sb = new StringBuilder();
+        View.printTitulo("Nome do Jogador: ");
+        String nome = scanner.next();
+        sb.append(nome).append(",");
+        int num;
+        do {
+            num = askAtributo("Número da Camisola: ");
+        }
+        while (num == -1);
+        sb.append(num).append(",");
+        View.printTitulo("Posição:");
+        View.printOpcao("0. Guarda-Redes");
+        View.printOpcao("1. Defesa");
+        View.printOpcao("2. Médio");
+        View.printOpcao("3. Avançado");
+        while (!scanner.hasNextInt()) {
+            View.printFrase("Insira uma opção válida.");
+        }
+        int posicao = scanner.nextInt();
+        int velocidade;
+        do {
+            velocidade = askAtributo("Velocidade: ");
+        }
+        while (velocidade == -1);
+        sb.append(velocidade).append(",");
+        int resistencia;
+        do {
+            resistencia = askAtributo("Resistência: ");
+        }
+        while (resistencia == -1);
+        sb.append(resistencia).append(",");
+        int destreza;
+        do {
+            destreza = askAtributo("Destreza: ");
+        }while (destreza == -1);
+        sb.append(destreza).append(",");
+        int impulsao;
+        do {
+            impulsao = askAtributo("Impulsão: ");
+        }while (impulsao == -1);
+        sb.append(impulsao).append(",");
+        int jogoCabeca;
+        do {
+            jogoCabeca = askAtributo("Jogo de Cabeça: ");
+        }while (jogoCabeca == -1);
+        sb.append(jogoCabeca).append(",");
+        int remate;
+        do {
+            remate = askAtributo("Remate: ");
+        }while (remate == -1);
+        sb.append(remate).append(",");
+        int passe;
+        do {
+            passe = askAtributo("Capacidade de Passe: ");
+        }while (passe == -1);
+        sb.append(passe).append(",");
+        int capDef;
+        do {
+            capDef = askAtributo("Capacidade Defensiva: ");
+        }while (capDef == -1);
+        sb.append(capDef).append(",");
+        int motivacao;
+        do {
+            motivacao = askAtributo("Motivação: ");
+        }while (motivacao == -1);
+        sb.append(motivacao).append(",");
+        int posicionamento;
+        do {
+            posicionamento = askAtributo("Posicionamento: ");
+        }while (posicionamento == -1);
+        sb.append(posicionamento).append(",");
+        if (posicao == 0) {
+            int reflexos;
+            do {
+                reflexos = askAtributo("Reflexos: ");
+            } while (reflexos == -1);
+            sb.append(reflexos).append(",");;
+            int elasticidade;
+            do {
+                elasticidade = askAtributo("Elasticidade: ");
+            } while (elasticidade == -1);
+            sb.append(elasticidade);
+            return GuardaRedes.parseControlador(sb.toString());
+        }
+        if (posicao == 1) {
+            int marcacao;
+            do {
+                marcacao = askAtributo("Marcação: ");
+            } while (marcacao == -1);
+            sb.append(marcacao);
+            View.printOpcao("0. Defesa Central");
+            View.printOpcao("1. Defesa Lateral");
+            View.printPrompt("Choose Option");
+            while (!scanner.hasNextInt()) {
+                View.printFrase("Insira uma opção válida.");
+            }
+            int lateral = scanner.nextInt();
+            if (lateral == 0) {
+                return Defesa.parseControlador(sb.toString(), false);
+            } else {
+                int cruzamento;
+                do {
+                    cruzamento = askAtributo("Cruzamento: ");
+                }while (cruzamento == -1);
+                sb.append(",").append(cruzamento);
+                return Defesa.parseControlador(sb.toString(), true);
+            }
+        }
+        if (posicao == 2) {
+            int recuperacao;
+            do {
+                recuperacao = askAtributo("Recuperação de Bola: ");
+            }while (recuperacao == -1);
+            sb.append(recuperacao);
+            View.printOpcao("0. Médio Central");
+            View.printOpcao("1. Médio Lateral");
+            while (!scanner.hasNextInt()) {
+                View.printFrase("Insira uma opção válida.");
+            }
+            int lateral = scanner.nextInt();
+            if (lateral == 0) {
+                return Medio.parseControlador(sb.toString(), false);
+            } else {
+                int cruzamento;
+                do {
+                    cruzamento = askAtributo("Cruzamento: ");
+                }while (cruzamento == -1);
+                sb.append(",").append(cruzamento);
+                return Medio.parseControlador(sb.toString(), true);
+            }
+        }
+        if (posicao == 3) {
+            int finalizacao;
+            do {
+                finalizacao = askAtributo("Finalização: ");
+            }while (finalizacao == -1);
+            sb.append(finalizacao);
+            View.printOpcao("0. Avançado Central");
+            View.printOpcao("1. Avançado Lateral");
+            while (!scanner.hasNextInt()) {
+                View.printFrase("Insira uma opção válida.");
+            }
+            int lateral = scanner.nextInt();
+            if (lateral == 0) {
+                return Avancado.parseControlador(sb.toString(), false);
+            } else {
+                int cruzamento;
+                do {
+                    cruzamento = askAtributo("Cruzamento: ");
+                }while (cruzamento == -1);
+                sb.append(",").append(cruzamento);
+                return Avancado.parseControlador(sb.toString(), true);
+            }
+        }
+        return null;
+    }
 
     public void addJogador(Jogador jogador, List<String> titulosEquipas) throws JogadorExistenteException {
         View.printTitulo("Selecione Equipa para adicionar o seu Jogador");
@@ -487,7 +516,18 @@ public class Controller {
         if ((opcao = selecionarEquipa(titulosEquipas)) != 0){
             equipa = titulosEquipas.get(opcao-1);
         }
-        model.addJogador(jogador, equipa);
+        try{
+            model.addJogador(jogador, equipa);
+        }
+        catch (JogadorExistenteException existenteException){
+            View.printFrase("O número do jogador já existe na equipa");
+            int num;
+            do {
+                num = askAtributo("Número novo do Jogador :");
+            }while (num == -1);
+            jogador.setId(num);
+            model.addJogador(jogador, equipa);
+        }
         View.printFrase("O Jogador foi adicionado á equipa");
     }
 
