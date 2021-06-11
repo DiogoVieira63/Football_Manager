@@ -260,69 +260,71 @@ public class Controller {
                             View.printFrase("Insira uma opção válida.");
                         }
                         int posicao = scanner.nextInt();
-                        int valor = askAtributo("Velocidade: ");
-                        while (valor == 0) {
-                            valor = askAtributo("Velocidade: ");
+                        int velocidade = askAtributo("Velocidade: ");
+                        while (velocidade == 0) {
+                            velocidade = askAtributo("Velocidade: ");
                         }
-                        sb.append(valor).append(",");
-                        int valor2 = askAtributo("Resistência: ");
-                        while (valor2 == 0) {
-                            valor2 = askAtributo("Resistência: ");
+                        sb.append(velocidade).append(",");
+                        int resistencia = askAtributo("Resistência: ");
+                        while (resistencia == 0) {
+                            resistencia = askAtributo("Resistência: ");
                         }
-                        sb.append(valor2).append(",");
-                        int valor3 = askAtributo("Destreza: ");
-                        while (valor3 == 0) {
-                            valor3 = askAtributo("Destreza: ");
+                        sb.append(resistencia).append(",");
+                        int destreza = askAtributo("Destreza: ");
+                        while (destreza == 0) {
+                            destreza = askAtributo("Destreza: ");
                         }
-                        sb.append(valor3).append(",");
-                        int valor4 = askAtributo("Impulsão: ");
-                        while (valor4 == 0) {
-                            valor4 = askAtributo("Impulsão: ");
+                        sb.append(destreza).append(",");
+                        int impulsao = askAtributo("Impulsão: ");
+                        while (impulsao == 0) {
+                            impulsao = askAtributo("Impulsão: ");
                         }
-                        sb.append(valor4).append(",");
-                        int valor5 = askAtributo("Jogo de Cabeça: ");
-                        while (valor5 == 0) {
-                            valor5 = askAtributo("Jogo de Cabeça: ");
+                        sb.append(impulsao).append(",");
+                        int jogoCabeca = askAtributo("Jogo de Cabeça: ");
+                        while (jogoCabeca == 0) {
+                            jogoCabeca = askAtributo("Jogo de Cabeça: ");
                         }
-                        sb.append(valor5).append(",");
-                        int valor6 = askAtributo("Remate: ");
-                        while (valor6 == 0) {
-                            valor6 = askAtributo("Remate: ");
+                        sb.append(jogoCabeca).append(",");
+                        int remate = askAtributo("Remate: ");
+                        while (remate == 0) {
+                            remate = askAtributo("Remate: ");
                         }
-                        sb.append(valor6).append(",");
-                        int valor7 = askAtributo("Capacidade de Passe: ");
-                        while (valor7 == 0) {
-                            valor7 = askAtributo("Capacidade de Passe: ");
+                        sb.append(remate).append(",");
+                        int passe = askAtributo("Capacidade de Passe: ");
+                        while (passe == 0) {
+                            passe = askAtributo("Capacidade de Passe: ");
                         }
-                        sb.append(valor7).append(",");
-                        int valor9 = askAtributo("Capacidade Defensiva: ");
-                        while (valor9 == 0) {
-                            valor9 = askAtributo("Capacidade Defensiva: ");
+                        sb.append(passe).append(",");
+                        int capDef = askAtributo("Capacidade Defensiva: ");
+                        while (capDef == 0) {
+                            capDef = askAtributo("Capacidade Defensiva: ");
                         }
-                        sb.append(valor9).append(",");
-                        int valor10 = askAtributo("Motivação: ");
-                        while (valor10 == 0) {
-                            valor10 = askAtributo("Motivação: ");
+                        sb.append(capDef).append(",");
+                        int motivacao = askAtributo("Motivação: ");
+                        while (motivacao == 0) {
+                            motivacao = askAtributo("Motivação: ");
                         }
-                        sb.append(valor10).append(",");
-                        int valor11 = askAtributo("Posicionamento: ");
-                        while (valor11 == 0) {
-                            valor11 = askAtributo("Posicionamento: ");
+                        sb.append(motivacao).append(",");
+                        int posicionamento = askAtributo("Posicionamento: ");
+                        while (posicionamento == 0) {
+                            posicionamento = askAtributo("Posicionamento: ");
                         }
-                        sb.append(valor11).append(",");
+                        sb.append(posicionamento).append(",");
                         if (posicao == 0) {
-                            int valor12 = askAtributo("Reflexos: ");
-                            while (valor12 == 0) {
-                                valor12 = askAtributo("Reflexos: ");
+                            int reflexos = askAtributo("Reflexos: ");
+                            while (reflexos == 0) {
+                                reflexos = askAtributo("Reflexos: ");
                             }
-                            sb.append(valor12).append(",");;
-                            int valor8 = askAtributo("Elasticidade: ");
-                            while (valor8 == 0) {
-                                valor8 = askAtributo("Elasticidade: ");
+                            sb.append(reflexos).append(",");;
+                            int elasticidade = askAtributo("Elasticidade: ");
+                            while (elasticidade == 0) {
+                                elasticidade = askAtributo("Elasticidade: ");
                             }
-                            sb.append(valor8);
+                            sb.append(elasticidade);
                             GuardaRedes guardaRedes = GuardaRedes.parseControlador(sb.toString());
+                            View.clearScreen();
                             addJogador(guardaRedes, titulosEquipas);
+                            break;
                         }
                         if (posicao == 1) {
                             int marcacao = askAtributo("Marcação: ");
@@ -339,13 +341,17 @@ public class Controller {
                             int lateral = scanner.nextInt();
                             if (lateral == 0) {
                                 Defesa defesa = Defesa.parseControlador(sb.toString(), false);
+                                addJogador(defesa, titulosEquipas);
+                                pressAnyKeyToContinue();
                             } else {
-                                int cruzamento = askAtributo("Cruza: ");
+                                int cruzamento = askAtributo("Cruzamento: ");
                                 while (cruzamento == 0) {
-                                    cruzamento = askAtributo("Marcação: ");
+                                    cruzamento = askAtributo("Cruzamento: ");
                                 }
                                 sb.append(",").append(cruzamento);
                                 Defesa defesaLateral = Defesa.parseControlador(sb.toString(), true);
+                                addJogador(defesaLateral, titulosEquipas);
+                                pressAnyKeyToContinue();
                             }
                         }
                         if (posicao == 2) {
@@ -362,6 +368,8 @@ public class Controller {
                             int lateral = scanner.nextInt();
                             if (lateral == 0) {
                                 Medio medio = Medio.parseControlador(sb.toString(), false);
+                                addJogador(medio, titulosEquipas);
+                                pressAnyKeyToContinue();
                             } else {
                                 int cruzamento = askAtributo("Cruza: ");
                                 while (cruzamento == 0) {
@@ -369,6 +377,8 @@ public class Controller {
                                 }
                                 sb.append(",").append(cruzamento);
                                 Medio medioLateral = Medio.parseControlador(sb.toString(), true);
+                                addJogador(medioLateral, titulosEquipas);
+                                pressAnyKeyToContinue();
                             }
                         }
                         if (posicao == 3) {
@@ -385,6 +395,8 @@ public class Controller {
                             int lateral = scanner.nextInt();
                             if (lateral == 0) {
                                 Avancado avancado = Avancado.parseControlador(sb.toString(), false);
+                                addJogador(avancado, titulosEquipas);
+                                pressAnyKeyToContinue();
                             } else {
                                 int cruzamento = askAtributo("Cruza: ");
                                 while (cruzamento == 0) {
@@ -392,11 +404,14 @@ public class Controller {
                                 }
                                 sb.append(",").append(cruzamento);
                                 Avancado avancadoLateral = Avancado.parseControlador(sb.toString(), true);
+                                addJogador(avancadoLateral, titulosEquipas);
                                 pressAnyKeyToContinue();
                             }
                         }
                     }
-                    //add equipa
+                    if (str.equals("1")){
+
+                    }
                     break;
                 case 4:
                     View.printTitulo("Load from file");
@@ -465,7 +480,7 @@ public class Controller {
 
 
     public void addJogador(Jogador jogador, List<String> titulosEquipas) throws JogadorExistenteException {
-        View.printTitulo("Selecionar Equipa");
+        View.printTitulo("Selecione Equipa para adicionar o seu Jogador");
         View.printSimpleOrganizedCollection(titulosEquipas);
         View.printPrompt("Choose Option");
         int opcao;
