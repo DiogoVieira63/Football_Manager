@@ -473,7 +473,8 @@ public class Controller {
     public static Jogador askJogadores(){
         Scanner scanner = new Scanner(System.in);
         StringBuilder sb = new StringBuilder();
-        View.printTitulo("Nome do Jogador: ");
+        View.clearScreen();
+        View.printPrompt("Nome do Jogador");
         String nome = scanner.next();
         sb.append(nome).append(",");
         View.clearScreen();
@@ -577,7 +578,7 @@ public class Controller {
         return null;
     }
 
-    public void addJogador(Jogador jogador, List<String> titulosEquipas) throws JogadorExistenteException {
+    public void addJogador(Jogador jogador, List<String> titulosEquipas) {
         View.printTitulo("Selecione Equipa para adicionar o seu Jogador");
         View.printSimpleOrganizedCollection(titulosEquipas,true);
         View.printPrompt("Choose Option");
@@ -586,17 +587,17 @@ public class Controller {
         if ((opcao = selecionarEquipa(titulosEquipas)) != 0){
             equipa = titulosEquipas.get(opcao-1);
         }
-        try{
-            model.addJogador(jogador, equipa);
-        }
-        catch (JogadorExistenteException existenteException){
-            View.printFrase("O número do jogador já existe na equipa");
-            int num;
-            do {
-                num = askAtributo("Número novo do Jogador :");
-            }while (num == -1);
-            jogador.setId(num);
-            model.addJogador(jogador, equipa);
+        boolean adicionado = false;
+        while (!adicionado) {
+            try {
+                model.addJogador(jogador, equipa);
+                adicionado = true;
+            } catch (JogadorExistenteException existenteException) {
+                View.printFrase("O número do jogador já existe na equipa");
+                pressAnyKeyToContinue();
+                int num = askAtributo("Número novo do Jogador");
+                jogador.setId(num);
+            }
         }
         View.printFrase("O Jogador foi adicionado à equipa");
     }
