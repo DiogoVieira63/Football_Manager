@@ -8,7 +8,7 @@ import java.util.function.IntBinaryOperator;
 public class View {
     private int menu;
 
-private static int largura = 40;
+    private static int largura = 40;
 
 
     public View (){
@@ -61,10 +61,11 @@ private static int largura = 40;
         System.out.flush();
     }
 
-    public static void printSimpleOrganizedCollection(Collection<String> collection){
+    public static void printSimpleOrganizedCollection(Collection<String> collection,boolean withNumber){
         int number = 1;
         for(String str: collection){
-            System.out.println(centerString(largura,number +":"+ str));
+            if (withNumber)System.out.println(centerString(largura,number +":"+ str));
+            else System.out.println(centerString(largura, str));
             number++;
         }
     }
@@ -72,8 +73,9 @@ private static int largura = 40;
     @SuppressWarnings("unchecked")
     public static void printPairOrganizedCollection (Collection <Object> collection){
         for (Object obj : collection){
-            Map.Entry<Object,Object> entry = (Map.Entry<Object,Object>) obj;
-            System.out.println(centerString(largura,entry.getKey() + " " + entry.getValue()));
+            Map.Entry<Integer,Object> entry = (Map.Entry<Integer,Object>) obj;
+            if (entry.getKey() != -1)System.out.println(centerString(largura,entry.getKey() + " " + entry.getValue()));
+            else System.out.println(centerString(largura, " " + entry.getValue()));
         }
     }
 
@@ -82,6 +84,7 @@ private static int largura = 40;
         Map.Entry<Object,Object> entry = (Map.Entry<Object,Object>) obj;
         System.out.println(centerString(largura,entry.getKey() + " " + entry.getValue()));
     }
+
 
 
 

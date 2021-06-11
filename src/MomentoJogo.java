@@ -1,13 +1,15 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.TimerTask;
 
-public class MomentoJogo extends TimerTask {
+public class MomentoJogo {
     private Zonas zonaDoCampo;
     private PosseDeBola posseDeBola;
     private int golosCasa;
     private int golosFora;
     private List<Integer> diferencaCasaFora;
+
 
     private enum  PosseDeBola{CASA,FORA}
 
@@ -31,7 +33,19 @@ public class MomentoJogo extends TimerTask {
         posseDeBola = PosseDeBola.CASA;
         golosCasa = 0;
         golosFora = 0;
-        this.diferencaCasaFora = diferencaCasaFora;
+        this.diferencaCasaFora = new ArrayList<>(diferencaCasaFora);
+    }
+    public int getGolosCasa (){
+        return golosCasa;
+    }
+
+    public int getGolosFora(){
+        return golosFora;
+    }
+
+
+    public void setDiferencaCasaFora (List<Integer> list){
+        this.diferencaCasaFora = new ArrayList<>(list);
     }
 
     public Acontecimentos getAcontecimento () {
@@ -86,9 +100,13 @@ public class MomentoJogo extends TimerTask {
         int number = random.nextInt(100);
         if (number < prob) return true;
         else return false;
-
-
     }
+
+    public void segundaParte() {
+        this.zonaDoCampo= Zonas.ZONA2;
+        this.posseDeBola = PosseDeBola.FORA;
+    }
+
 
     public void changePosseBola (){
         if (posseDeBola == PosseDeBola.CASA) posseDeBola = PosseDeBola.FORA;
@@ -127,20 +145,18 @@ public class MomentoJogo extends TimerTask {
     }
 
 
-    public static int minutes = 0;
-
     public void run (){
-        minutes++;
-
         Acontecimentos acontecimento = getAcontecimento();
         int probabilidade = 50 + getProbabilidade(diferencaCasaFora);
-        System.out.println("Probabilidade -> " + probabilidade);
-        boolean sucesso = acontcimentoSucesso(probabilidade,Acontecimentos.OPORTUNIDADE_GOLO);
-        System.out.println(zonaDoCampo + " " + acontecimento + " " + posseDeBola + " " + sucesso);
+        boolean sucesso = acontcimentoSucesso(probabilidade,acontecimento);
         boolean golo = change (acontecimento,sucesso);
         if (golo){
-            if (posseDeBola == PosseDeBola.FORA) this.golosCasa++;
-            else this.golosFora++;
+            if (posseDeBola == PosseDeBola.FORA) {
+                this.golosCasa++;
+            }
+            else {
+                this.golosFora++;
+            }
         }
     }
 

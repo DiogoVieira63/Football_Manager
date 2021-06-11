@@ -157,15 +157,21 @@ public class Avancado extends Jogador implements Serializable{
         return new Avancado(this);
     }
 
-    public List<Object> infoJogador (){
-        List<Object> list = super.infoJogador();
+    public List<String> infoJogador (){
+        List<String> list = super.infoJogador();
         if (lateral)
-            list.set(2,Map.entry("Posição:","Avancado Lateral"));
+            list.set(2,"Posição: Avancado Lateral");
         else
-            list.set(2,Map.entry("Posição:","Avancado Central"));
-        list.add(Map.entry("Finalização:",finalizacao));
-        list.add(Map.entry("",""));
-        list.add(Map.entry("Overall:",habilidadeGeralEspecifica()));
+            list.set(2,"Posição: Avancado Central");
+        list.add("Finalização:" + finalizacao);
+        list.add("");
+        list.add("Overall:" + habilidadeGeralEspecifica());
         return list;
+    }
+
+    @Override
+    public String getPosition() {
+        String str = lateral ? "L" : "C";
+        return "A" + str;
     }
 }

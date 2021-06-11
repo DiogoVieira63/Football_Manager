@@ -61,23 +61,31 @@ public class EsquemaTatico implements Serializable {
         return new EsquemaTatico(this);
     }
 
-    public List<Object> posicoes (){
-        List<Object> list = new ArrayList<>();
-        list.add(Map.entry("Posicção 1", "Guara-redes(GR)"));
-        list.add(Map.entry ("Posição 2","Defesa Lateral(DL)"));
-        list.add(Map.entry ("Posição 3","Defesa Central(DC)"));
-        list.add(Map.entry ("Posição 4","Defesa Central(DC)"));
-        list.add(Map.entry ("Posição 5","Defesa Lateral(DL)"));
-        list.add(Map.entry("Posição 6:","Medio Centro(MC)"));
-        list.add(Map.entry("Posição 7:","Medio Centro(MC)"));
-        if (medios == 4) list.add(Map.entry("Posição 8:","Medio Lateral(ML)"));
-        else list.add(Map.entry("Posição 8:","Medio Centro(MC)"));
-        if (medios == 4) list.add(Map.entry("Posição 9:","Medio Lateral(ML)"));
-        else list.add(Map.entry("Posição 9:","Avancado Centro(MC("));
-        if (atacantes == 2) list.add(Map.entry("Posição 10:","Avancado Centro(AC)"));
-        else list.add(Map.entry("Posição 10:","Avancado Lateral(AC)"));
-        if (atacantes == 2) list.add(Map.entry("Posição 11:","Avancado Centro(AC)"));
-        else list.add(Map.entry("Posição 11:","Avancado Lateral(AL)"));
+    public List<String> posicoes (){
+        List<String> list = new ArrayList<>();
+        list.add("Posição 1:Guarda-redes(GR)");
+        list.add("Posição 2:Defesa Lateral(DL)");
+        list.add("Posição 3:Defesa Central(DC)");
+        list.add("Posição 4:Defesa Central(DC)");
+        list.add("Posição 5:Defesa Lateral(DL)");
+        list.add("Posição 6:Medio Centro(MC)");
+        list.add("Posição 7:Medio Centro(MC)");
+        if (medios == 4)
+            list.add("Posição 8:Medio Lateral(ML)");
+        else
+            list.add("Posição 8:Medio Centro(MC)");
+        if (medios == 4)
+            list.add("Posição 9:Medio Lateral(ML)");
+        else
+            list.add("Posição 9:Avancado Centro(AC)");
+        if (atacantes == 2)
+            list.add("Posição 10:Avancado Centro(AC)");
+        else
+            list.add("Posição 10:Avancado Lateral(AC)");
+        if (atacantes == 2)
+            list.add("Posição 11:Avancado Centro(AC)");
+        else
+            list.add("Posição 11:Avancado Lateral(AL)");
         return list;
     }
 

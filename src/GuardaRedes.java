@@ -134,12 +134,12 @@ public class GuardaRedes extends Jogador implements Serializable {
     }
 
 
-    public List<Object> infoJogador (){
-        List<Object> list = super.infoJogador();
-        list.add(Map.entry("Elasticidade:",elasticidade));
-        list.add(Map.entry("Reflexos:",reflexos));
-        list.add(Map.entry("",""));
-        list.add(Map.entry("Overall:",habilidadeGeralEspecifica()));
+    public List<String> infoJogador (){
+        List<String> list = super.infoJogador();
+        list.add("Elasticidade:" + elasticidade);
+        list.add("Reflexos:" +reflexos);
+        list.add("");
+        list.add("Overall:" +habilidadeGeralEspecifica());
         return list;
     }
     /*
@@ -147,5 +147,9 @@ public class GuardaRedes extends Jogador implements Serializable {
         String jog = super.toString();
     }
     */
+    @Override
+    public String getPosition() {
+        return "GR";
+    }
 
 }

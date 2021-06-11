@@ -1,4 +1,5 @@
 import Exceptions.JogadorExistenteException;
+import Exceptions.NaoHaJogadorPosicaoException;
 
 import java.io.Serializable;
 import java.util.*;
@@ -55,7 +56,7 @@ public class CatalogoEquipas implements Serializable {
         return catalogoEquipas.get(equipa).organizadoNumero();
     }
 
-    public List<Object> infoJogador (String equipa, int jogador){
+    public List<String> infoJogador (String equipa, int jogador){
         return catalogoEquipas.get(equipa).infoJogador(jogador);
     }
 
@@ -66,6 +67,7 @@ public class CatalogoEquipas implements Serializable {
             e.printStackTrace();
         }
     }
+
 
     public Equipa getEquipa (String equipa){
         return catalogoEquipas.get(equipa).clone();
@@ -79,11 +81,26 @@ public class CatalogoEquipas implements Serializable {
         return catalogoEquipas.get(equipa).getNumeros();
     }
 
-    public List<Object> possiveisPosicao(String equipa, String posicao, boolean lateral) {
-        return catalogoEquipas.get(equipa).possiveisPosicao(posicao,lateral);
+    public List<Object> possiveisPosicao(String equipa, String posicao, boolean lateral,List<Integer> usados) throws NaoHaJogadorPosicaoException {
+        List<Object> list = catalogoEquipas.get(equipa).possiveisPosicao(posicao,lateral,usados);
+        if (list.size() == 0) throw new NaoHaJogadorPosicaoException("Não há jogadores para esta posição");
+        return list;
     }
+
 
     public void addJogador(Jogador jogador, String equipa) throws JogadorExistenteException {
         catalogoEquipas.get(equipa).addJogador(jogador.clone());
+    }
+
+    public List<String> listJogadores(String equipa, Collection<Integer> collection){
+        return catalogoEquipas.get(equipa).listJogadores (collection);
+    }
+
+    public int OverallTitulares(String equipa,List<Integer> titulares, EsquemaTatico esquemaTatico) {
+        return catalogoEquipas.get(equipa).overallList (titulares,esquemaTatico);
+    }
+
+    public boolean isEmptyEquipa(String equipa) {
+        return catalogoEquipas.get(equipa).isEmpty();
     }
 }

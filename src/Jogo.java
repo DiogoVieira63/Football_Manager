@@ -106,7 +106,6 @@ public class Jogo implements Serializable {
             int in = Integer.parseInt(sub[1]);
             if (equipaJogoCasa.isTitular(out) && equipaJogoCasa.isSuplente(in)) equipaJogoFora.addSubstituicao(out,in);
         }
-
         return new Jogo(equipaJogoCasa,equipaJogoFora,golosCasa, golosFora, dataJogo,true);
     }
 
@@ -179,9 +178,43 @@ public class Jogo implements Serializable {
         return list;
     }
 
+    public static void wait(int ms)
+    {
+        try
+        {
+            Thread.sleep(ms);
+        }
+        catch(InterruptedException ex)
+        {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+
     public void calculaJogo (Map <Integer,Integer> overallCasa, Map<Integer,Integer> overallFora){
         List <Integer> list = diferencas(overallCasa,overallFora);
         MomentoJogo mj = new MomentoJogo(list);
+
+        for (int tempo = 0; tempo <= 90; tempo++){
+            if (tempo == 45){
+                View.clearScreen();
+                View.printTitulo("INTERVALO");
+                if (casa.haSubstituicoes() || fora.haSubstituicoes()){
+                    mj.segundaParte();
+                    casa.fazeSubstituicoes();
+                    fora.fazeSubstituicoes();
+                    mj.setDiferencaCasaFora(diferencas(overallCasa,overallFora));
+                    View.printFrase("Substituições a serem efetuadas");
+                }
+                wait(3000);
+            }
+            View.clearScreen();
+            View.printFrase("Tempo:" + tempo);
+            for (int i = 0; i < 3;i++) mj.run();
+            View.printFrase(mj.getGolosCasa() + " - " + mj.getGolosFora());
+            wait(250);
+        }
+/*
         Timer t = new Timer();
         TimerTask tt = new TimerTask() {
             private int count = 0;
@@ -189,13 +222,18 @@ public class Jogo implements Serializable {
             public void run() {
                 count++;
                 mj.run();
-                if (count >= 180) {
+                if (count >= 90) {
                     t.cancel();
                     t.purge();
                 }
             }
         };
         t.schedule(tt,0,500);
+ */
+        this.golosCasa = mj.getGolosCasa();
+        this.golosFora = mj.getGolosFora();
+        System.out.println(golosCasa);
+        System.out.println(golosFora);
         this.realizado = true;
     }
 

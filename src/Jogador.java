@@ -118,19 +118,18 @@ public abstract class Jogador implements Serializable {
 
     public abstract Jogador clone();
 
-    public List<Object> infoJogador (){
-        List <Object> list = new ArrayList<>();
-        list.add(Map.entry("Name:",name));
-        list.add(Map.entry("Número:",id));
-        list.add(Map.entry("Posição:",this.getClass().getSimpleName()));
-        list.add(Map.entry("Historico",""));
-        for (String str : historico)
-            list.add(Map.entry(str,""));
-        list.add(Map.entry("",""));
-        list.add(Map.entry("Atributos",""));
+    public List<String> infoJogador (){
+        List <String> list = new ArrayList<>();
+        list.add("Name:" +name);
+        list.add("Número:" +id);
+        list.add("Posição:" +this.getClass().getSimpleName());
+        list.add("Historico");
+        list.addAll(historico);;
+        list.add("");
+        list.add("Atributos");
         for (List<Atributo> listas:  this.atributos.values())
             for (Atributo atributo : listas)
-                list.add(Map.entry(atributo.getClass().getSimpleName() + ":", atributo.valor()));
+                list.add(atributo.getClass().getSimpleName() + ":" + atributo.valor());
         return list;
     }
 
@@ -147,6 +146,25 @@ public abstract class Jogador implements Serializable {
 
     public boolean isLateral (){
         return false;
+    }
+
+    public String primeiroUlitmoNome (){
+        String[]nomes = name.split(" ");
+        return nomes.length == 1 ? nomes[0] : nomes[0] + " " + nomes[nomes.length-1];
+    }
+
+    public abstract String getPosition();
+
+    public double percentagemPosicao (String posicao, boolean lateral){
+        return this.getClass().getName().equals(posicao) && this.isLateral() == lateral ? 1.0 : 0.75;
+    }
+
+    public String toString (){
+        return ("(" + getPosition() + ") " + primeiroUlitmoNome());
+    }
+
+    public String toString (String pos){
+        return ("(" + pos + ") " + primeiroUlitmoNome());
     }
     /*
     public String toString() {

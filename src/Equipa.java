@@ -139,15 +139,15 @@ public class Equipa implements Serializable {
         Set<Integer> set = new TreeSet<>(listaJogadores.keySet());
         List <Object> list = new ArrayList<>();
         for (Integer number : set){
-            String name = listaJogadores.get(number).getName();
-            list.add(Map.entry(number,name));
+            Jogador jogador = listaJogadores.get(number);
+            list.add(Map.entry(number," - " + jogador + " - " + jogador.habilidadeGeralEspecifica()));
         }
-        list.add(Map.entry("",""));
-        list.add(Map.entry("Overall Equipa:",this.habilidadeEquipa()));
+        list.add(Map.entry(-1,""));
+        list.add(Map.entry(-1, "Overall Equipa:" + this.habilidadeEquipa()));
         return list;
     }
 
-    public List<Object> infoJogador (int number){
+    public List<String> infoJogador (int number){
         return listaJogadores.get(number).infoJogador();
     }
 
@@ -173,14 +173,48 @@ public class Equipa implements Serializable {
     }
 
 
-    public List<Object> possiveisPosicao (String posicao,boolean lateral){
+    public List<Object> possiveisPosicao (String posicao,boolean lateral, List<Integer> usados){
+        Set<Integer> set = new TreeSet<>(listaJogadores.keySet());
         List<Object> list = new ArrayList<>();
-        for (Jogador jogador : listaJogadores.values()){
-            if (jogador.getClass().getName().equals(posicao) || (!posicao.equals("GuardaRedes") && lateral == jogador.isLateral())){
-                list.add(Map.entry(jogador.getId() + " - " + jogador.getName() +  " - ",jogador.habilidadeGeralEspecifica()));
+        for (Integer number: set){
+            Jogador jogador = listaJogadores.get(number);
+            String className = jogador.getClass().getName();
+            if (className.equals(posicao) || (!posicao.equals("GuardaRedes") && lateral == jogador.isLateral())){
+                if (!usados.contains(jogador.getId())) {
+                    int habilidade = jogador.habilidadeGeralEspecifica();
+                    habilidade *= jogador.percentagemPosicao(posicao,lateral);
+                    if (posicao.equals("GuardaRedes") || !(className.equals("GuardaRedes")))
+                        list.add(Map.entry(jogador.getId(), " - " + jogador +  " - " + habilidade));
+                }
             }
         }
         return list;
     }
 
+    public int overallList(List<Integer> titulares, EsquemaTatico esquemaTatico) {
+        int total = 0;
+        int posicao = 1;
+        for (Integer number : titulares){
+            Jogador jogador = listaJogadores.get(number);
+            Map.Entry<String,Boolean> info = esquemaTatico.infoPosicao(posicao);
+            double percentagem = (jogador.getClass().getName().equals(info.getKey()) && jogador.isLateral() == info.getValue()) ? 1.0 : 0.75;
+            total += jogador.habilidadeGeralEspecifica() * percentagem;
+            posicao++;
+        }
+        return (int) total/titulares.size();
+    }
+
+
+    public List<String> listJogadores(Collection<Integer> collection){
+        List<String> list = new ArrayList<>();
+        for (Integer number : collection){
+            Jogador jogador = listaJogadores.get(number);
+            list.add(jogador.getId() + " - "  + jogador.toString());
+        }
+        return list;
+    }
+
+    public boolean isEmpty() {
+        return listaJogadores.isEmpty();
+    }
 }

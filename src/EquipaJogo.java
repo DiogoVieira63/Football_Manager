@@ -46,8 +46,6 @@ public class EquipaJogo implements Serializable {
             this.suplentes.remove(n2);
             int index = this.titulares.indexOf(n1);
             this.titulares.set(index,n2);
-            Substituicao substituicao = new Substituicao(n1,n2);
-            this.substituições.add(substituicao);
         }
     }
 
@@ -83,6 +81,14 @@ public class EquipaJogo implements Serializable {
 
     public void setSuplentes(Set<Integer> suplentes) {
         this.suplentes = new HashSet<Integer>(suplentes);
+    }
+
+    public void setEsquemaTatico(EsquemaTatico esquemaTatico) {
+        this.esquemaTatico = esquemaTatico;
+    }
+
+    public EsquemaTatico getEsquemaTatico() {
+        return esquemaTatico;
     }
 
     public List<Substituicao> getSubstituições() {
@@ -142,7 +148,7 @@ public class EquipaJogo implements Serializable {
         return new EquipaJogo(this);
     }
 
-    public List<Object> posicoes (){
+    public List<String> posicoes (){
         return esquemaTatico.posicoes();
     }
 
@@ -159,5 +165,28 @@ public class EquipaJogo implements Serializable {
                 ", suplentes=" + suplentes +
                 ", substituições=" + substituições +
                 '}';
+    }
+
+    public boolean inSubstituicao (int number){
+        for (Substituicao sub : substituições){
+            if (sub.getIn() == number || sub.getOut() == number) return  true;
+        }
+        return false;
+    }
+
+
+    public void fazeSubstituicoes (){
+        for (Substituicao sub : substituições){
+            try {
+                substituicao(sub.getOut(),sub.getIn());
+            } catch (SubstituicaoException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    public boolean haSubstituicoes (){
+        return substituições.size() != 0;
     }
 }

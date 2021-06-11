@@ -160,15 +160,21 @@ public class Defesa extends Jogador implements Serializable {
     }
 
 
-    public List<Object> infoJogador (){
-        List<Object> list = super.infoJogador();
+    public List<String> infoJogador (){
+        List<String> list = super.infoJogador();
         if (lateral)
-            list.set(2,Map.entry("Posição:","Defesa Lateral"));
+            list.set(2,"Posição: Defesa Lateral");
         else
-            list.set(2,Map.entry("Posição:","Defesa Central"));
-        list.add(Map.entry("Marcação:",marcacao));
-        list.add(Map.entry("",""));
-        list.add(Map.entry("Overall:",habilidadeGeralEspecifica()));
+            list.set(2,"Posição: Defesa Central");
+        list.add("Marcação:" + marcacao);
+        list.add("");
+        list.add("Overall:" + habilidadeGeralEspecifica());
         return list;
+    }
+
+    @Override
+    public String getPosition() {
+        String str = lateral ? "L" : "C";
+        return "D" + str ;
     }
 }

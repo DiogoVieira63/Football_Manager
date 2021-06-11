@@ -160,16 +160,22 @@ public class Medio extends Jogador implements Serializable {
         return new Medio(this);
     }
 
-    public List<Object> infoJogador (){
-        List<Object> list = super.infoJogador();
+    public List<String> infoJogador (){
+        List<String> list = super.infoJogador();
         if (lateral)
-            list.set(2,Map.entry("Posição:","Medio Lateral"));
+            list.set(2,"Posição: Medio Lateral");
         else
-            list.set(2,Map.entry("Posição:","Medio Central"));
-        list.add(Map.entry("RecuperaçãoDeBola:",recuperacaoBola));
-        list.add(Map.entry("",""));
-        list.add(Map.entry("Overall:",habilidadeGeralEspecifica()));
+            list.set(2,"Posição: Medio Central");
+        list.add("RecuperaçãoDeBola:" +recuperacaoBola);
+        list.add("");
+        list.add("Overall:" +habilidadeGeralEspecifica());
         return list;
+    }
+
+    @Override
+    public String getPosition() {
+        String str = lateral ? "L" : "C";
+        return "M" + str ;
     }
 
 }
