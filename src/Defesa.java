@@ -105,19 +105,19 @@ public class Defesa extends Jogador implements Serializable {
 
         CapacidadeDefensiva capacidadeDefensiva = new CapacidadeDefensiva(Integer.parseInt(campos[9]));
         Jogador.addToMapa(capacidadeDefensiva,0.15,mapa);
-        Motivacao motivacao = new Motivacao(Integer.parseInt(campos[10]));
+        Motivacao motivacao = new Motivacao(50);
         Jogador.addToMapa(motivacao,0.05,mapa);
-        Posicionamento posicionamento = new Posicionamento(Integer.parseInt(campos[11]));
+        Posicionamento posicionamento = new Posicionamento(Integer.parseInt(campos[10]));
         Jogador.addToMapa(posicionamento,0.1,mapa);
 
-        int marcacao = Integer.parseInt(campos[12]);
+        int marcacao = Integer.parseInt(campos[11]);
 
         if (lateral){
             Jogador.addToMapa(jogocabeca, 0.05, mapa);
             Jogador.addToMapa(impulso, 0.05, mapa);
             Jogador.addToMapa(velocidade, 0.1, mapa);
             Jogador.addToMapa(capacidadePasse, 0.07, mapa);
-            Cruzamento cruzamento = new Cruzamento(Integer.parseInt(campos[10]));
+            Cruzamento cruzamento = new Cruzamento(Integer.parseInt(campos[12]));
             Jogador.addToMapa(cruzamento, 0.1, mapa);
         }
         else {

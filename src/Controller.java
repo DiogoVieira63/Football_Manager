@@ -411,11 +411,6 @@ public class Controller {
             capDef = askAtributo("Capacidade Defensiva: ");
         }while (capDef == -1);
         sb.append(capDef).append(",");
-        int motivacao;
-        do {
-            motivacao = askAtributo("Motivação: ");
-        }while (motivacao == -1);
-        sb.append(motivacao).append(",");
         int posicionamento;
         do {
             posicionamento = askAtributo("Posicionamento: ");

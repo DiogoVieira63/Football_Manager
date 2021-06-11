@@ -96,11 +96,11 @@ public class GuardaRedes extends Jogador implements Serializable {
         int elasticidade = Integer.parseInt(campos[9]);
         CapacidadeDefensiva capacidadeDefensiva = new CapacidadeDefensiva(Integer.parseInt(campos[10]));
         Jogador.addToMapa(capacidadeDefensiva, 0.01, mapa);
-        Motivacao motivacao = new Motivacao(Integer.parseInt(campos[11]));
+        Motivacao motivacao = new Motivacao(50);
         Jogador.addToMapa(motivacao,0.05, mapa);
-        Posicionamento posicionamento = new Posicionamento(Integer.parseInt(campos[12]));
+        Posicionamento posicionamento = new Posicionamento(Integer.parseInt(campos[11]));
         Jogador.addToMapa(posicionamento,0.10, mapa);
-        int reflexos = Integer.parseInt(campos[13]);
+        int reflexos = Integer.parseInt(campos[12]);
 
         List<String> historico = new ArrayList<>();
 

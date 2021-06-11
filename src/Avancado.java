@@ -104,18 +104,18 @@ public class Avancado extends Jogador implements Serializable{
 
         CapacidadeDefensiva capacidadeDefensiva = new CapacidadeDefensiva(Integer.parseInt(campos[9]));
         Jogador.addToMapa(capacidadeDefensiva,0.01,mapa);
-        Motivacao motivacao = new Motivacao(Integer.parseInt(campos[10]));
+        Motivacao motivacao = new Motivacao(50);
         Jogador.addToMapa(motivacao,0.05,mapa);
-        Posicionamento posicionamento = new Posicionamento(Integer.parseInt(campos[11]));
+        Posicionamento posicionamento = new Posicionamento(Integer.parseInt(campos[10]));
         Jogador.addToMapa(posicionamento,0.05,mapa);
-        int finalizacao = Integer.parseInt(campos[12]);
+        int finalizacao = Integer.parseInt(campos[11]);
 
         if (lateral){
             Jogador.addToMapa(remate, 0.15, mapa);
             Jogador.addToMapa(jogocabeca, 0.05, mapa);
             Jogador.addToMapa(impulso, 0.05, mapa);
             Jogador.addToMapa(destreza, 0.1, mapa);
-            Cruzamento cruzamento = new Cruzamento(Integer.parseInt(campos[13]));
+            Cruzamento cruzamento = new Cruzamento(Integer.parseInt(campos[12]));
             Jogador.addToMapa(cruzamento, 0.1, mapa);
         }
         else {
