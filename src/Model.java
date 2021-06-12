@@ -1,3 +1,4 @@
+import Exceptions.EquipaJaExisteException;
 import Exceptions.JogadorExistenteException;
 import Exceptions.NaoHaJogadorPosicaoException;
 
@@ -23,7 +24,7 @@ public class Model implements Serializable {
     }
 
 
-    public void addEquipa (Equipa equipa){
+    public void addEquipa (Equipa equipa) throws EquipaJaExisteException {
         catalogoEquipas.adicionarEquipa(equipa);
     }
 
@@ -125,4 +126,7 @@ public class Model implements Serializable {
         catalogoEquipas.addJogador(jogador, equipa);
     }
 
+    public boolean containsEquipa(String nomeEquipa) {
+        return catalogoEquipas.containsEquipa (nomeEquipa);
+    }
 }
