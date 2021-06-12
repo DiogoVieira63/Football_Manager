@@ -199,6 +199,7 @@ public class Jogo implements Serializable {
             if (tempo == 45){
                 View.clearScreen();
                 View.printTitulo("INTERVALO");
+                View.printFrase(mj.getGolosCasa() + " - " + mj.getGolosFora());
                 if (casa.haSubstituicoes() || fora.haSubstituicoes()){
                     mj.segundaParte();
                     casa.fazeSubstituicoes();
@@ -209,31 +210,16 @@ public class Jogo implements Serializable {
                 wait(3000);
             }
             View.clearScreen();
-            View.printFrase("Tempo:" + tempo);
             for (int i = 0; i < 3;i++) mj.run();
+            View.printFrase("Tempo:" + tempo);
             View.printFrase(mj.getGolosCasa() + " - " + mj.getGolosFora());
+            for (int i = 0; i< 3;i++){
+                View.printFrase(casa.getSubString(i) + "    " + fora.getSubString(i));
+            }
             wait(250);
         }
-/*
-        Timer t = new Timer();
-        TimerTask tt = new TimerTask() {
-            private int count = 0;
-            @Override
-            public void run() {
-                count++;
-                mj.run();
-                if (count >= 90) {
-                    t.cancel();
-                    t.purge();
-                }
-            }
-        };
-        t.schedule(tt,0,500);
- */
         this.golosCasa = mj.getGolosCasa();
         this.golosFora = mj.getGolosFora();
-        System.out.println(golosCasa);
-        System.out.println(golosFora);
         this.realizado = true;
     }
 
