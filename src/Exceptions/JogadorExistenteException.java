@@ -1,6 +1,9 @@
 package Exceptions;
 
-public class JogadorExistenteException extends Exception{
+import java.io.Serializable;
+
+public class JogadorExistenteException extends Exception {
+
     public JogadorExistenteException(){
         super();
     }

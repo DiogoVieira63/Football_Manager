@@ -179,6 +179,7 @@ public class EquipaJogo implements Serializable {
         for (Substituicao sub : substituições){
             try {
                 substituicao(sub.getOut(),sub.getIn());
+                sub.setDone(true);
             } catch (SubstituicaoException e) {
                 e.printStackTrace();
             }
@@ -188,5 +189,13 @@ public class EquipaJogo implements Serializable {
 
     public boolean haSubstituicoes (){
         return substituições.size() != 0;
+    }
+
+    public String getSubString (int number){
+        if (number < substituições.size()){
+            Substituicao sub = substituições.get(number);
+            if (sub.getDone()) return sub.getOut() + "->" + sub.getIn();
+        }
+        return "      ";
     }
 }
