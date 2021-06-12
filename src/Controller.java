@@ -473,7 +473,8 @@ public class Controller {
     public static Jogador askJogadores(){
         Scanner scanner = new Scanner(System.in);
         StringBuilder sb = new StringBuilder();
-        View.printTitulo("Nome do Jogador: ");
+        View.clearScreen();
+        View.printPrompt("Nome do Jogador");
         String nome = scanner.next();
         sb.append(nome).append(",");
         View.clearScreen();
