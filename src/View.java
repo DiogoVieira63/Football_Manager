@@ -32,7 +32,7 @@ public class View {
         System.out.print("\n"+ str + ":");
     }
 
-    public static void menuPrincipal (){
+    public void menuPrincipal (){
         printTitulo("FOOTBALL MANAGER");
         printOpcao("1.Simular Jogo");
         printOpcao("2.Catálogo de Equipas");
@@ -45,6 +45,15 @@ public class View {
 
     public static void printFrase (String str){
         System.out.println(centerString(largura,str));
+    }
+
+    public void menu (int nr){
+        clearScreen();
+        switch (nr){
+            case 0:
+                menuPrincipal();
+                break;
+        }
     }
 
     public static void clearScreen() {

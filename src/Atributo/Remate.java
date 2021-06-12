@@ -1,9 +1,6 @@
 package Atributo;
 
-import java.io.Serializable;
-
-public class Remate implements Atributo, Serializable {
-    private static final long serialVersionUID = -1782400894232428529L;
+public class Remate implements Atributo{
     private int valor;
 
     public Remate(int valor){

@@ -1,9 +1,6 @@
 package Atributo;
 
-import java.io.Serializable;
-
-public class Resistencia implements Atributo, Serializable {
-    private static final long serialVersionUID = 7188897572938923615L;
+public class Resistencia implements Atributo{
     private int valor;
 
     public Resistencia(int valor){

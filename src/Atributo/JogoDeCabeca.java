@@ -1,9 +1,6 @@
 package Atributo;
 
-import java.io.Serializable;
-
-public class JogoDeCabeca implements Atributo, Serializable {
-    private static final long serialVersionUID = -472912748115978338L;
+public class JogoDeCabeca implements Atributo{
     private int valor;
 
     public JogoDeCabeca(int valor){

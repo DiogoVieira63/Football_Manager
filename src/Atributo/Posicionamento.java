@@ -1,9 +1,6 @@
 package Atributo;
 
-import java.io.Serializable;
-
-public class Posicionamento implements Atributo, Serializable {
-    private static final long serialVersionUID = -6306344867785119697L;
+public class Posicionamento implements Atributo {
     private int valor;
 
     public Posicionamento(int valor){

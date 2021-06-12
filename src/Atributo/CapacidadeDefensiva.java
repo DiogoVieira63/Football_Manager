@@ -1,10 +1,8 @@
 package Atributo;
 
-import java.io.Serializable;
-
-public class CapacidadeDefensiva implements Atributo, Serializable {
-    private static final long serialVersionUID = 1200759775244012189L;
+public class CapacidadeDefensiva implements Atributo{
     private int valor;
+
     public CapacidadeDefensiva(int valor){
         this.valor = valor;
     }

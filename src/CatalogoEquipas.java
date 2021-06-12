@@ -1,4 +1,3 @@
-import Exceptions.EquipaJaExisteException;
 import Exceptions.JogadorExistenteException;
 import Exceptions.NaoHaJogadorPosicaoException;
 
@@ -43,8 +42,7 @@ public class CatalogoEquipas implements Serializable {
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().clone()));
     }
 
-    public void adicionarEquipa (Equipa equipa) throws EquipaJaExisteException {
-        if (catalogoEquipas.containsKey(equipa.getName())) throw new EquipaJaExisteException ("A Equipa " + equipa.getName() +  " já existe");
+    public void adicionarEquipa (Equipa equipa){
         catalogoEquipas.put(equipa.getName(),equipa);
     }
 
@@ -104,9 +102,5 @@ public class CatalogoEquipas implements Serializable {
 
     public boolean isEmptyEquipa(String equipa) {
         return catalogoEquipas.get(equipa).isEmpty();
-    }
-
-    public boolean containsEquipa(String nomeEquipa) {
-        return catalogoEquipas.containsKey(nomeEquipa);
     }
 }

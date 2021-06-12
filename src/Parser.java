@@ -1,5 +1,4 @@
 import Atributo.*;
-import Exceptions.EquipaJaExisteException;
 import Exceptions.JogadorExistenteException;
 import Exceptions.LinhaIncorretaException;
 
@@ -10,9 +9,10 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class Parser {
-    public static Model parse(String filename) throws LinhaIncorretaException, JogadorExistenteException {
+    public static Model parse() throws LinhaIncorretaException, JogadorExistenteException {
         Model model = new Model();
-        List<String> linhas = lerFicheiro(filename);
+        List<String> linhas = lerFicheiro("logs.txt");
+        List<Jogo> jogos = new ArrayList<>();
         Equipa ultima = null; Jogador j = null;
         String[] linhaPartida;
         Random rand = new Random();
@@ -22,13 +22,8 @@ public class Parser {
             switch (linhaPartida[0]){
                 case "Equipa":
                     Equipa e = Equipa.parse(linhaPartida[1]);
-                    try {
-                        model.addEquipa(e);
-                        ultima = e;
-                    }
-                    catch (EquipaJaExisteException exception){
-                        System.out.println(exception.getMessage());
-                    }
+                    model.addEquipa(e);
+                    ultima = e;
                     break;
                 case "Guarda-Redes" :
                     j = GuardaRedes.parse(linhaPartida[1]);
@@ -79,7 +74,17 @@ public class Parser {
                     throw new LinhaIncorretaException();
             }
         }
+        /*
+        //debug
+        for (Equipa e: equipas.values()){
+            System.out.println(e.toString());
+        }
+        for (Jogo jog: jogos){
+            System.out.println(jog.toString());
+        }
+        */
         return model;
+
     }
 
     public static List<String> lerFicheiro(String nomeFich) {

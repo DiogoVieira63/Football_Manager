@@ -5,22 +5,14 @@ import Exceptions.LinhaIncorretaException;
 import java.util.*;
 
 public class FootballManager {
-    public static void main(String[] args) {
-        Model model = new Model();
-        Controller controller = new Controller(model);
-        if (controller.carregarLogs()){
-            try {
-                model = Parser.parse("logs.txt");
-                controller.setModel(model);
-            }
-            catch (JogadorExistenteException | LinhaIncorretaException e) {
-                View.printFrase("Erro ao ler o ficheiro logs.txt");
-            }
-        }
-        boolean stop = false;
-        do {
-            stop = controller.run();
-        }while (!stop);
+    public static void main(String[] args) throws JogadorExistenteException, LinhaIncorretaException {
+        Model model = Parser.parse();
+        //Model model = new Model();
+        View view = new View();
+        Controller controller = new Controller(model,view);
+        //model.printJogos();
+        //View.printPairOrganizedCollection(model.getJogosEquipa("Bach F. C."));
+        controller.run();
         //System.out.println(model.getEquipaJogo(1).toString());
         //model.efetuarJogo(model.getEquipaJogo(1),model.getEquipaJogo(1));
     }

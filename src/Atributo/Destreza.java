@@ -1,9 +1,6 @@
 package Atributo;
 
-import java.io.Serializable;
-
-public class Destreza implements Atributo, Serializable {
-    private static final long serialVersionUID = 6243549206717881581L;
+public class Destreza implements Atributo{
     private int valor;
 
     public Destreza(int valor){

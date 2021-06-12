@@ -1,9 +1,6 @@
 package Atributo;
 
-import java.io.Serializable;
-
-public class Impulsao implements Atributo, Serializable {
-    private static final long serialVersionUID = 1458962975365698809L;
+public class Impulsao implements Atributo{
     private int valor;
 
     public Impulsao(int valor){

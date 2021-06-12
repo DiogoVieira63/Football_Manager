@@ -166,6 +166,17 @@ public abstract class Jogador implements Serializable {
     public String toString (String pos){
         return ("(" + pos + ") " + primeiroUlitmoNome());
     }
-
-
+    /*
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Jogador: ").append(this.name);
+        sb.append("\n");
+        sb.append("Número da Camisola: ").append(this.id);
+        sb.append("\n");
+        sb.append("Atributos: ").append(this.atributos.values());
+        sb.append("\n");
+        sb.append("Histórico: ").append(this.historico);
+        return sb.toString();
+    }
+    */
 }
