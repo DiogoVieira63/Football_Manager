@@ -1,6 +1,9 @@
 package Atributo;
 
-public class Velocidade implements Atributo{
+import java.io.Serializable;
+
+public class Velocidade implements Atributo, Serializable {
+    private static final long serialVersionUID = -4906235120994484801L;
     private int valor;
 
     public Velocidade(int valor){

@@ -1,6 +1,9 @@
 package Atributo;
 
-public class Cruzamento implements Atributo{
+import java.io.Serializable;
+
+public class Cruzamento implements Atributo, Serializable {
+    private static final long serialVersionUID = 7927435869866131145L;
     private int valor;
 
     public Cruzamento(int valor){
