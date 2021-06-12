@@ -110,7 +110,8 @@ public class Equipa implements Serializable {
     }
 
 
-    public List<Object> organizadoNumero (){
+    public List<Object> organizadoNumero () throws EquipaSemJogadoresException{
+        if (listaJogadores.size() == 0) throw new EquipaSemJogadoresException("Equipa não tem jogadores");
         Set<Integer> set = new TreeSet<>(listaJogadores.keySet());
         List <Object> list = new ArrayList<>();
         for (Integer number : set){

@@ -1,7 +1,4 @@
-import Exceptions.EquipaJaExisteException;
-import Exceptions.JogadorExistenteException;
-import Exceptions.LinhaIncorretaException;
-import Exceptions.NaoHaJogadorPosicaoException;
+import Exceptions.*;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -353,7 +350,15 @@ public class Controller {
                         break;
                     case 1:
                         View.clearScreen();
-                        List<Object> list = model.nomesJogadoresOrdenado(equipa);
+                        List<Object> list = null;
+                        try {
+                            list = model.nomesJogadoresOrdenado(equipa);
+                        } catch (EquipaSemJogadoresException e) {
+                            View.printFrase("Equipa não contém jogadores");
+                            pressAnyKeyToContinue();
+                            submenu = 0;
+                            break;
+                        }
                         View.printTitulo("Selecionar Jogador");
                         View.printPairOrganizedCollection(list);
                         View.printOpcao("z. Voltar atrás");
@@ -728,14 +733,32 @@ public class Controller {
     }
 
     public void addJogador(Jogador jogador, List<String> titulosEquipas){
-        View.printTitulo("Selecione Equipa para adicionar o seu Jogador");
-        View.printSimpleOrganizedCollection(titulosEquipas,true);
-        View.printPrompt("Choose Option");
+        Scanner scanner = new Scanner(System.in);
         int number;
         String equipa = "";
-        if ((number = selecionarEquipa(titulosEquipas)) != 0){
-            equipa = titulosEquipas.get(number-1);
-        }
+        boolean valid = false;
+        do {
+            View.clearScreen();
+            View.printTitulo("Selecione Equipa para adicionar o seu Jogador");
+            View.printSimpleOrganizedCollection(titulosEquipas,true);
+            View.printPrompt("Choose Option");
+            String[]pieces = scanner.nextLine().split("\\s+");
+            if (pieces.length == 1){
+                number = getInt(pieces[0]);
+                if (number >= 0 && number <= titulosEquipas.size()){
+                    equipa = titulosEquipas.get(number-1);
+                    valid = true;
+                }
+                else {
+                    View.printFrase("Erro: Opção inválida");
+                    pressAnyKeyToContinue();
+                }
+            }
+            else{
+                View.printFrase("Erro:Opção inválida");
+                pressAnyKeyToContinue();
+            }
+        }while (!valid);
         boolean inserted = false;
         while (!inserted){
             try{

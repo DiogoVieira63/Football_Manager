@@ -1,4 +1,5 @@
 import Exceptions.EquipaJaExisteException;
+import Exceptions.EquipaSemJogadoresException;
 import Exceptions.JogadorExistenteException;
 import Exceptions.NaoHaJogadorPosicaoException;
 
@@ -21,7 +22,7 @@ public class Model implements Serializable {
         return catalogoEquipas.nomesOrdenados();
     }
 
-    public List<Object> nomesJogadoresOrdenado (String equipa){
+    public List<Object> nomesJogadoresOrdenado (String equipa)throws EquipaSemJogadoresException {
         return catalogoEquipas.nomesOrdenadosEquipa(equipa);
     }
 
