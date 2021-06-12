@@ -2,8 +2,10 @@ import Exceptions.EquipaJaExisteException;
 import Exceptions.JogadorExistenteException;
 import Exceptions.NaoHaJogadorPosicaoException;
 
+import java.awt.*;
 import java.io.*;
 import java.util.*;
+import java.util.List;
 
 public class Model implements Serializable {
     private static final long serialVersionUID = -6501770757804112150L;
@@ -99,8 +101,8 @@ public class Model implements Serializable {
         Jogo jogo = new Jogo(casa,fora);
         String nomeCasa = casa.getIdEquipa();
         String nomeFora = fora.getIdEquipa();
-        Map<Integer,Integer> overallCasa = catalogoEquipas.overallJogadores(nomeCasa);
-        Map<Integer,Integer> overallFora = catalogoEquipas.overallJogadores(nomeFora);
+        Map<Integer,Integer> overallCasa = catalogoEquipas.overallJogadores(casa);
+        Map<Integer,Integer> overallFora = catalogoEquipas.overallJogadores(fora);
         jogo.calculaJogo(overallCasa,overallFora);
         addJogo(jogo);
         return casa.getIdEquipa() + " " + jogo.getGolosCasa() + " - " + jogo.getGolosFora() + " " + fora.getIdEquipa();
@@ -129,4 +131,19 @@ public class Model implements Serializable {
     public boolean containsEquipa(String nomeEquipa) {
         return catalogoEquipas.containsEquipa (nomeEquipa);
     }
+
+    public Jogador doJogador (int jogador, String line, boolean lateral){
+        switch (jogador){
+            case 0:
+                return GuardaRedes.parseControlador(line);
+            case 1:
+                return Defesa.parseControlador(line,lateral);
+            case 2:
+                return Medio.parseControlador(line,lateral);
+            case 3:
+                return Avancado.parseControlador(line,lateral);
+        }
+        return null;
+    }
+
 }

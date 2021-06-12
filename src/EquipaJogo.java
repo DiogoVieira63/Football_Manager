@@ -49,6 +49,7 @@ public class EquipaJogo implements Serializable {
         }
     }
 
+
     public double mediaGeralTitulares (Equipa equipa){
         double total=0;
         for (Integer number : this.titulares){

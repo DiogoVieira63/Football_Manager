@@ -75,8 +75,8 @@ public class CatalogoEquipas implements Serializable {
         return catalogoEquipas.get(equipa).clone();
     }
 
-    public Map<Integer, Integer> overallJogadores(String nomeCasa) {
-        return catalogoEquipas.get(nomeCasa).mapOverall();
+    public Map<Integer, Integer> overallJogadores(EquipaJogo equipa) {
+        return catalogoEquipas.get(equipa.getIdEquipa()).mapOverall(equipa);
     }
 
     public Set<Integer> getNumeros(String equipa) {

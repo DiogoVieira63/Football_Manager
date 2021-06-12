@@ -81,7 +81,7 @@ public class EsquemaTatico implements Serializable {
         if (atacantes == 2)
             list.add("Posição 10:Avancado Centro(AC)");
         else
-            list.add("Posição 10:Avancado Lateral(AC)");
+            list.add("Posição 10:Avancado Lateral(AL)");
         if (atacantes == 2)
             list.add("Posição 11:Avancado Centro(AC)");
         else

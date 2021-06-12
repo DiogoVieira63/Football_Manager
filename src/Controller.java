@@ -17,12 +17,15 @@ public class Controller {
     private int menu;
     private int submenu;
     private int opcao;
+    private String equipa;
+    private List<EquipaJogo> equipaJogoList;
 
     public Controller (Model model){
         this.model = model;
         this.menu = 0;
         this.submenu = 0;
         this.opcao = 0;
+        this.equipaJogoList = new ArrayList<>();
     }
 
     public void setModel(Model model) {
@@ -54,18 +57,18 @@ public class Controller {
 
 
     public int selecionarEquipa (List<String> titulosEquipas){
-        int opcao;
+        int number;
         Scanner scanner = new Scanner(System.in);
         String[] line = scanner.nextLine().split("//s+");
         if (line.length == 1) {
-            opcao = getInt(line[0]);
-            if (opcao >= 1 && opcao <= titulosEquipas.size()) {
-                if (!model.isEmptyEquipa(titulosEquipas.get(opcao-1))) return opcao;
+            number = getInt(line[0]);
+            if (number >= 1 && number <= titulosEquipas.size()) {
+                if (!model.isEmptyEquipa(titulosEquipas.get(number-1))) return number;
                 else {
                     View.printFrase("A equipa não contém jogadores");
                     pressAnyKeyToContinue();
                 }
-            } else if (opcao == 0) {
+            } else if (number == 0) {
                 menu = 0;
             }
             else {
@@ -79,22 +82,14 @@ public class Controller {
         return 0;
     }
 
-    public int getInt (String line){
-        int opcao;
+    public static int getInt (String line){
+        int number;
         try {
-            opcao = Integer.parseInt(line);
+            number = Integer.parseInt(line);
         } catch (NumberFormatException e) {
-            opcao = -1;
+            number = -1;
         }
-        return opcao;
-    }
-
-    public int askInt (){
-        Scanner scanner = new Scanner(System.in);
-        if (scanner.hasNextInt()){
-            return scanner.nextInt();
-        }
-        else return -1;
+        return number;
     }
 
     @SuppressWarnings("unchecked")
@@ -106,9 +101,10 @@ public class Controller {
         return false;
     }
 
-    public boolean carregarLogs () {
+    public void carregarLogs () {
         Scanner scanner = new Scanner(System.in);
         File temp = new File("logs.txt");
+        boolean write, resposta = false;
         if (temp.exists()) {
             do {
                 View.clearScreen();
@@ -120,8 +116,14 @@ public class Controller {
                 line = scanner.nextLine().split("//s+");
                 if (line.length == 1) {
                     int number = getInt(line[0]);
-                    if (number == 0) return false;
-                    else if (number == 1) return true;
+                    if (number == 0) {
+                        write = false;
+                        resposta = true;
+                    }
+                    else if (number == 1) {
+                        write = true;
+                        resposta = true;
+                    }
                     else {
                         View.printFrase("Erro: Opcão \"" + line[0] + "\" não existe");
                         pressAnyKeyToContinue();
@@ -130,9 +132,15 @@ public class Controller {
                     View.printFrase("Erro: Coloque apenas o número");
                     pressAnyKeyToContinue();
                 }
-            }while (true);
+            }while (!resposta);
         }
-        return false;
+        try {
+            model = Parser.parse("logs.txt");
+            this.setModel(model);
+        }
+        catch (JogadorExistenteException | LinhaIncorretaException e) {
+            View.printFrase("Erro ao ler o ficheiro logs.txt");
+        }
     }
 
     public boolean selecionarTitulares (EquipaJogo equipaJogo){
@@ -273,12 +281,10 @@ public class Controller {
     public boolean run ()  {
         boolean out = false;
         Scanner scanner = new Scanner(System.in);
-        String equipa = "";
-        int idJogador = 0;
+        int number = 0;
         String line;
         String[] pieces;
         List<String> titulosEquipas = model.nomesEquipasOrdenados();
-        List<EquipaJogo> equipaJogoList = new ArrayList<>();
         View.clearScreen();
         switch ((int)menu){
             case 0:
@@ -287,17 +293,17 @@ public class Controller {
                 line = scanner.nextLine();
                 pieces = line.split("\\s+");
                 if (pieces.length == 1) {
-                    opcao = 0;
+                    number = 0;
                     try {
-                        opcao = Integer.parseInt(pieces[0]);
+                        number = Integer.parseInt(pieces[0]);
                     } catch (NumberFormatException e) {
                         View.printFrase("ERRO: Coloque apenas o número");
                         pressAnyKeyToContinue();
                     }
-                    if (opcao >= 1 && opcao <= 5) {
-                        menu = opcao;
+                    if (number >= 1 && number <= 5) {
+                        menu = number;
                     }
-                    else if (opcao == 6) out = true;
+                    else if (number == 6) out = true;
                 }
                 else {
                     View.printFrase("ERRO -Coloque apenas o número");
@@ -326,8 +332,8 @@ public class Controller {
                 View.printSimpleOrganizedCollection(equipasTemp,true);
                 View.printOpcao("0. Voltar atrás");
                 View.printPrompt("Choose Option");
-                if ((opcao = selecionarEquipa(equipasTemp)) != 0){
-                    equipa = equipasTemp.get(opcao-1);
+                if ((number = selecionarEquipa(equipasTemp)) != 0){
+                    equipa = equipasTemp.get(number-1);
                     EquipaJogo equipaJogo = new EquipaJogo(equipa,model.getNumeros(equipa));
                     if (selecionarTitulares(equipaJogo)) equipaJogoList.add(equipaJogo);
                     else equipaJogoList.clear();
@@ -340,8 +346,8 @@ public class Controller {
                         View.printSimpleOrganizedCollection(titulosEquipas,true);
                         View.printOpcao("0. Voltar atrás");
                         View.printPrompt("Choose Option");
-                        if ((opcao = selecionarEquipa(titulosEquipas)) != 0){
-                            equipa = titulosEquipas.get(opcao-1);
+                        if ((number = selecionarEquipa(titulosEquipas)) != 0){
+                            equipa = titulosEquipas.get(number-1);
                             submenu = 1;
                         }
                         break;
@@ -358,9 +364,9 @@ public class Controller {
                             if (pieces[0].equals("z")) submenu = 0;
                             else if (pieces[0].equals("r")) submenu = 4;
                             else{
-                                int number = getInt(pieces[0]);
+                                number = getInt(pieces[0]);
                                 if (containsId(number, list)) {
-                                    idJogador = number;
+                                    opcao = number;
                                     submenu = 2;
                                 }
                                 else {
@@ -377,13 +383,13 @@ public class Controller {
                     case 2:
                         View.clearScreen();
                         View.printTitulo("Info Jogador");
-                        View.printSimpleOrganizedCollection(model.infoJogador(equipa, idJogador),false);
+                        View.printSimpleOrganizedCollection(model.infoJogador(equipa, opcao),false);
                         View.printOpcao("0. Voltar Atrás");
                         View.printOpcao("1. Transferir Jogador");
                         View.printPrompt("Choose Option");
                         pieces = scanner.nextLine().split("\\s+");
                         if (pieces.length == 1){
-                            int number = getInt(pieces[0]);
+                            number = getInt(pieces[0]);
                             if (number == 0) submenu = 1;
                             else if (number == 1) submenu = 3;
                             else {
@@ -405,16 +411,15 @@ public class Controller {
                         View.printPrompt("Choose Option");
                         pieces = scanner.nextLine().split("\\s+");
                         if (pieces.length == 1){
-                            opcao = getInt(pieces[0]);
-                            if (opcao >= 1 && opcao <= aTransferir.size()) {
+                            number = getInt(pieces[0]);
+                            if (number >= 1 && number <= aTransferir.size()) {
                                 View.clearScreen();
-                                String novaEquipa = aTransferir.get(opcao-1);
-                                model.transferirJogador(equipa,idJogador,novaEquipa);
+                                String novaEquipa = aTransferir.get(number-1);
+                                model.transferirJogador(equipa,opcao,novaEquipa);
                                 View.printFrase("Jogador transferido para "+ novaEquipa);
                                 pressAnyKeyToContinue();
-                                equipa = novaEquipa;
                                 submenu = 1;
-                            } else if (opcao == 0) {
+                            } else if (number == 0) {
                                 submenu= 2;
                             } else {
                                 View.printFrase("ERRO - Opção inválida");
@@ -443,7 +448,7 @@ public class Controller {
                 View.printPrompt("Choose Option");
                 pieces = scanner.nextLine().split("\\s+");
                 if (pieces.length == 1){
-                    int number = getInt(pieces[0]);
+                    number = getInt(pieces[0]);
                     if (number == 0) {
                         menu = 0;
                         break;
@@ -489,12 +494,12 @@ public class Controller {
                         View.printPrompt("Choose Option");
                         pieces = scanner.nextLine().split("\\s+");
                         if (pieces.length == 1){
-                            opcao = getInt(pieces[0]);
-                            if (opcao == 0){
+                            number = getInt(pieces[0]);
+                            if (number == 0){
                                 menu = 0;
                                 break;
                             }
-                            else if (opcao == 1 || opcao == 2){
+                            else if (number == 1 || number == 2){
                                 submenu = 1;
                             }
                             else{
@@ -516,7 +521,7 @@ public class Controller {
                         else {
                             File temp = new File(str);
                             if (temp.exists()) {
-                                if (opcao == 1) {
+                                if (number == 1) {
                                     try {
                                         model = Parser.parse(str);
                                         View.printFrase("Ficheiro carregado com sucesso");
@@ -525,7 +530,7 @@ public class Controller {
                                     }
                                     menu = 0;
                                 }
-                                if (opcao == 2){
+                                if (number == 2){
                                     model = model.readFromFile(str);
                                     menu = 0;
                                 }
@@ -547,7 +552,7 @@ public class Controller {
                 else{
                     File temp = new File(str);
                     if (temp.exists()){
-                        int number = -1;
+                        number = -1;
                         do {
                             View.clearScreen();
                             View.printFrase("Já existe um ficheiro com esse nome. Quer dar overwrite?");
@@ -584,17 +589,14 @@ public class Controller {
     public static int askAtributo (String atributo){
         boolean valid = false;
         int valor = 0;
+        String[] pieces;
         Scanner scanner = new Scanner(System.in);
         do {
             View.clearScreen();
             View.printPrompt(atributo);
-            if (!scanner.hasNextInt()) {
-                scanner.nextLine();
-                View.printFrase("Insira um valor númerico.");
-                pressAnyKeyToContinue();
-            }
-            else {
-                valor = scanner.nextInt();
+            pieces = scanner.nextLine().split("\\s+");
+            if (pieces.length == 1){
+                valor = getInt(pieces[0]);
                 if (valor >= 0 && valor <= 100)valid = true;
                 else {
                     View.printFrase("Valor inválido");
@@ -612,12 +614,14 @@ public class Controller {
         return equipa;
     }
 
-    public static Jogador askJogadores(){
+    public Jogador askJogadores(){
         Scanner scanner = new Scanner(System.in);
         StringBuilder sb = new StringBuilder();
-        View.printTitulo("Nome do Jogador: ");
-        String nome = scanner.next();
+        View.clearScreen();
+        View.printPrompt("Nome do Jogador");
+        String nome = scanner.nextLine();
         sb.append(nome).append(",");
+        View.clearScreen();
         View.clearScreen();
         int num = askAtributo("Número da Camisola");
         sb.append(num).append(",");
@@ -661,10 +665,9 @@ public class Controller {
             sb.append(reflexos).append(",");;
             int elasticidade = askAtributo("Elasticidade");
             sb.append(elasticidade);
-            System.out.println(sb.toString());
-            return GuardaRedes.parseControlador(sb.toString());
+            return model.doJogador(0,sb.toString(),false);
         }
-        if (posicao == 1) {
+        else if (posicao == 1) {
             int marcacao = askAtributo("Marcação");
             sb.append(marcacao);
             View.printOpcao("0. Defesa Central");
@@ -674,15 +677,17 @@ public class Controller {
                 View.printFrase("Insira uma opção válida.");
             }
             int lateral = scanner.nextInt();
+            boolean doLateral;
             if (lateral == 0) {
-                return Defesa.parseControlador(sb.toString(), false);
+                doLateral = false;
             } else {
                 int cruzamento = askAtributo("Cruzamento");
                 sb.append(",").append(cruzamento);
-                return Defesa.parseControlador(sb.toString(), true);
+                doLateral = true;
             }
+            return model.doJogador(1,sb.toString(),doLateral);
         }
-        if (posicao == 2) {
+        else if (posicao == 2) {
             int recuperacao = askAtributo("Recuperação de Bola: ");
             sb.append(recuperacao);
             View.printOpcao("0. Médio Central");
@@ -691,15 +696,17 @@ public class Controller {
                 View.printFrase("Insira uma opção válida.");
             }
             int lateral = scanner.nextInt();
+            boolean doLateral;
             if (lateral == 0) {
-                return Medio.parseControlador(sb.toString(), false);
+                doLateral = false;
             } else {
                 int cruzamento = askAtributo("Cruzamento");
                 sb.append(",").append(cruzamento);
-                return Medio.parseControlador(sb.toString(), true);
+                doLateral = true;
             }
+            return model.doJogador(2,sb.toString(),doLateral);
         }
-        if (posicao == 3) {
+        else {
             int finalizacao= askAtributo("Finalização");
             sb.append(finalizacao);
             View.printOpcao("0. Avançado Central");
@@ -708,25 +715,26 @@ public class Controller {
                 View.printFrase("Insira uma opção válida.");
             }
             int lateral = scanner.nextInt();
+            boolean doLateral;
             if (lateral == 0) {
-                return Avancado.parseControlador(sb.toString(), false);
+                doLateral = false;
             } else {
                 int cruzamento = askAtributo("Cruzamento");
                 sb.append(",").append(cruzamento);
-                return Avancado.parseControlador(sb.toString(), true);
+                doLateral = true;
             }
+            return model.doJogador(3,sb.toString(), doLateral);
         }
-        return null;
     }
 
     public void addJogador(Jogador jogador, List<String> titulosEquipas){
         View.printTitulo("Selecione Equipa para adicionar o seu Jogador");
         View.printSimpleOrganizedCollection(titulosEquipas,true);
         View.printPrompt("Choose Option");
-        int opcao;
+        int number;
         String equipa = "";
-        if ((opcao = selecionarEquipa(titulosEquipas)) != 0){
-            equipa = titulosEquipas.get(opcao-1);
+        if ((number = selecionarEquipa(titulosEquipas)) != 0){
+            equipa = titulosEquipas.get(number-1);
         }
         boolean inserted = false;
         while (!inserted){
